@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 public class GlobalRankingAdapter extends BaseAdapter {
     private LayoutInflater inflater;
@@ -33,6 +34,12 @@ public class GlobalRankingAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        return null;
+
+        view=inflater.inflate(R.layout.globalrankingelement,null);
+        TextView textViewUser = (TextView) view.findViewById(R.id.rankUser);
+        TextView textViewELO = (TextView) view.findViewById(R.id.rankELO);
+        textViewUser.setText(userNames[i]);
+        textViewELO.setText(ELO[i]);
+        return view;
     }
 }

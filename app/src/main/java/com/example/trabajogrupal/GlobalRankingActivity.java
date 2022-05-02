@@ -4,16 +4,19 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ListView;
 
 public class GlobalRankingActivity extends AppCompatActivity {
     private String[] usernames;
     private int[] elos;
+    private ListView list;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_global_ranking);
-        GlobalRankingAdapter adaptador = new GlobalRankingAdapter(this, usernames, elos);
-        //Se llama al adaptador de esta lista.
+        GlobalRankingAdapter adapter = new GlobalRankingAdapter(this, usernames, elos);
+        list=findViewById(R.id.globalRanking);
+        list.setAdapter(adapter);
     }
     public void onBackPressed() {
         finish();
