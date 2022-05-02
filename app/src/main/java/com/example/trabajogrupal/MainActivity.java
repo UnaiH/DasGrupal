@@ -66,4 +66,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent i = new Intent(this, SignUpActivity.class);
         startActivity(i);
     }
+
+    public void onClickCheckers(View v)
+    {
+        finish();
+        Intent i = new Intent(this, CheckersActivity.class);
+        startActivity(i);
+    }
 }

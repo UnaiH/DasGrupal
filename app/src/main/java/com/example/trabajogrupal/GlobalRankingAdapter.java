@@ -7,11 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-public class globalRankingAdapter extends BaseAdapter {
+public class GlobalRankingAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private String[] userNames;
     private int[] ELO;
-    public globalRankingAdapter(Activity context, String[] pUserNames,int[] pELO){
+    public GlobalRankingAdapter(Activity context, String[] pUserNames, int[] pELO){
         userNames=pUserNames;
         ELO=pELO;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

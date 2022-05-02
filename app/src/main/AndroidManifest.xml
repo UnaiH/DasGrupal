@@ -10,7 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TrabajoGrupal">
         <activity
-            android:name=".globalRankingActivity"
+            android:name=".CheckersActivity"
+            android:exported="false" />
+        <activity
+            android:name=".GlobalRankingActivity"
             android:exported="false" />
         <activity
             android:name=".SignUpActivity"
