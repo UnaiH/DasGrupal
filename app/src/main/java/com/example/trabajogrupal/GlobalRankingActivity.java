@@ -13,6 +13,8 @@ public class GlobalRankingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        usernames=new String[0];
+        elos=new int[0];
         setContentView(R.layout.activity_global_ranking);
         GlobalRankingAdapter adapter = new GlobalRankingAdapter(this, usernames, elos);
         list=findViewById(R.id.globalRanking);

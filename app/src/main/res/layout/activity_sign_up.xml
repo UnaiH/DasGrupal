@@ -12,8 +12,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="160dp"
         android:layout_marginTop="404dp"
+        android:layout_marginEnd="163dp"
         android:onClick="onClick"
         android:text="Back"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
