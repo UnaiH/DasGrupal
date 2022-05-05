@@ -34,18 +34,41 @@ public class CheckersBoard
     {
         board[x][y]=p;
     }
-    public void movePiece(int x, int y, int x2, int y2)
+    public void removePiece(int x, int y)
     {
-        board[x2][y2]=board[x][y];
         board[x][y]=null;
+    }
+    public boolean movePiece(int x, int y, int x2, int y2)
+    {
+        Piece p = board[x][y];
+        board[x][y]=null;
+        if (p instanceof Piece_Checkers_White && !(p instanceof Piece_Checkers_Crowned_White) && y2==8)
+        {
+            Piece crownedP = new Piece_Checkers_Crowned_White(p.name,"White",x2,y2);
+            board[x2][y2]=crownedP;
+            return true;
+        }
+        else if (p instanceof Piece_Checkers_Black && !(p instanceof Piece_Checkers_Crowned_Black) && y2==1)
+        {
+            Piece crownedP = new Piece_Checkers_Crowned_Black(p.name,"Black",x2,y2);
+            board[x2][y2]=crownedP;
+            return true;
+        }
+        else
+        {
+            p.changePosition(x2,y2);
+            board[x2][y2]=p;
+            return false;
+        }
+
+
+
     }
 
     public ArrayList<Integer> availableMoves(int x, int y)
     {
         ArrayList<Integer> moves = new ArrayList<>();
         Piece p = board[x][y];
-        Log.i("Checkers","posicion = " + x + "-" + y);
-        Log.i("Checkers", "pieza " + p.toString());
         if (p instanceof Piece_Checkers_White)
         {
             moves = checkMovementJumpUpLeft(p, moves);
@@ -77,15 +100,14 @@ public class CheckersBoard
             }
             if (p instanceof  Piece_Checkers_Crowned_Black)
             {
-                moves = checkMovementJumpDownLeft(p, moves);
-                moves = checkMovementJumpDownRight(p, moves);
+                moves = checkMovementJumpUpLeft(p, moves);
+                moves = checkMovementJumpUpRight(p, moves);
                 if (firstMove)
                 {
-                    moves = checkMovementDownLeft(p, moves);
-                    moves = checkMovementDownRight(p, moves);
+                    moves = checkMovementUpLeft(p, moves);
+                    moves = checkMovementUpRight(p, moves);
                 }
             }
-
 
         }
         else
@@ -99,8 +121,6 @@ public class CheckersBoard
     {
         int posX = currentPiece.returnPosition()[0];
         int posY = currentPiece.returnPosition()[1];
-        Log.i("Checkers","posX " + posX);
-        Log.i("Checkers","posY " + posY);
         int finalX = posX-1;
         int finalY = posY+1;
         if (finalX<=0 || finalY >=9)
@@ -108,10 +128,8 @@ public class CheckersBoard
             return moves;
         }
         Piece finalPiece = board[finalX][finalY];
-
         if (finalPiece == null)
         {
-            Log.i("Checkers","jumpleft");
             moves.add(finalX);
             moves.add(finalY);
         }

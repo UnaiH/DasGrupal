@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.ImageButton;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class CheckersActivity extends AppCompatActivity {
 
@@ -17,6 +16,7 @@ public class CheckersActivity extends AppCompatActivity {
     private ImageButton[][] buttons = new ImageButton[10][10];
     private ArrayList<Integer> coordinates;
     private ArrayList<Integer> redSquares;
+    private int[] chosenSquare = new int[2];
     private ImageButton A1;
     private ImageButton C1;
     private ImageButton E1;
@@ -68,7 +68,7 @@ public class CheckersActivity extends AppCompatActivity {
         Player player1 = new Player("whitePlayer");
         Player player2 = new Player("blackPlayer");
         game = new Game(player1, player2);
-        board=new CheckersBoard();
+        board = new CheckersBoard();
 
         for (int i=0; i<10; i++)
         {
@@ -113,8 +113,7 @@ public class CheckersActivity extends AppCompatActivity {
         F8 = findViewById(R.id.CheckersF8);
         H8 = findViewById(R.id.CheckersH8);
 
-        coordinates.add(1); coordinates.add(1);
-        buttons[1][1]=A1;
+        coordinates.add(1); coordinates.add(1); buttons[1][1]=A1;
         coordinates.add(3); coordinates.add(1); buttons[3][1]=C1;
         coordinates.add(5); coordinates.add(1); buttons[5][1]=E1;
         coordinates.add(7); coordinates.add(1); buttons[7][1]=G1;
@@ -155,22 +154,27 @@ public class CheckersActivity extends AppCompatActivity {
             int coordinateX = coordinates.get(i);
             int coordinateY = coordinates.get(i+1);
             ImageButton a = buttons[coordinateX][coordinateY];
-            a.setImageResource(R.drawable.checkers_empty);
-            String name = buttons[coordinateX][coordinateY].toString();
+
+            String name = a.toString();
             Piece p;
-            if (i<coordinates.size()/2)
+            if (coordinateY<=3)
             {
                 p = new Piece_Checkers_White(name, "White", coordinateX, coordinateY);
                 game.addWhitePiece(p);
                 board.addPiece(p,coordinateX,coordinateY);
+                a.setImageResource(R.drawable.checkers_white);
             }
-            else
+            else if(coordinateY>=6)
             {
                 p = new Piece_Checkers_Black(name, "Black", coordinateX, coordinateY);
                 game.addBlackPiece(p);
                 board.addPiece(p,coordinateX,coordinateY);
+                a.setImageResource(R.drawable.checkers_black);
             }
-            board.addPiece(p,coordinateX,coordinateY);
+            else
+            {
+                a.setImageResource(R.drawable.checkers_empty);
+            }
 
         }
         /**
@@ -227,14 +231,7 @@ public class CheckersActivity extends AppCompatActivity {
         game.addBlackPiece(p23); board.addPiece(p1,6,8);
         game.addBlackPiece(p24); board.addPiece(p1,8,8);
 
-        **/
 
-
-
-        arrowUL = findViewById(R.id.CheckersArrowUL); arrowUL.setImageResource(R.drawable.checkers_up_left);
-        arrowUR = findViewById(R.id.CheckersArrowUR); arrowUR.setImageResource(R.drawable.checkers_up_right);
-        arrowDL = findViewById(R.id.CheckersArrowDL); arrowDL.setImageResource(R.drawable.checkers_down_left);
-        arrowDR = findViewById(R.id.CheckersArrowDR); arrowDR.setImageResource(R.drawable.checkers_down_right);
 
         A1.setImageResource(R.drawable.checkers_white);
         C1.setImageResource(R.drawable.checkers_white);
@@ -270,6 +267,8 @@ public class CheckersActivity extends AppCompatActivity {
         D8.setImageResource(R.drawable.checkers_black);
         F8.setImageResource(R.drawable.checkers_black);
         H8.setImageResource(R.drawable.checkers_black);
+
+         **/
     }
 
     public void onClickBoard(View v)
@@ -377,7 +376,24 @@ public class CheckersActivity extends AppCompatActivity {
 
     private void clickSquare(int x, int y)
     {
+        if (redSquares.size()>0)
+        {
+            for (int i=0; i<redSquares.size(); i+=2)
+            {
+                int posX = redSquares.get(i);
+                int posY = redSquares.get(i+1);
+                if(posX==x && posY==y)
+                {
+                    Log.i("Checkers","found red square");
+                    movePiece(chosenSquare[0],chosenSquare[1],x,y);
+                    unmarkSquares();
+                    return;
+                }
+            }
+        }
         unmarkSquares();
+        chosenSquare[0]=x;
+        chosenSquare[1]=y;
         ArrayList<Integer> moves = new ArrayList<>();
         Piece p = board.returnPiece(x,y);
         if (p==null || p instanceof Piece_Border_Board)
@@ -436,11 +452,11 @@ public class CheckersActivity extends AppCompatActivity {
         ImageButton image = buttons[x][y];
         if (piece instanceof Piece_Checkers_Crowned_White)   //first childs, then fathers
         {
-            //
+            image.setImageResource(R.drawable.checkers_crowned_white);
         }
         else if(piece instanceof Piece_Checkers_Crowned_Black)
         {
-            //
+            image.setImageResource(R.drawable.checkers_crowned_black);
         }
         else if(piece instanceof Piece_Checkers_White)
         {
@@ -459,7 +475,53 @@ public class CheckersActivity extends AppCompatActivity {
             Log.i("Checkers", "Piece: " + x + "-" + y + " has wrong type.");
         }
     }
-}
 
+    private void movePiece(int posX, int posY, int finalX, int finalY)
+    {
+        Piece startPiece = board.returnPiece(posX, posY);
+        Piece endPiece = board.returnPiece(finalX, finalY);
+        if (startPiece instanceof Piece_Checkers_White || startPiece instanceof Piece_Checkers_Black)
+        {
+            if ((finalX==posX+2 || finalX==posX-2) && (finalY==posY+2 || finalY==posY-2))    //if it is a jump
+            {
+                int middleX = (posX+finalX)/2;
+                int middleY = (posY+finalY)/2;
+                Piece middlePiece = board.returnPiece(middleX, middleY);
+                if (startPiece instanceof Piece_Checkers_White)
+                {game.removeBlackPiece(middlePiece);}
+                if (startPiece instanceof Piece_Checkers_Black)
+                {game.removeWhitePiece(middlePiece);}
+                board.removePiece(middleX,middleY);
+                drawProperPiece(null,middleX,middleY);
+            }
+            boolean crowned=false;
+            crowned = board.movePiece(posX, posY, finalX, finalY);
+            drawProperPiece(null,posX,posY);
+            if (crowned)
+            {
+                Piece crownedPiece = board.returnPiece(finalX,finalY);
+                if (startPiece instanceof Piece_Checkers_White)
+                {
+                    game.removeWhitePiece(startPiece);
+                    game.addBlackPiece(crownedPiece);
+                }
+                if (startPiece instanceof Piece_Checkers_Black)
+                {
+                    game.removeBlackPiece(startPiece);
+                    game.addBlackPiece(crownedPiece);
+                }
+            }
+            else
+            {
+                drawProperPiece(startPiece,finalX,finalY);
+            }
+
+        }
+        else
+        {
+            Log.i("Checkers", "Piece: " + posX + "-" + posY + " has wrong type.");
+        }
+    }
+}
 
 //https://www.pixilart.com/draw/50x50-b16e5b967c8eaa3
