@@ -27,6 +27,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
     public void onClickSignIn(View view) {
         EditText user=findViewById(R.id.userSignIn);
+        Intent i = new Intent(getApplicationContext(), selectMenu.class);
+        i.putExtra("usuario", user.getText().toString());
+        setResult(RESULT_OK, i);
+        finish();
+        startActivity(i);
+        /*
+        EditText user=findViewById(R.id.userSignIn);
         EditText pass=findViewById(R.id.PasswordSignIn);
         Data.Builder data = new Data.Builder();
         data.putString("usuario",user.getText().toString());
@@ -46,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             Log.i("TAG", "onChanged: "+inicio);
                             if (inicio!=null) {
                                 if (inicio.equals("true")) {
-                                    Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                                    Intent i = new Intent(getApplicationContext(), selectMenu.class);
                                     i.putExtra("usuario", user.getText().toString());
                                     setResult(RESULT_OK, i);
                                     finish();
@@ -59,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         }
                     }
                 });
-        WorkManager.getInstance(this).enqueue(otwr);
+        WorkManager.getInstance(this).enqueue(otwr);*/
     }
     public void onClickSignUp(View view) {
         finish();
