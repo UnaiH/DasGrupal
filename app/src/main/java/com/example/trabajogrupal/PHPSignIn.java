@@ -1,6 +1,7 @@
 package com.example.trabajogrupal;
 
 import android.content.Context;
+import android.net.Uri;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -30,11 +31,11 @@ public class PHPSignIn extends Worker{
     @Override
     public Result doWork()
     {
-        String user = getInputData().getString("user");
+        String user = getInputData().getString("email");
         String pass = getInputData().getString("pass");
         Log.i("TAG1", "doWork: "+user);
         Log.i("TAG1", "doWork: "+pass);
-        String direccion = "";
+        String direccion = "http://ec2-52-56-170-196.eu-west-2.compute.amazonaws.com/prehecho001/WEB/GroupProyect/Register.php";
         HttpURLConnection urlConnection = null;
         try
         {
@@ -42,18 +43,19 @@ public class PHPSignIn extends Worker{
             urlConnection = (HttpURLConnection) destino.openConnection();
             urlConnection.setConnectTimeout(5000);
             urlConnection.setReadTimeout(5000);
+            Uri.Builder builder = new Uri.Builder().appendQueryParameter("email", user).appendQueryParameter("password", pass);
+            String parametros = builder.build().getEncodedQuery();
             urlConnection.setRequestMethod("POST");
             urlConnection.setDoOutput(true);
             urlConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-            String parametros = "usu="+user+"&contrasena="+pass;
+
             PrintWriter out = new PrintWriter(urlConnection.getOutputStream());
             out.print(parametros);
             out.close();
-            Log.i("TAG","statusCode: " + urlConnection);
+
             int statusCode = urlConnection.getResponseCode();
-            Log.i("TAG","statusCode: " + statusCode);
-            if (statusCode == 200)
-            {
+
+            if (statusCode == 200) {
                 BufferedInputStream inputStream = new BufferedInputStream(urlConnection.getInputStream());
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
                 String line, result = "";
@@ -65,16 +67,19 @@ public class PHPSignIn extends Worker{
                 String resultado="";
                 for(int i = 0; i < jsonArray.length(); i++)
                 {
-                    Log.i("TAG", "doWork: "+jsonArray.getJSONObject(i));
                     resultado = jsonArray.getJSONObject(i).getString("resultado");
                 }
-                Data json = new Data.Builder()
-                        .putString("result",resultado)
-                        .build();
-                Log.i("php","listaJson: " + json);
-                return Result.success(json);
+                System.out.println("EXISTE USUARIO: "+resultado);
+                Data datos;
+                if(resultado.equals("false")){
+                    datos = new Data.Builder().putBoolean("exito",false).build();
+                }else{
+                    datos = new Data.Builder().putBoolean("exito",true).build();
+                }
+                return Result.success(datos);
+            }else{
+                return Result.retry();
             }
-            return Result.failure();
         }
         catch (MalformedURLException e) {e.printStackTrace();}
         catch (IOException e) {e.printStackTrace();}
