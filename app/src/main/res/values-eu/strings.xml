@@ -6,4 +6,6 @@
     <string name="iniciars">Sartu</string>
     <string name="register">Erregistratu</string>
     <string name="confPas">Pasahitza baieztatu</string>
+    <string name="checkers">Damak</string>
+    <string name="chess">Xake</string>
 </resources>

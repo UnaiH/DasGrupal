@@ -6,4 +6,6 @@
     <string name="iniciars">Iniciar sesión</string>
     <string name="register">Registrar</string>
     <string name="confPas">Confirmar contraseña</string>
+    <string name="checkers">Damas</string>
+    <string name="chess">Ajedrez</string>
 </resources>

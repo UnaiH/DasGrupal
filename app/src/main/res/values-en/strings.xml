@@ -6,4 +6,6 @@
     <string name="iniciars">Login</string>
     <string name="register">Register</string>
     <string name="confPas">Confirm password</string>
+    <string name="checkers">Damas</string>
+    <string name="chess">Chess</string>
 </resources>
