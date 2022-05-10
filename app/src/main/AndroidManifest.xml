@@ -14,9 +14,6 @@
             android:exported="false"
             android:theme="@style/Menu"/>
         <activity
-            android:name=".Menu"
-            android:exported="false"/>
-        <activity
             android:name=".CheckersActivity"
             android:exported="false"/>
         <activity

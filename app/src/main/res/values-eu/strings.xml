@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TrabajoGrupal</string>
+    <string name="usuario">Erabiltzailea</string>
+    <string name="contr">Pasahitza</string>
+    <string name="iniciars">Sartu</string>
+    <string name="register">Erregistratu</string>
+    <string name="confPas">Pasahitza baieztatu</string>
+</resources>

@@ -28,9 +28,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onClick(View view) {
-        finish();
-        Intent i = new Intent(this, MainActivity.class);
-        startActivity(i);
     }
 
     public void onClickRegis(View view) {
@@ -106,5 +103,11 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             }
         }
         return valid;
+    }
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        Intent i = new Intent(this, MainActivity.class);
+        startActivity(i);
     }
 }
