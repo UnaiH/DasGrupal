@@ -19,7 +19,7 @@ $hashed_password=password_hash($password, PASSWORD_DEFAULT);
 $stmt=mysqli_query($con,"SELECT * FROM Usuario WHERE email='$email'");
 
 if (mysqli_num_rows ($stmt)==0){
-	mysqli_query($con,"INSERT INTO Usuario VALUES ('$email','$hashed_password','$username')");
+	mysqli_query($con,"INSERT INTO Usuario (email,password,username) VALUES ('$email','$hashed_password','$username')");
 	$resultado[] = array('resultado' => true);
 }else{
 	$resultado[] = array('resultado' => false);
