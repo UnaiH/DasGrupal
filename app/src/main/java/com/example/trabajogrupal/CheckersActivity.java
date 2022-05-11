@@ -2,6 +2,7 @@ package com.example.trabajogrupal;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -521,6 +522,14 @@ public class CheckersActivity extends AppCompatActivity {
         {
             Log.i("Checkers", "Piece: " + posX + "-" + posY + " has wrong type.");
         }
+    }
+    //Para que no se salga de la App
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        Intent i = new Intent(this, selectMenu.class);
+        startActivity(i);
     }
 }
 

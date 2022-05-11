@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
+
 import androidx.work.Data;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkInfo;
@@ -14,7 +16,8 @@ import androidx.work.WorkManager;
 import androidx.lifecycle.Observer;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-
+    EditText user, pass;
+    String userEmail, password;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,57 +28,72 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
 
     }
+
     public void onClickSignIn(View view) {
-        EditText user=findViewById(R.id.userSignIn);
-        EditText pass=findViewById(R.id.PasswordSignIn);
-        Data.Builder data = new Data.Builder();
-        data.putString("usuario",user.getText().toString());
-        data.putString("contrasena",pass.getText().toString());
-        OneTimeWorkRequest otwr = new OneTimeWorkRequest.Builder(PHPSignIn.class)
-                .setInputData(data.build())
-                .build();
-        WorkManager.getInstance(this).getWorkInfoByIdLiveData(otwr.getId())
-                .observe(this, new Observer<WorkInfo>() {
-                    @Override
-                    public void onChanged(WorkInfo workInfo)
-                    {
-                        //Si se puede iniciar sesión porque devulve true se cambiará la actividad cerrando en la que se encuentra. Si la devolución es null o no es true se mostrará un toast en la interfaz actual.
-                        if(workInfo != null && workInfo.getState().isFinished())
-                        {
-                            String inicio = workInfo.getOutputData().getString("result");
-                            Log.i("TAG", "onChanged: "+inicio);
-                            if (inicio!=null) {
-                                if (inicio.equals("true")) {
-                                    Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                                    i.putExtra("usuario", user.getText().toString());
-                                    setResult(RESULT_OK, i);
-                                    finish();
-                                    startActivity(i);
-                                } else {
-                                }
-                            }
-                            else {
-                            }
+        user = findViewById(R.id.userSignIn);
+        pass = findViewById(R.id.PasswordSignIn);
+        userEmail = user.getText().toString();
+        password = pass.getText().toString();
+        /*
+        Intent i = new Intent(getApplicationContext(), selectMenu.class);
+        i.putExtra("usuario", user.getText().toString());
+        setResult(RESULT_OK, i);
+        finish();
+        startActivity(i);
+        */
+
+        if (userEmail.trim().length() > 0 && password.trim().length() > 0) { //Se comprueba que no son campos vacíos ni espacios en blanco
+            Data.Builder datos = new Data.Builder().putString("email", userEmail).putString("password", password);
+            OneTimeWorkRequest otwr = new OneTimeWorkRequest.Builder(PHPSignIn.class).setInputData(datos.build()).build();
+            WorkManager.getInstance(MainActivity.this).getWorkInfoByIdLiveData(otwr.getId()).observe(MainActivity.this, new Observer<WorkInfo>() {
+                @Override
+                public void onChanged(WorkInfo workInfo) {
+                    if (workInfo != null && workInfo.getState().isFinished()) {
+                        Boolean resultadoPhp = workInfo.getOutputData().getBoolean("exito", false);
+                        System.out.println("RESULTADO LOGIN --> " + resultadoPhp);
+                        if (resultadoPhp) {//se logueó correctamente
+
+                            /*Intent i = new Intent(Login.this, MainActivity.class);
+                            i.putExtra("user", userEmail);
+                            startActivity(i);
+                            finish();
+
+
+                             */
+                        } else {
+                            Toast.makeText(MainActivity.this, "Email o contraseña incorrecta", Toast.LENGTH_SHORT).show();
                         }
                     }
-                });
-        WorkManager.getInstance(this).enqueue(otwr);
+                }
+            });
+            WorkManager.getInstance(MainActivity.this).enqueue(otwr);
+        } else {
+            Toast.makeText(MainActivity.this, "Por favor, rellena todos los campos", Toast.LENGTH_SHORT).show();
+        }
     }
+
     public void onClickSignUp(View view) {
         finish();
         Intent i = new Intent(this, SignUpActivity.class);
-        startActivity(i);
+        startActivityForResult(i,1);
     }
 
-    public void onClickCheckers(View v)
-    {
+    public void onClickCheckers(View v) {
         finish();
         Intent i = new Intent(this, CheckersActivity.class);
         startActivity(i);
     }
-    public void onClickRanking(View v){
+
+    public void onClickRanking(View v) {
         finish();
         Intent i = new Intent(this, GlobalRankingActivity.class);
         startActivity(i);
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==1 && resultCode==RESULT_OK){
+            /* TODO dar por logueado al usuario y llevarlo a la actividad correspondiente */
+        }
     }
 }

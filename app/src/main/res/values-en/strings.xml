@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">TrabajoGrupal</string>
     <string name="usuario">User</string>
@@ -5,6 +6,6 @@
     <string name="iniciars">Login</string>
     <string name="register">Register</string>
     <string name="confPas">Confirm password</string>
-    <string name="checkers">Checkers</string>
+    <string name="checkers">Damas</string>
     <string name="chess">Chess</string>
 </resources>
