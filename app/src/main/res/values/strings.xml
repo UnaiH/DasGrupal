@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TrabajoGrupal</string>
+    <string name="app_name">Multi-Chess</string>
     <string name="usuario">User</string>
     <string name="contr">Password</string>
     <string name="iniciars">Login</string>

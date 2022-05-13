@@ -8,14 +8,17 @@ public class Game
     public Player player2;  //black
     public ArrayList<Piece> whitePieces;
     public ArrayList<Piece> blackPieces;
+    public String gameType;
     public String nextToMove;
 
-    public Game(Player p1, Player p2)
+
+    public Game(Player p1, Player p2, String pGameType)
     {
         player1=p1;
         player2=p2;
         whitePieces = new ArrayList<>();
         blackPieces = new ArrayList<>();
+        gameType = pGameType;
         nextToMove="White";
     }
 

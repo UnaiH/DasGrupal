@@ -3,13 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Daniel/Documents/GitHub/DasGrupal/app/src/main/res/layout/activity_checkers.xml" value="0.3378623188405797" />
-        <entry key="..\:/Users/Daniel/Documents/GitHub/DasGrupal/app/src/main/res/layout/activity_global_ranking.xml" value="0.3378623188405797" />
-        <entry key="..\:/Users/Daniel/Documents/GitHub/DasGrupal/app/src/main/res/layout/activity_main.xml" value="0.3378623188405797" />
-        <entry key="..\:/Users/Daniel/Documents/GitHub/DasGrupal/app/src/main/res/layout/activity_menu.xml" value="0.3378623188405797" />
-        <entry key="..\:/Users/Daniel/Documents/GitHub/DasGrupal/app/src/main/res/layout/activity_select_menu.xml" value="0.3378623188405797" />
-        <entry key="..\:/Users/Daniel/Documents/GitHub/DasGrupal/app/src/main/res/layout/activity_sign_up.xml" value="0.3378623188405797" />
-        <entry key="..\:/Users/Daniel/Documents/GitHub/DasGrupal/app/src/main/res/layout/globalrankingelement.xml" value="0.3378623188405797" />
+        <entry key="..\:/Users/fanju/AndroidStudioProjects/DasGrupal/app/src/main/res/layout/activity_checkers.xml" value="0.35054347826086957" />
+        <entry key="..\:/Users/fanju/AndroidStudioProjects/DasGrupal/app/src/main/res/layout/activity_chess.xml" value="0.13" />
+        <entry key="..\:/Users/fanju/AndroidStudioProjects/DasGrupal/app/src/main/res/layout/activity_main.xml" value="0.271532184950136" />
         <entry key="..\:/Users/jonka/AndroidStudioProjects/TrabajoGrupal/app/src/main/res/layout/activity_checkers.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/jonka/AndroidStudioProjects/TrabajoGrupal/app/src/main/res/layout/activity_global_ranking.xml" value="0.33" />
         <entry key="..\:/Users/jonka/AndroidStudioProjects/TrabajoGrupal/app/src/main/res/layout/activity_main.xml" value="0.33" />

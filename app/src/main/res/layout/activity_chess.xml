@@ -1,0 +1,514 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ChessActivity">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TableRow
+            android:id="@+id/Chess_Row_8"
+            android:layout_width="match_parent"
+            android:layout_height="45dp">
+
+            <ImageButton
+                android:id="@+id/ChessA8"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/ChessB8"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/ChessC8"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/ChessD8"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/ChessE8"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/ChessF8"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/ChessG8"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/ChessH8"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/Chess_Row_7"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageButton
+                android:id="@+id/ChessA7"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/ChessB7"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/ChessC7"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/ChessD7"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/ChessE7"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/ChessF7"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/ChessG7"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/ChessH7"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/Chess_Row_6"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageButton
+                android:id="@+id/ChessA6"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/ChessB6"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/ChessC6"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/ChessD6"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/ChessE6"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/ChessF6"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/ChessG6"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/ChessH6"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/Chess_Row_5"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageButton
+                android:id="@+id/ChessA5"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/ChessB5"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/ChessC5"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/ChessD5"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/ChessE5"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/ChessF5"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/ChessG5"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/ChessH5"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/Chess_Row_4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageButton
+                android:id="@+id/ChessA4"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/ChessB4"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/ChessC4"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                tools:srcCompat="@tools:sample/avatars"
+                android:onClick="onClickBoard" />
+
+            <ImageButton
+                android:id="@+id/ChessD4"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/ChessE4"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/ChessF4"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/ChessG4"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/ChessH4"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/Chess_Row_3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageButton
+                android:id="@+id/ChessA3"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/ChessB3"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/ChessC3"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/ChessD3"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/ChessE3"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/ChessF3"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/ChessG3"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/ChessH3"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/Chess_Row_2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageButton
+                android:id="@+id/ChessA2"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/ChessB2"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/ChessC2"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/ChessD2"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/ChessE2"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/ChessF2"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/ChessG2"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/ChessH2"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/Chess_Row_1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageButton
+                android:id="@+id/ChessA1"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/ChessB1"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/ChessC1"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/ChessD1"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/ChessE1"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/ChessF1"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/ChessG1"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/ChessH1"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:onClick="onClickBoard"
+                tools:srcCompat="@tools:sample/avatars" />
+        </TableRow>
+    </TableLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
