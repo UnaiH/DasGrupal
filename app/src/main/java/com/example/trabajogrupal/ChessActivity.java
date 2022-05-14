@@ -650,8 +650,12 @@ public class ChessActivity extends AppCompatActivity
         Piece startPiece = board.returnPiece(posX, posY);
         if (startPiece!=null)
         {
+            boolean[] both;
             boolean crowned;
-            crowned = board.movePiece(posX, posY, finalX, finalY);
+            boolean castled;
+            both = board.movePiece(posX, posY, finalX, finalY);
+            crowned = both[0];
+            castled = both[1];
             drawProperPiece(null,posX,posY);
             if (crowned)
             {
@@ -668,9 +672,29 @@ public class ChessActivity extends AppCompatActivity
                 }
                 drawProperPiece(crownedPiece,finalX,finalY);
             }
-            else
+            drawProperPiece(startPiece,finalX,finalY);
+            if (castled)
             {
-                drawProperPiece(startPiece,finalX,finalY);
+                if (finalX==3 && finalY==1)
+                {
+                    movePiece(1,1,4,1);
+                }
+                else if(finalX==7 && finalY==1)
+                {
+                    movePiece(8,1,6,1);
+                }
+                else if (finalX==3 && finalY==8)
+                {
+                    movePiece(1,8,4,8);
+                }
+                else if(finalX==7 && finalY==8)
+                {
+                    movePiece(8,8,6,8);
+                }
+                else
+                {
+                    Log.i("Chess", "Incorrect castling");
+                }
             }
 
         }

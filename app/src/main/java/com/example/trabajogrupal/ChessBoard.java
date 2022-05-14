@@ -36,7 +36,7 @@ public class ChessBoard
     {
         board[x][y]=null;
     }
-    public boolean movePiece(int x, int y, int x2, int y2)
+    public boolean[] movePiece(int x, int y, int x2, int y2)
     {
         Piece p = board[x][y];
         board[x][y]=null;
@@ -44,19 +44,31 @@ public class ChessBoard
         {
             Piece crownedP = new Piece_Chess_Queen_White(p.name,"White",x2,y2);
             board[x2][y2]=crownedP;
-            return true;
+            return new boolean[]{true, false};
         }
         else if (p instanceof Piece_Chess_Pawn_Black && y2==1)
         {
             Piece crownedP = new Piece_Chess_Queen_Black(p.name,"Black",x2,y2);
             board[x2][y2]=crownedP;
-            return true;
+            return new boolean[]{true, false};
         }
         else
         {
+            boolean[] results = {false,false};
+            if(p instanceof Piece_Chess_Castling)
+            {
+                ((Piece_Chess_Castling) p).setMoved();
+                if (p instanceof Piece_Chess_King_White || p instanceof Piece_Chess_King_Black)
+                {
+                    if (x==5 && (x2==3 || x2==7))
+                    {
+                        results[1]=true;
+                    }
+                }
+            }
             p.changePosition(x2,y2);
             board[x2][y2]=p;
-            return false;
+            return results;
         }
     }
 
@@ -69,12 +81,19 @@ public class ChessBoard
         {
             moves = checkMovementForward(p, moves);
             moves = checkMovementEatForwardDiagonal(p, moves);
-
+            if (y==2)
+            {
+                moves = checkMovementDoubleForward(p,moves);
+            }
         }
         else if (p instanceof Piece_Chess_Pawn_Black)
         {
             moves = checkMovementBackward(p, moves);
             moves = checkMovementEatBackwardDiagonal(p, moves);
+            if (y==7)
+            {
+                moves = checkMovementDoubleBackward(p,moves);
+            }
         }
         else if (p instanceof Piece_Chess_Rook_White || p instanceof Piece_Chess_Rook_Black)
         {
@@ -96,6 +115,16 @@ public class ChessBoard
         else if (p instanceof Piece_Chess_King_White || p instanceof Piece_Chess_King_Black)
         {
             moves = checkMovementAround(p, moves);
+            if (p instanceof Piece_Chess_King_White && !((Piece_Chess_King_White) p).getHasMoved())
+            {
+                moves = checkMovementWhiteCastlingLeft(p, moves);
+                moves = checkMovementWhiteCastlingRight(p, moves);
+            }
+            else if (p instanceof Piece_Chess_King_Black && !((Piece_Chess_King_Black) p).getHasMoved())
+            {
+                moves = checkMovementBlackCastlingLeft(p, moves);
+                moves = checkMovementBlackCastlingRight(p, moves);
+            }
         }
         else
         {
@@ -122,6 +151,27 @@ public class ChessBoard
         }
         return moves;
     }
+    private ArrayList<Integer> checkMovementDoubleForward(Piece currentPiece, ArrayList<Integer> moves)
+    {
+        int posX = currentPiece.returnPosition()[0];
+        int posY = currentPiece.returnPosition()[1];
+        int middleX = posX;
+        int middleY = posY+1;
+        int finalX = posX;
+        int finalY = posY+2;
+        if (finalY >=9)
+        {
+            return moves;
+        }
+        Piece middlePiece = board[middleX][middleY];
+        Piece finalPiece = board[finalX][finalY];
+        if (middlePiece==null && finalPiece == null)
+        {
+            moves.add(finalX);
+            moves.add(finalY);
+        }
+        return moves;
+    }
 
     private ArrayList<Integer> checkMovementBackward(Piece currentPiece, ArrayList<Integer> moves)
     {
@@ -135,6 +185,28 @@ public class ChessBoard
         }
         Piece finalPiece = board[finalX][finalY];
         if (finalPiece == null)
+        {
+            moves.add(finalX);
+            moves.add(finalY);
+        }
+        return moves;
+    }
+
+    private ArrayList<Integer> checkMovementDoubleBackward(Piece currentPiece, ArrayList<Integer> moves)
+    {
+        int posX = currentPiece.returnPosition()[0];
+        int posY = currentPiece.returnPosition()[1];
+        int middleX = posX;
+        int middleY = posY-1;
+        int finalX = posX;
+        int finalY = posY-2;
+        if (finalY <=0)
+        {
+            return moves;
+        }
+        Piece middlePiece = board[middleX][middleY];
+        Piece finalPiece = board[finalX][finalY];
+        if (middlePiece==null && finalPiece == null)
         {
             moves.add(finalX);
             moves.add(finalY);
@@ -615,4 +687,102 @@ public class ChessBoard
         }
         return moves;
     }
+    private ArrayList<Integer> checkMovementWhiteCastlingLeft(Piece currentPiece, ArrayList<Integer> moves)
+    {
+        int posX = currentPiece.returnPosition()[0];
+        int posY = currentPiece.returnPosition()[1];
+        int rookX = 1;
+        int rookY = 1;
+        Piece rookPiece = board[rookX][rookY];
+
+        if(rookPiece==null || !(rookPiece instanceof Piece_Chess_Rook_White))
+        {
+            return moves;
+        }
+        if(((Piece_Chess_Rook_White) rookPiece).getHasMoved())
+        {
+            return moves;
+        }
+        if(board[2][1]!=null || board[3][1]!=null || board[4][1]!=null)
+        {
+            return moves;
+        }
+        moves.add(posX-2);
+        moves.add(posY);
+        return moves;
+    }
+    private ArrayList<Integer> checkMovementWhiteCastlingRight(Piece currentPiece, ArrayList<Integer> moves)
+    {
+        int posX = currentPiece.returnPosition()[0];
+        int posY = currentPiece.returnPosition()[1];
+        int rookX = 8;
+        int rookY = 1;
+        Piece rookPiece = board[rookX][rookY];
+
+        if(rookPiece==null || !(rookPiece instanceof Piece_Chess_Rook_White))
+        {
+            return moves;
+        }
+        if(((Piece_Chess_Rook_White) rookPiece).getHasMoved())
+        {
+            return moves;
+        }
+        if(board[6][1]!=null || board[7][1]!=null)
+        {
+            return moves;
+        }
+        moves.add(posX+2);
+        moves.add(posY);
+        return moves;
+    }
+    private ArrayList<Integer> checkMovementBlackCastlingLeft(Piece currentPiece, ArrayList<Integer> moves)
+    {
+        int posX = currentPiece.returnPosition()[0];
+        int posY = currentPiece.returnPosition()[1];
+        int rookX = 1;
+        int rookY = 8;
+        Piece rookPiece = board[rookX][rookY];
+
+        if(rookPiece==null || !(rookPiece instanceof Piece_Chess_Rook_Black))
+        {
+            return moves;
+        }
+        if(((Piece_Chess_Rook_Black) rookPiece).getHasMoved())
+        {
+            return moves;
+        }
+        if(board[2][8]!=null || board[3][8]!=null || board[4][8]!=null)
+        {
+            return moves;
+        }
+        moves.add(posX-2);
+        moves.add(posY);
+        return moves;
+    }
+
+    private ArrayList<Integer> checkMovementBlackCastlingRight(Piece currentPiece, ArrayList<Integer> moves)
+    {
+        int posX = currentPiece.returnPosition()[0];
+        int posY = currentPiece.returnPosition()[1];
+        int rookX = 8;
+        int rookY = 8;
+        Piece rookPiece = board[rookX][rookY];
+
+        if(rookPiece==null || !(rookPiece instanceof Piece_Chess_Rook_Black))
+        {
+            return moves;
+        }
+        if(((Piece_Chess_Rook_Black) rookPiece).getHasMoved())
+        {
+            return moves;
+        }
+        if(board[6][8]!=null || board[7][8]!=null)
+        {
+            return moves;
+        }
+        moves.add(posX+2);
+        moves.add(posY);
+        return moves;
+    }
+
 }
