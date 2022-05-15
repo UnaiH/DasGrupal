@@ -102,4 +102,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             /* TODO dar por logueado al usuario y llevarlo a la actividad correspondiente */
         }
     }
+    public void onClickPref(View v) {
+        finish();
+        Intent i = new Intent(this, Preferencies.class);
+        startActivity(i);
+    }
 }

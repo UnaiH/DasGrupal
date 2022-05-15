@@ -8,4 +8,14 @@
     <string name="confPas">Confirmar contraseña</string>
     <string name="checkers">Damas</string>
     <string name="chess">Ajedrez</string>
+    <string name="idiomas">Idiomas</string>
+    <string name="defIdm">En este apartado se puede elegir el idioma a usar en la app</string>
+    <string name="preferencies">Configuración</string>
+    <string name="idimSelect">Idioma de la App</string>
+    <string name="temSelect">Tema de la app</string>
+    <string name="lanques">¿Qué idioma deseas emplear?</string>
+    <string name="temques">¿Qué tema deseas usar?</string>
+    <string name="temapp">En este apartado se puede elegir el tema a emplear en la app</string>
+    <string name="defi">Predefinido</string>
+    <string name="osc">Oscuro</string>
 </resources>

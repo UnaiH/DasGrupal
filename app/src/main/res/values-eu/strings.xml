@@ -8,4 +8,14 @@
     <string name="confPas">Pasahitza baieztatu</string>
     <string name="checkers">Damak</string>
     <string name="chess">Xake</string>
+    <string name="idiomas">Hizkuntzak</string>
+    <string name="defIdm">Sekzio honetan App-ren hizkuntza aukeratu dezakezu</string>
+    <string name="preferencies">Konfigurazioa</string>
+    <string name="idimSelect">App-ren hizkuntza</string>
+    <string name="temSelect">App-ren gaia</string>
+    <string name="lanques">Zein hizkuntza nahi duzu?</string>
+    <string name="temques">Zein gaia nahi duzu?</string>
+    <string name="temapp">Sekzio honetan App-ren gaia aukeratu dezakezu</string>
+    <string name="defi">Lehenetsia</string>
+    <string name="osc">Iluna</string>
 </resources>

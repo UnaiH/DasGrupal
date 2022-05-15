@@ -6,6 +6,16 @@
     <string name="iniciars">Login</string>
     <string name="register">Register</string>
     <string name="confPas">Confirm password</string>
-    <string name="checkers">Damas</string>
+    <string name="checkers">Checkers</string>
     <string name="chess">Chess</string>
+    <string name="idiomas">Languages</string>
+    <string name="defIdm">In this section you can select the app language</string>
+    <string name="preferencies">Settings</string>
+    <string name="idimSelect">App language</string>
+    <string name="temSelect">App theme</string>
+    <string name="lanques">Which language would you like to use?</string>
+    <string name="temques">Which theme would you like to use?</string>
+    <string name="temapp">In this section you can select the app theme</string>
+    <string name="defi">Default</string>
+    <string name="osc">Dark</string>
 </resources>

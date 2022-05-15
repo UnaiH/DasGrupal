@@ -2,23 +2,25 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <PreferenceCategory
-        android:key="idioma"
-        android:title="Idiomas">
+        android:key="idiomas"
+        android:textColor="#00838F"
+        android:title="@string/idimSelect">
         <ListPreference
             android:entries="@array/listaidiomas"
             android:entryValues="@array/listaidiomas"
-            android:summary="Idioma que se usará en la aplicación"
-            android:key="prefIdiomas"
-            android:title="Idiomas"/>
+            android:key="@string/idiomas"
+            android:summary="@string/defIdm"
+            android:title="@string/lanques"
+            android:defaultValue="English"/>
     </PreferenceCategory>
     <PreferenceCategory
-        android:key="theme"
-        android:title="Temas">
+        android:key="temas"
+        android:title="@string/temSelect">
         <ListPreference
             android:entries="@array/Temas"
             android:entryValues="@array/Temas"
-            android:summary="Tema que se empleará en la aplicación"
-            android:key="prefTema"
-            android:title="Tema"/>
+            android:summary="@string/temapp"
+            android:key="tema"
+            android:title="@string/temSelect" />
     </PreferenceCategory>
 </PreferenceScreen>

@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TrabajoGrupal">
         <activity
+            android:name=".Preferencies"
+            android:exported="false" />
+        <activity
             android:name=".ChessActivity"
             android:exported="false" />
         <activity
