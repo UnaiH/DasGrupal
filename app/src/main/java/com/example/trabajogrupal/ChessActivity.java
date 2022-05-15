@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -650,14 +651,16 @@ public class ChessActivity extends AppCompatActivity
         Piece startPiece = board.returnPiece(posX, posY);
         if (startPiece!=null)
         {
-            boolean[] both;
-            boolean crowned;
+            boolean[] specialConditions;
+            boolean promoted;
             boolean castled;
-            both = board.movePiece(posX, posY, finalX, finalY);
-            crowned = both[0];
-            castled = both[1];
+            boolean finished;
+            specialConditions = board.movePiece(posX, posY, finalX, finalY);
+            promoted = specialConditions[0];
+            castled = specialConditions[1];
+            finished = specialConditions[2];
             drawProperPiece(null,posX,posY);
-            if (crowned)
+            if (promoted)
             {
                 Piece crownedPiece = board.returnPiece(finalX,finalY);
                 if (startPiece instanceof Piece_Chess_Pawn_White)
@@ -695,6 +698,10 @@ public class ChessActivity extends AppCompatActivity
                 {
                     Log.i("Chess", "Incorrect castling");
                 }
+            }
+            if(finished)
+            {
+                Toast.makeText(this,"You win", Toast.LENGTH_LONG).show();
             }
 
         }

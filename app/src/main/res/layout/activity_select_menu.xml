@@ -29,6 +29,7 @@
         android:layout_marginTop="104dp"
         android:layout_marginEnd="175dp"
         android:background="@color/white"
+        android:onClick="onClickChess"
         android:text="@string/chess"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"

@@ -39,22 +39,29 @@ public class ChessBoard
     public boolean[] movePiece(int x, int y, int x2, int y2)
     {
         Piece p = board[x][y];
+        Piece p2 = board[x2][y2];
+        if (p2 !=null && p2 instanceof Piece_Chess_King_White || p2 instanceof Piece_Chess_King_Black)
+        {
+            p.changePosition(x2,y2);
+            board[x2][y2]=p;
+            return new boolean[]{false, false, true};
+        }
         board[x][y]=null;
         if (p instanceof Piece_Chess_Pawn_White && y2==8)
         {
             Piece crownedP = new Piece_Chess_Queen_White(p.name,"White",x2,y2);
             board[x2][y2]=crownedP;
-            return new boolean[]{true, false};
+            return new boolean[]{true, false, false};
         }
         else if (p instanceof Piece_Chess_Pawn_Black && y2==1)
         {
             Piece crownedP = new Piece_Chess_Queen_Black(p.name,"Black",x2,y2);
             board[x2][y2]=crownedP;
-            return new boolean[]{true, false};
+            return new boolean[]{true, false, false};
         }
         else
         {
-            boolean[] results = {false,false};
+            boolean[] results = {false,false,false};
             if(p instanceof Piece_Chess_Castling)
             {
                 ((Piece_Chess_Castling) p).setMoved();

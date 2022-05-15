@@ -21,4 +21,10 @@ public class SelectMenuActivity extends AppCompatActivity {
         Intent i = new Intent(this, CheckersActivity.class);
         startActivity(i);
     }
+    public void onClickChess(View v)
+    {
+        finish();
+        Intent i = new Intent(this, ChessActivity.class);
+        startActivity(i);
+    }
 }

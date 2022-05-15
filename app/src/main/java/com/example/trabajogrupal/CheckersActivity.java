@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -398,6 +399,10 @@ public class CheckersActivity extends AppCompatActivity {
                 {game.removeWhitePiece(middlePiece);}
                 board.removePiece(middleX,middleY);
                 drawProperPiece(null,middleX,middleY);
+                if(game.blackPieces.size()==0 || game.whitePieces.size()==0)
+                {
+                    Toast.makeText(this,"You win", Toast.LENGTH_LONG).show();
+                }
             }
             boolean crowned=false;
             crowned = board.movePiece(posX, posY, finalX, finalY);
