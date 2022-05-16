@@ -97,6 +97,7 @@ public class ChessActivity extends GameActivity
 
         setUpBoard();
         loadPieces();
+        //deletePiece(game.getId(), 1,1);
 
     }
 
@@ -658,7 +659,6 @@ public class ChessActivity extends GameActivity
 
     private void movePiece(int posX, int posY, int finalX, int finalY)
     {
-        deletePiece(game.getId(), 1,1);
         Piece startPiece = board.returnPiece(posX, posY);
         if (startPiece!=null)
         {
@@ -678,6 +678,7 @@ public class ChessActivity extends GameActivity
                 {
                     game.removeWhitePiece(startPiece);
                     game.addWhitePiece(crownedPiece);
+                    //add insertPiece()
                 }
                 if (startPiece instanceof Piece_Chess_Pawn_Black)
                 {
