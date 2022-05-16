@@ -458,6 +458,14 @@ public class CheckersActivity extends GameActivity {
             posY=p.posY;
             insertPiece(id, type, posX, posY);
         }
+        for (int i=0; i<blacks.size(); i++)
+        {
+            p = blacks.get(i);
+            type = p.getClass().getName();
+            posX=p.posX;
+            posY=p.posY;
+            insertPiece(id, type, posX, posY);
+        }
     }
 
     //Para que no se salga de la App

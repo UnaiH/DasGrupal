@@ -38,4 +38,29 @@ public class GameActivity extends AppCompatActivity
                 });
         WorkManager.getInstance(this).enqueue(otwr);
     }
+
+    protected void deletePiece(int idGame, int posX, int posY)
+    {
+        Data.Builder data = new Data.Builder();
+
+        data.putInt("idGame", idGame);
+        data.putInt("posX", posX);
+        data.putInt("posY", posY);
+
+        OneTimeWorkRequest otwr = new OneTimeWorkRequest.Builder(WorkerDeletePiece.class)
+                .setInputData(data.build())
+                .build();
+        WorkManager.getInstance(this).getWorkInfoByIdLiveData(otwr.getId())
+                .observe(this, new Observer<WorkInfo>()
+                {
+                    @Override
+                    public void onChanged(WorkInfo workInfo)
+                    {
+                        if (workInfo != null && workInfo.getState().isFinished()) {
+                            Log.i("workerPHP", "Piece deleted");
+                        }
+                    }
+                });
+        WorkManager.getInstance(this).enqueue(otwr);
+    }
 }

@@ -33,7 +33,7 @@ public class Game
     }
     public ArrayList<Piece> returnBlackPieces()
     {
-        return this.whitePieces;
+        return this.blackPieces;
     }
     public void addWhitePiece(Piece p)
     {

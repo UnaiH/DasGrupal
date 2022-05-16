@@ -97,6 +97,7 @@ public class ChessActivity extends GameActivity
 
         setUpBoard();
         loadPieces();
+
     }
 
     private void setUpBoard()
@@ -657,6 +658,7 @@ public class ChessActivity extends GameActivity
 
     private void movePiece(int posX, int posY, int finalX, int finalY)
     {
+        deletePiece(game.getId(), 1,1);
         Piece startPiece = board.returnPiece(posX, posY);
         if (startPiece!=null)
         {
@@ -735,6 +737,14 @@ public class ChessActivity extends GameActivity
         for (int i=0; i<whites.size(); i++)
         {
             p = whites.get(i);
+            type = p.getClass().getName();
+            posX=p.posX;
+            posY=p.posY;
+            insertPiece(id, type, posX, posY);
+        }
+        for (int j=0; j<blacks.size(); j++)
+        {
+            p = blacks.get(j);
             type = p.getClass().getName();
             posX=p.posX;
             posY=p.posY;
