@@ -10,8 +10,9 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Random;
 
-public class CheckersActivity extends AppCompatActivity {
+public class CheckersActivity extends GameActivity {
 
     private Game game;
     private CheckersBoard board;
@@ -58,13 +59,17 @@ public class CheckersActivity extends AppCompatActivity {
         setContentView(R.layout.activity_checkers);
 
         setUpBoard();
+        loadPieces();
     }
 
     private void setUpBoard()
     {
         Player player1 = new Player("whitePlayer");
         Player player2 = new Player("blackPlayer");
-        game = new Game(player1, player2, "Checkers");
+
+        Random rand = new Random();
+        int id = rand.nextInt(999999);
+        game = new Game(id, player1, player2, "Checkers");
         board = new CheckersBoard();
 
         for (int i=0; i<10; i++)
@@ -399,7 +404,7 @@ public class CheckersActivity extends AppCompatActivity {
                 {game.removeWhitePiece(middlePiece);}
                 board.removePiece(middleX,middleY);
                 drawProperPiece(null,middleX,middleY);
-                if(game.blackPieces.size()==0 || game.whitePieces.size()==0)
+                if(game.returnBlackPieces().size()==0 || game.returnWhitePieces().size()==0)
                 {
                     Toast.makeText(this,"You win", Toast.LENGTH_LONG).show();
                 }
@@ -431,6 +436,27 @@ public class CheckersActivity extends AppCompatActivity {
         else
         {
             Log.i("Checkers", "Piece: " + posX + "-" + posY + " has wrong type.");
+        }
+    }
+
+    private void loadPieces()
+    {
+        ArrayList<Piece> whites = game.returnWhitePieces();
+        ArrayList<Piece> blacks = game.returnBlackPieces();
+        Log.i("Chess", "Number of white pieces : " + whites.size());
+        Log.i("Chess", "Number of black pieces : " + blacks.size());
+        Piece p;
+        int id = game.getId();
+        String type;
+        int posX;
+        int posY;
+        for (int i=0; i<whites.size(); i++)
+        {
+            p = whites.get(i);
+            type = p.getClass().getName();
+            posX=p.posX;
+            posY=p.posY;
+            insertPiece(id, type, posX, posY);
         }
     }
 

@@ -4,16 +4,18 @@ import java.util.ArrayList;
 
 public class Game
 {
-    public Player player1;  //white
-    public Player player2;  //black
-    public ArrayList<Piece> whitePieces;
-    public ArrayList<Piece> blackPieces;
-    public String gameType;
-    public String nextToMove;
+    private int id;
+    private Player player1;  //white
+    private Player player2;  //black
+    private ArrayList<Piece> whitePieces;
+    private ArrayList<Piece> blackPieces;
+    private String gameType;
+    private String nextToMove;
 
 
-    public Game(Player p1, Player p2, String pGameType)
+    public Game(int pId, Player p1, Player p2, String pGameType)
     {
+        id=pId;
         player1=p1;
         player2=p2;
         whitePieces = new ArrayList<>();
@@ -21,7 +23,10 @@ public class Game
         gameType = pGameType;
         nextToMove="White";
     }
-
+    public int getId()
+    {
+        return id;
+    }
     public ArrayList<Piece> returnWhitePieces()
     {
         return this.whitePieces;
@@ -61,5 +66,6 @@ public class Game
             nextToMove="White";
         }
     }
+
 
 }

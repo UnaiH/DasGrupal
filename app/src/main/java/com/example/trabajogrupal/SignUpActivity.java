@@ -47,7 +47,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 data.putString("email", email);
                 data.putString("password", pass);
                 data.putString("user", username);
-                OneTimeWorkRequest otwr = new OneTimeWorkRequest.Builder(PHPRegistr.class)
+                OneTimeWorkRequest otwr = new OneTimeWorkRequest.Builder(WorkerRegister.class)
                         .setInputData(data.build())
                         .build();
                 WorkManager.getInstance(this).getWorkInfoByIdLiveData(otwr.getId())

@@ -1,6 +1,11 @@
 package com.example.trabajogrupal;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.work.Data;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkInfo;
+import androidx.work.WorkManager;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,8 +15,9 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Random;
 
-public class ChessActivity extends AppCompatActivity 
+public class ChessActivity extends GameActivity
 {
     private Game game;
     private ChessBoard board;
@@ -90,13 +96,17 @@ public class ChessActivity extends AppCompatActivity
         setContentView(R.layout.activity_chess);
 
         setUpBoard();
+        loadPieces();
     }
 
     private void setUpBoard()
     {
         Player player1 = new Player("whitePlayer");
         Player player2 = new Player("blackPlayer");
-        game = new Game(player1, player2, "Chess");
+
+        Random rand = new Random();
+        int id = rand.nextInt(999999);
+        game = new Game(id, player1, player2, "Chess");
         board = new ChessBoard();
 
         for (int i=0; i<10; i++)
@@ -514,7 +524,6 @@ public class ChessActivity extends AppCompatActivity
                 int posY = redSquares.get(i+1);
                 if(posX==x && posY==y)
                 {
-                    Log.i("Chess","found red square");
                     movePiece(chosenSquare[0],chosenSquare[1],x,y);
                     unmarkSquares();
                     game.changeTurn();
@@ -710,6 +719,30 @@ public class ChessActivity extends AppCompatActivity
             Log.i("Chess", "Piece: " + posX + "-" + posY + " has wrong type.");
         }
     }
+
+
+    private void loadPieces()
+    {
+        ArrayList<Piece> whites = game.returnWhitePieces();
+        ArrayList<Piece> blacks = game.returnBlackPieces();
+        Log.i("Chess", "Number of white pieces : " + whites.size());
+        Log.i("Chess", "Number of black pieces : " + blacks.size());
+        Piece p;
+        int id = game.getId();
+        String type;
+        int posX;
+        int posY;
+        for (int i=0; i<whites.size(); i++)
+        {
+            p = whites.get(i);
+            type = p.getClass().getName();
+            posX=p.posX;
+            posY=p.posY;
+            insertPiece(id, type, posX, posY);
+        }
+    }
+
+
 
     //Para que no se salga de la App
     @Override

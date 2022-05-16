@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -44,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if (userEmail.trim().length() > 0 && password.trim().length() > 0) { //Se comprueba que no son campos vacíos ni espacios en blanco
             Data.Builder datos = new Data.Builder().putString("email", userEmail).putString("password", password);
-            OneTimeWorkRequest otwr = new OneTimeWorkRequest.Builder(PHPSignIn.class).setInputData(datos.build()).build();
+            OneTimeWorkRequest otwr = new OneTimeWorkRequest.Builder(WorkerSignIn.class).setInputData(datos.build()).build();
             WorkManager.getInstance(MainActivity.this).getWorkInfoByIdLiveData(otwr.getId()).observe(MainActivity.this, new Observer<WorkInfo>() {
                 @Override
                 public void onChanged(WorkInfo workInfo) {
