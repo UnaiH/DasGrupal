@@ -1,7 +1,5 @@
 package com.example.trabajogrupal;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,47 +8,20 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 public class CheckersActivity extends GameActivity {
 
-    private Game game;
     private CheckersBoard board;
+    private int idGame;
+    private String currentTurn;
+    private HashMap<String,Piece> mapPieces;
     private ImageButton[][] buttons = new ImageButton[10][10];
     private ArrayList<Integer> redSquares;
     private int[] chosenSquare = new int[2];
-    private ImageButton A1;
-    private ImageButton C1;
-    private ImageButton E1;
-    private ImageButton G1;
-    private ImageButton B2;
-    private ImageButton D2;
-    private ImageButton F2;
-    private ImageButton H2;
-    private ImageButton A3;
-    private ImageButton C3;
-    private ImageButton E3;
-    private ImageButton G3;
-    private ImageButton B4;
-    private ImageButton D4;
-    private ImageButton F4;
-    private ImageButton H4;
-    private ImageButton A5;
-    private ImageButton C5;
-    private ImageButton E5;
-    private ImageButton G5;
-    private ImageButton B6;
-    private ImageButton D6;
-    private ImageButton F6;
-    private ImageButton H6;
-    private ImageButton A7;
-    private ImageButton C7;
-    private ImageButton E7;
-    private ImageButton G7;
-    private ImageButton B8;
-    private ImageButton D8;
-    private ImageButton F8;
-    private ImageButton H8;
+    private int whiteCounts;
+    private int blackCounts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -59,7 +30,7 @@ public class CheckersActivity extends GameActivity {
         setContentView(R.layout.activity_checkers);
 
         setUpBoard();
-        loadPieces();
+        loadPieces(mapPieces.values().toArray(new Piece[0]), idGame);
     }
 
     private void setUpBoard()
@@ -68,9 +39,13 @@ public class CheckersActivity extends GameActivity {
         Player player2 = new Player("blackPlayer");
 
         Random rand = new Random();
-        int id = rand.nextInt(999999);
-        game = new Game(id, player1, player2, "Checkers");
+        idGame = rand.nextInt(999999);
+        currentTurn="White";
         board = new CheckersBoard();
+        mapPieces = new HashMap<>();
+        whiteCounts=12;
+        blackCounts=12;
+
 
         for (int i=0; i<10; i++)
         {
@@ -82,38 +57,38 @@ public class CheckersActivity extends GameActivity {
         redSquares = new ArrayList<>();
         ArrayList<Integer> coordinates = new ArrayList<>();
 
-        A1 = findViewById(R.id.CheckersA1);
-        C1 = findViewById(R.id.CheckersC1);
-        E1 = findViewById(R.id.CheckersE1);
-        G1 = findViewById(R.id.CheckersG1);
-        B2 = findViewById(R.id.CheckersB2);
-        D2 = findViewById(R.id.CheckersD2);
-        F2 = findViewById(R.id.CheckersF2);
-        H2 = findViewById(R.id.CheckersH2);
-        A3 = findViewById(R.id.CheckersA3);
-        C3 = findViewById(R.id.CheckersC3);
-        E3 = findViewById(R.id.CheckersE3);
-        G3 = findViewById(R.id.CheckersG3);
-        B4 = findViewById(R.id.CheckersB4);
-        D4 = findViewById(R.id.CheckersD4);
-        F4 = findViewById(R.id.CheckersF4);
-        H4 = findViewById(R.id.CheckersH4);
-        A5 = findViewById(R.id.CheckersA5);
-        C5 = findViewById(R.id.CheckersC5);
-        E5 = findViewById(R.id.CheckersE5);
-        G5 = findViewById(R.id.CheckersG5);
-        B6 = findViewById(R.id.CheckersB6);
-        D6 = findViewById(R.id.CheckersD6);
-        F6 = findViewById(R.id.CheckersF6);
-        H6 = findViewById(R.id.CheckersH6);
-        A7 = findViewById(R.id.CheckersA7);
-        C7 = findViewById(R.id.CheckersC7);
-        E7 = findViewById(R.id.CheckersE7);
-        G7 = findViewById(R.id.CheckersG7);
-        B8 = findViewById(R.id.CheckersB8);
-        D8 = findViewById(R.id.CheckersD8);
-        F8 = findViewById(R.id.CheckersF8);
-        H8 = findViewById(R.id.CheckersH8);
+        ImageButton A1 = findViewById(R.id.CheckersA1);
+        ImageButton C1 = findViewById(R.id.CheckersC1);
+        ImageButton E1 = findViewById(R.id.CheckersE1);
+        ImageButton G1 = findViewById(R.id.CheckersG1);
+        ImageButton B2 = findViewById(R.id.CheckersB2);
+        ImageButton D2 = findViewById(R.id.CheckersD2);
+        ImageButton F2 = findViewById(R.id.CheckersF2);
+        ImageButton H2 = findViewById(R.id.CheckersH2);
+        ImageButton A3 = findViewById(R.id.CheckersA3);
+        ImageButton C3 = findViewById(R.id.CheckersC3);
+        ImageButton E3 = findViewById(R.id.CheckersE3);
+        ImageButton G3 = findViewById(R.id.CheckersG3);
+        ImageButton B4 = findViewById(R.id.CheckersB4);
+        ImageButton D4 = findViewById(R.id.CheckersD4);
+        ImageButton F4 = findViewById(R.id.CheckersF4);
+        ImageButton H4 = findViewById(R.id.CheckersH4);
+        ImageButton A5 = findViewById(R.id.CheckersA5);
+        ImageButton C5 = findViewById(R.id.CheckersC5);
+        ImageButton E5 = findViewById(R.id.CheckersE5);
+        ImageButton G5 = findViewById(R.id.CheckersG5);
+        ImageButton B6 = findViewById(R.id.CheckersB6);
+        ImageButton D6 = findViewById(R.id.CheckersD6);
+        ImageButton F6 = findViewById(R.id.CheckersF6);
+        ImageButton H6 = findViewById(R.id.CheckersH6);
+        ImageButton A7 = findViewById(R.id.CheckersA7);
+        ImageButton C7 = findViewById(R.id.CheckersC7);
+        ImageButton E7 = findViewById(R.id.CheckersE7);
+        ImageButton G7 = findViewById(R.id.CheckersG7);
+        ImageButton B8 = findViewById(R.id.CheckersB8);
+        ImageButton D8 = findViewById(R.id.CheckersD8);
+        ImageButton F8 = findViewById(R.id.CheckersF8);
+        ImageButton H8 = findViewById(R.id.CheckersH8);
 
         coordinates.add(1); coordinates.add(1); buttons[1][1]=A1;
         coordinates.add(3); coordinates.add(1); buttons[3][1]=C1;
@@ -158,18 +133,18 @@ public class CheckersActivity extends GameActivity {
             ImageButton a = buttons[coordinateX][coordinateY];
 
             String name = a.toString();
-            Piece p;
+            Piece p = null;
             if (coordinateY<=3)
             {
                 p = new Piece_Checkers_White(name, "White", coordinateX, coordinateY);
-                game.addWhitePiece(p);
+                mapPieces.put(p.name,p);
                 board.addPiece(p,coordinateX,coordinateY);
                 a.setImageResource(R.drawable.checkers_white);
             }
             else if(coordinateY>=6)
             {
                 p = new Piece_Checkers_Black(name, "Black", coordinateX, coordinateY);
-                game.addBlackPiece(p);
+                mapPieces.put(p.name,p);
                 board.addPiece(p,coordinateX,coordinateY);
                 a.setImageResource(R.drawable.checkers_black);
             }
@@ -297,7 +272,18 @@ public class CheckersActivity extends GameActivity {
                     Log.i("Checkers","found red square");
                     movePiece(chosenSquare[0],chosenSquare[1],x,y);
                     unmarkSquares();
-                    game.changeTurn();
+                    if (currentTurn.equals("White"))
+                    {
+                        currentTurn="Black";
+                    }
+                    else if (currentTurn.equals("Black"))
+                    {
+                        currentTurn="White";
+                    }
+                    else
+                    {
+                        Log.i("Chess","currentTurn error: " + currentTurn);
+                    }
                     return;
                 }
             }
@@ -313,7 +299,7 @@ public class CheckersActivity extends GameActivity {
         }
         if (p instanceof Piece_Checkers_White)
         {
-            if (game.currentTurn()=="Black")
+            if (currentTurn.equals("Black"))
             {
                 return;
             }
@@ -321,7 +307,7 @@ public class CheckersActivity extends GameActivity {
         }
         else if (p instanceof Piece_Checkers_Black)
         {
-            if (game.currentTurn()=="White")
+            if (currentTurn.equals("White"))
             {
                 return;
             }
@@ -398,13 +384,24 @@ public class CheckersActivity extends GameActivity {
                 int middleX = (posX+finalX)/2;
                 int middleY = (posY+finalY)/2;
                 Piece middlePiece = board.returnPiece(middleX, middleY);
-                if (startPiece instanceof Piece_Checkers_White)
-                {game.removeBlackPiece(middlePiece);}
-                if (startPiece instanceof Piece_Checkers_Black)
-                {game.removeWhitePiece(middlePiece);}
+                mapPieces.remove(middlePiece.name);
                 board.removePiece(middleX,middleY);
+                if (currentTurn.equals("White"))
+                {
+                    blackCounts--;
+                }
+                else if (currentTurn.equals("Black"))
+                {
+                    whiteCounts--;
+                }
+                else
+                {
+                    Log.i("Chess", "currentTurn error: " + currentTurn);
+                    return;
+                }
+
                 drawProperPiece(null,middleX,middleY);
-                if(game.returnBlackPieces().size()==0 || game.returnWhitePieces().size()==0)
+                if(whiteCounts==0 || blackCounts==0)
                 {
                     Toast.makeText(this,"You win", Toast.LENGTH_LONG).show();
                 }
@@ -415,16 +412,8 @@ public class CheckersActivity extends GameActivity {
             if (crowned)
             {
                 Piece crownedPiece = board.returnPiece(finalX,finalY);
-                if (startPiece instanceof Piece_Checkers_White)
-                {
-                    game.removeWhitePiece(startPiece);
-                    game.addWhitePiece(crownedPiece);
-                }
-                if (startPiece instanceof Piece_Checkers_Black)
-                {
-                    game.removeBlackPiece(startPiece);
-                    game.addBlackPiece(crownedPiece);
-                }
+                mapPieces.remove(startPiece.name);
+                mapPieces.put(crownedPiece.name,crownedPiece);
                 drawProperPiece(crownedPiece,finalX,finalY);
             }
             else
@@ -436,37 +425,11 @@ public class CheckersActivity extends GameActivity {
         else
         {
             Log.i("Checkers", "Piece: " + posX + "-" + posY + " has wrong type.");
+            return;
         }
     }
 
-    private void loadPieces()
-    {
-        ArrayList<Piece> whites = game.returnWhitePieces();
-        ArrayList<Piece> blacks = game.returnBlackPieces();
-        Log.i("Chess", "Number of white pieces : " + whites.size());
-        Log.i("Chess", "Number of black pieces : " + blacks.size());
-        Piece p;
-        int id = game.getId();
-        String type;
-        int posX;
-        int posY;
-        for (int i=0; i<whites.size(); i++)
-        {
-            p = whites.get(i);
-            type = p.getClass().getName();
-            posX=p.posX;
-            posY=p.posY;
-            insertPiece(id, type, posX, posY);
-        }
-        for (int i=0; i<blacks.size(); i++)
-        {
-            p = blacks.get(i);
-            type = p.getClass().getName();
-            posX=p.posX;
-            posY=p.posY;
-            insertPiece(id, type, posX, posY);
-        }
-    }
+
 
     //Para que no se salga de la App
     @Override

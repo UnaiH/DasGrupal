@@ -1,12 +1,5 @@
 package com.example.trabajogrupal;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
-import androidx.work.Data;
-import androidx.work.OneTimeWorkRequest;
-import androidx.work.WorkInfo;
-import androidx.work.WorkManager;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,79 +8,19 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 public class ChessActivity extends GameActivity
 {
-    private Game game;
     private ChessBoard board;
+    private int idGame;
+    private String currentTurn;
+    private HashMap<String,Piece> mapPieces;
     private ImageButton[][] buttons = new ImageButton[10][10];
     private ArrayList<Integer> redSquares;
     private int[] chosenSquare = new int[2];
-    private ImageButton A1;
-    private ImageButton B1;
-    private ImageButton C1;
-    private ImageButton D1;
-    private ImageButton E1;
-    private ImageButton F1;
-    private ImageButton G1;
-    private ImageButton H1;
-    private ImageButton A2;
-    private ImageButton B2;
-    private ImageButton C2;
-    private ImageButton D2;
-    private ImageButton E2;
-    private ImageButton F2;
-    private ImageButton G2;
-    private ImageButton H2;
-    private ImageButton A3;
-    private ImageButton B3;
-    private ImageButton C3;
-    private ImageButton D3;
-    private ImageButton E3;
-    private ImageButton F3;
-    private ImageButton G3;
-    private ImageButton H3;
-    private ImageButton A4;
-    private ImageButton B4;
-    private ImageButton C4;
-    private ImageButton D4;
-    private ImageButton E4;
-    private ImageButton F4;
-    private ImageButton G4;
-    private ImageButton H4;
-    private ImageButton A5;
-    private ImageButton B5;
-    private ImageButton C5;
-    private ImageButton D5;
-    private ImageButton E5;
-    private ImageButton F5;
-    private ImageButton G5;
-    private ImageButton H5;
-    private ImageButton A6;
-    private ImageButton B6;
-    private ImageButton C6;
-    private ImageButton D6;
-    private ImageButton E6;
-    private ImageButton F6;
-    private ImageButton G6;
-    private ImageButton H6;
-    private ImageButton A7;
-    private ImageButton B7;
-    private ImageButton C7;
-    private ImageButton D7;
-    private ImageButton E7;
-    private ImageButton F7;
-    private ImageButton G7;
-    private ImageButton H7;
-    private ImageButton A8;
-    private ImageButton B8;
-    private ImageButton C8;
-    private ImageButton D8;
-    private ImageButton E8;
-    private ImageButton F8;
-    private ImageButton G8;
-    private ImageButton H8;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -96,8 +29,9 @@ public class ChessActivity extends GameActivity
         setContentView(R.layout.activity_chess);
 
         setUpBoard();
-        loadPieces();
+        loadPieces(mapPieces.values().toArray(new Piece[0]), idGame);
         //deletePiece(game.getId(), 1,1);
+        //updatePiece(game.getId(),2,2,12,13);
 
     }
 
@@ -107,9 +41,10 @@ public class ChessActivity extends GameActivity
         Player player2 = new Player("blackPlayer");
 
         Random rand = new Random();
-        int id = rand.nextInt(999999);
-        game = new Game(id, player1, player2, "Chess");
+        idGame = rand.nextInt(999999);
+        currentTurn="White";
         board = new ChessBoard();
+        mapPieces = new HashMap<>();
 
         for (int i=0; i<10; i++)
         {
@@ -121,38 +56,38 @@ public class ChessActivity extends GameActivity
         redSquares = new ArrayList<>();
         ArrayList<Integer> coordinates = new ArrayList<>();
 
-        A1 = findViewById(R.id.ChessA1); B1 = findViewById(R.id.ChessB1);
-        C1 = findViewById(R.id.ChessC1); D1 = findViewById(R.id.ChessD1);
-        E1 = findViewById(R.id.ChessE1); F1 = findViewById(R.id.ChessF1);
-        G1 = findViewById(R.id.ChessG1); H1 = findViewById(R.id.ChessH1);
-        A2 = findViewById(R.id.ChessA2); B2 = findViewById(R.id.ChessB2);
-        C2 = findViewById(R.id.ChessC2); D2 = findViewById(R.id.ChessD2);
-        E2 = findViewById(R.id.ChessE2); F2 = findViewById(R.id.ChessF2);
-        G2 = findViewById(R.id.ChessG2); H2 = findViewById(R.id.ChessH2);
-        A3 = findViewById(R.id.ChessA3); B3 = findViewById(R.id.ChessB3);
-        C3 = findViewById(R.id.ChessC3); D3 = findViewById(R.id.ChessD3);
-        E3 = findViewById(R.id.ChessE3); F3 = findViewById(R.id.ChessF3);
-        G3 = findViewById(R.id.ChessG3); H3 = findViewById(R.id.ChessH3);
-        A4 = findViewById(R.id.ChessA4); B4 = findViewById(R.id.ChessB4);
-        C4 = findViewById(R.id.ChessC4); D4 = findViewById(R.id.ChessD4);
-        E4 = findViewById(R.id.ChessE4); F4 = findViewById(R.id.ChessF4);
-        G4 = findViewById(R.id.ChessG4); H4 = findViewById(R.id.ChessH4);
-        A5 = findViewById(R.id.ChessA5); B5 = findViewById(R.id.ChessB5);
-        C5 = findViewById(R.id.ChessC5); D5 = findViewById(R.id.ChessD5);
-        E5 = findViewById(R.id.ChessE5); F5 = findViewById(R.id.ChessF5);
-        G5 = findViewById(R.id.ChessG5); H5 = findViewById(R.id.ChessH5);
-        A6 = findViewById(R.id.ChessA6); B6 = findViewById(R.id.ChessB6);
-        C6 = findViewById(R.id.ChessC6); D6 = findViewById(R.id.ChessD6);
-        E6 = findViewById(R.id.ChessE6); F6 = findViewById(R.id.ChessF6);
-        G6 = findViewById(R.id.ChessG6); H6 = findViewById(R.id.ChessH6);
-        A7 = findViewById(R.id.ChessA7); B7 = findViewById(R.id.ChessB7);
-        C7 = findViewById(R.id.ChessC7); D7 = findViewById(R.id.ChessD7);
-        E7 = findViewById(R.id.ChessE7); F7 = findViewById(R.id.ChessF7);
-        G7 = findViewById(R.id.ChessG7); H7 = findViewById(R.id.ChessH7);
-        A8 = findViewById(R.id.ChessA8); B8 = findViewById(R.id.ChessB8);
-        C8 = findViewById(R.id.ChessC8); D8 = findViewById(R.id.ChessD8);
-        E8 = findViewById(R.id.ChessE8); F8 = findViewById(R.id.ChessF8);
-        G8 = findViewById(R.id.ChessG8); H8 = findViewById(R.id.ChessH8);
+        ImageButton A1 = findViewById(R.id.ChessA1); ImageButton B1 = findViewById(R.id.ChessB1);
+        ImageButton C1 = findViewById(R.id.ChessC1); ImageButton D1 = findViewById(R.id.ChessD1);
+        ImageButton E1 = findViewById(R.id.ChessE1); ImageButton F1 = findViewById(R.id.ChessF1);
+        ImageButton G1 = findViewById(R.id.ChessG1); ImageButton H1 = findViewById(R.id.ChessH1);
+        ImageButton A2 = findViewById(R.id.ChessA2); ImageButton B2 = findViewById(R.id.ChessB2);
+        ImageButton C2 = findViewById(R.id.ChessC2); ImageButton D2 = findViewById(R.id.ChessD2);
+        ImageButton E2 = findViewById(R.id.ChessE2); ImageButton F2 = findViewById(R.id.ChessF2);
+        ImageButton G2 = findViewById(R.id.ChessG2); ImageButton H2 = findViewById(R.id.ChessH2);
+        ImageButton A3 = findViewById(R.id.ChessA3); ImageButton B3 = findViewById(R.id.ChessB3);
+        ImageButton C3 = findViewById(R.id.ChessC3); ImageButton D3 = findViewById(R.id.ChessD3);
+        ImageButton E3 = findViewById(R.id.ChessE3); ImageButton F3 = findViewById(R.id.ChessF3);
+        ImageButton G3 = findViewById(R.id.ChessG3); ImageButton H3 = findViewById(R.id.ChessH3);
+        ImageButton A4 = findViewById(R.id.ChessA4); ImageButton B4 = findViewById(R.id.ChessB4);
+        ImageButton C4 = findViewById(R.id.ChessC4); ImageButton D4 = findViewById(R.id.ChessD4);
+        ImageButton E4 = findViewById(R.id.ChessE4); ImageButton F4 = findViewById(R.id.ChessF4);
+        ImageButton G4 = findViewById(R.id.ChessG4); ImageButton H4 = findViewById(R.id.ChessH4);
+        ImageButton A5 = findViewById(R.id.ChessA5); ImageButton B5 = findViewById(R.id.ChessB5);
+        ImageButton C5 = findViewById(R.id.ChessC5); ImageButton D5 = findViewById(R.id.ChessD5);
+        ImageButton E5 = findViewById(R.id.ChessE5); ImageButton F5 = findViewById(R.id.ChessF5);
+        ImageButton G5 = findViewById(R.id.ChessG5); ImageButton H5 = findViewById(R.id.ChessH5);
+        ImageButton A6 = findViewById(R.id.ChessA6); ImageButton B6 = findViewById(R.id.ChessB6);
+        ImageButton C6 = findViewById(R.id.ChessC6); ImageButton D6 = findViewById(R.id.ChessD6);
+        ImageButton E6 = findViewById(R.id.ChessE6); ImageButton F6 = findViewById(R.id.ChessF6);
+        ImageButton G6 = findViewById(R.id.ChessG6); ImageButton H6 = findViewById(R.id.ChessH6);
+        ImageButton A7 = findViewById(R.id.ChessA7); ImageButton B7 = findViewById(R.id.ChessB7);
+        ImageButton C7 = findViewById(R.id.ChessC7); ImageButton D7 = findViewById(R.id.ChessD7);
+        ImageButton E7 = findViewById(R.id.ChessE7); ImageButton F7 = findViewById(R.id.ChessF7);
+        ImageButton G7 = findViewById(R.id.ChessG7); ImageButton H7 = findViewById(R.id.ChessH7);
+        ImageButton A8 = findViewById(R.id.ChessA8); ImageButton B8 = findViewById(R.id.ChessB8);
+        ImageButton C8 = findViewById(R.id.ChessC8); ImageButton D8 = findViewById(R.id.ChessD8);
+        ImageButton E8 = findViewById(R.id.ChessE8); ImageButton F8 = findViewById(R.id.ChessF8);
+        ImageButton G8 = findViewById(R.id.ChessG8); ImageButton H8 = findViewById(R.id.ChessH8);
 
         for (int j=1; j<9; j++)
         {
@@ -209,35 +144,35 @@ public class ChessActivity extends GameActivity
                 if(coordinateX==1 || coordinateX==8)
                 {
                     p = new Piece_Chess_Rook_White(name, "White", coordinateX, coordinateY);
-                    game.addWhitePiece(p);
+                    mapPieces.put(p.name,p);
                     board.addPiece(p,coordinateX,coordinateY);
                     button.setImageResource(R.drawable.chess_white_rook);
                 }
                 else if(coordinateX==2 || coordinateX==7)
                 {
                     p = new Piece_Chess_Knight_White(name, "White", coordinateX, coordinateY);
-                    game.addWhitePiece(p);
+                    mapPieces.put(p.name,p);
                     board.addPiece(p,coordinateX,coordinateY);
                     button.setImageResource(R.drawable.chess_white_knight);
                 }
                 else if(coordinateX==3 || coordinateX==6)
                 {
                     p = new Piece_Chess_Bishop_White(name, "White", coordinateX, coordinateY);
-                    game.addWhitePiece(p);
+                    mapPieces.put(p.name,p);
                     board.addPiece(p,coordinateX,coordinateY);
                     button.setImageResource(R.drawable.chess_white_bishop);
                 }
                 else if(coordinateX==4)
                 {
                     p = new Piece_Chess_Queen_White(name, "White", coordinateX, coordinateY);
-                    game.addWhitePiece(p);
+                    mapPieces.put(p.name,p);
                     board.addPiece(p,coordinateX,coordinateY);
                     button.setImageResource(R.drawable.chess_white_queen);
                 }
                 else if(coordinateX==5)
                 {
                     p = new Piece_Chess_King_White(name, "White", coordinateX, coordinateY);
-                    game.addWhitePiece(p);
+                    mapPieces.put(p.name,p);
                     board.addPiece(p,coordinateX,coordinateY);
                     button.setImageResource(R.drawable.chess_white_king);
                 }
@@ -250,14 +185,14 @@ public class ChessActivity extends GameActivity
             else if(coordinateY==2)
             {
                 p = new Piece_Chess_Pawn_White(name, "White", coordinateX, coordinateY);
-                game.addWhitePiece(p);
+                mapPieces.put(p.name,p);
                 board.addPiece(p,coordinateX,coordinateY);
                 button.setImageResource(R.drawable.chess_white_pawn);
             }
             else if(coordinateY==7)
             {
                 p = new Piece_Chess_Pawn_Black(name, "Black", coordinateX, coordinateY);
-                game.addBlackPiece(p);
+                mapPieces.put(p.name,p);
                 board.addPiece(p,coordinateX,coordinateY);
                 button.setImageResource(R.drawable.chess_black_pawn);
             }
@@ -266,35 +201,35 @@ public class ChessActivity extends GameActivity
                 if(coordinateX==1 || coordinateX==8)
                 {
                     p = new Piece_Chess_Rook_Black(name, "Black", coordinateX, coordinateY);
-                    game.addBlackPiece(p);
+                    mapPieces.put(p.name,p);
                     board.addPiece(p,coordinateX,coordinateY);
                     button.setImageResource(R.drawable.chess_black_rook);
                 }
                 else if(coordinateX==2 || coordinateX==7)
                 {
                     p = new Piece_Chess_Knight_Black(name, "Black", coordinateX, coordinateY);
-                    game.addBlackPiece(p);
+                    mapPieces.put(p.name,p);
                     board.addPiece(p,coordinateX,coordinateY);
                     button.setImageResource(R.drawable.chess_black_knight);
                 }
                 else if(coordinateX==3 || coordinateX==6)
                 {
                     p = new Piece_Chess_Bishop_Black(name, "Black", coordinateX, coordinateY);
-                    game.addBlackPiece(p);
+                    mapPieces.put(p.name,p);
                     board.addPiece(p,coordinateX,coordinateY);
                     button.setImageResource(R.drawable.chess_black_bishop);
                 }
                 else if(coordinateX==4)
                 {
                     p = new Piece_Chess_Queen_Black(name, "Black", coordinateX, coordinateY);
-                    game.addBlackPiece(p);
+                    mapPieces.put(p.name,p);
                     board.addPiece(p,coordinateX,coordinateY);
                     button.setImageResource(R.drawable.chess_black_queen);
                 }
                 else if(coordinateX==5)
                 {
                     p = new Piece_Chess_King_Black(name, "Black", coordinateX, coordinateY);
-                    game.addBlackPiece(p);
+                    mapPieces.put(p.name,p);
                     board.addPiece(p,coordinateX,coordinateY);
                     button.setImageResource(R.drawable.chess_black_king);
                 }
@@ -528,7 +463,18 @@ public class ChessActivity extends GameActivity
                 {
                     movePiece(chosenSquare[0],chosenSquare[1],x,y);
                     unmarkSquares();
-                    game.changeTurn();
+                    if (currentTurn.equals("White"))
+                    {
+                        currentTurn="Black";
+                    }
+                    else if (currentTurn.equals("Black"))
+                    {
+                        currentTurn="White";
+                    }
+                    else
+                    {
+                        Log.i("Chess","currentTurn error: " + currentTurn);
+                    }
                     return;
                 }
             }
@@ -544,7 +490,7 @@ public class ChessActivity extends GameActivity
         }
         if (p.color.equals("White"))
         {
-            if (game.currentTurn().equals("Black"))
+            if (currentTurn.equals("Black"))
             {
                 return;
             }
@@ -552,7 +498,7 @@ public class ChessActivity extends GameActivity
         }
         else if (p.color.equals("Black"))
         {
-            if (game.currentTurn().equals("White"))
+            if (currentTurn.equals("White"))
             {
                 return;
             }
@@ -565,6 +511,76 @@ public class ChessActivity extends GameActivity
             Log.i("Chess",moves.get(i) + "-" + moves.get(i+1));
         }
 
+    }
+
+
+
+    private void movePiece(int posX, int posY, int finalX, int finalY)
+    {
+        Piece startPiece = board.returnPiece(posX, posY);
+        if (startPiece!=null)
+        {
+            boolean[] specialConditions;
+            boolean promoted;
+            boolean castled;
+            boolean finished;
+            specialConditions = board.movePiece(posX, posY, finalX, finalY);
+            promoted = specialConditions[0];
+            castled = specialConditions[1];
+            finished = specialConditions[2];
+            drawProperPiece(null,posX,posY);
+            if (promoted)
+            {
+                Piece crownedPiece = board.returnPiece(finalX,finalY);
+                if (startPiece instanceof Piece_Chess_Pawn_White)
+                {
+                    mapPieces.remove(startPiece.name);
+                    mapPieces.put(crownedPiece.name,crownedPiece);
+                    //add insertPiece()
+                }
+                if (startPiece instanceof Piece_Chess_Pawn_Black)
+                {
+                    mapPieces.remove(startPiece.name);
+                    mapPieces.put(crownedPiece.name,crownedPiece);
+                }
+                drawProperPiece(crownedPiece,finalX,finalY);
+            }
+            drawProperPiece(startPiece,finalX,finalY);
+            if (castled)
+            {
+                if (finalX==3 && finalY==1)
+                {
+                    movePiece(1,1,4,1);
+                }
+                else if(finalX==7 && finalY==1)
+                {
+                    movePiece(8,1,6,1);
+                }
+                else if (finalX==3 && finalY==8)
+                {
+                    movePiece(1,8,4,8);
+                }
+                else if(finalX==7 && finalY==8)
+                {
+                    movePiece(8,8,6,8);
+                }
+                else
+                {
+                    Log.i("Chess", "Incorrect castling");
+                    return;
+                }
+            }
+            if(finished)
+            {
+                Toast.makeText(this,"You win", Toast.LENGTH_LONG).show();
+            }
+
+        }
+        else
+        {
+            Log.i("Chess", "Piece: " + posX + "-" + posY + " has wrong type.");
+            return;
+        }
     }
 
     //transforms the image of a button to a red square
@@ -654,102 +670,6 @@ public class ChessActivity extends GameActivity
         else
         {
             Log.i("Chess", "Piece: " + x + "-" + y + " has wrong type.");
-        }
-    }
-
-    private void movePiece(int posX, int posY, int finalX, int finalY)
-    {
-        Piece startPiece = board.returnPiece(posX, posY);
-        if (startPiece!=null)
-        {
-            boolean[] specialConditions;
-            boolean promoted;
-            boolean castled;
-            boolean finished;
-            specialConditions = board.movePiece(posX, posY, finalX, finalY);
-            promoted = specialConditions[0];
-            castled = specialConditions[1];
-            finished = specialConditions[2];
-            drawProperPiece(null,posX,posY);
-            if (promoted)
-            {
-                Piece crownedPiece = board.returnPiece(finalX,finalY);
-                if (startPiece instanceof Piece_Chess_Pawn_White)
-                {
-                    game.removeWhitePiece(startPiece);
-                    game.addWhitePiece(crownedPiece);
-                    //add insertPiece()
-                }
-                if (startPiece instanceof Piece_Chess_Pawn_Black)
-                {
-                    game.removeBlackPiece(startPiece);
-                    game.addBlackPiece(crownedPiece);
-                }
-                drawProperPiece(crownedPiece,finalX,finalY);
-            }
-            drawProperPiece(startPiece,finalX,finalY);
-            if (castled)
-            {
-                if (finalX==3 && finalY==1)
-                {
-                    movePiece(1,1,4,1);
-                }
-                else if(finalX==7 && finalY==1)
-                {
-                    movePiece(8,1,6,1);
-                }
-                else if (finalX==3 && finalY==8)
-                {
-                    movePiece(1,8,4,8);
-                }
-                else if(finalX==7 && finalY==8)
-                {
-                    movePiece(8,8,6,8);
-                }
-                else
-                {
-                    Log.i("Chess", "Incorrect castling");
-                }
-            }
-            if(finished)
-            {
-                Toast.makeText(this,"You win", Toast.LENGTH_LONG).show();
-            }
-
-        }
-        else
-        {
-            Log.i("Chess", "Piece: " + posX + "-" + posY + " has wrong type.");
-        }
-    }
-
-
-    private void loadPieces()
-    {
-        ArrayList<Piece> whites = game.returnWhitePieces();
-        ArrayList<Piece> blacks = game.returnBlackPieces();
-        Log.i("Chess", "Number of white pieces : " + whites.size());
-        Log.i("Chess", "Number of black pieces : " + blacks.size());
-        Piece p;
-        int id = game.getId();
-        String type;
-        int posX;
-        int posY;
-        for (int i=0; i<whites.size(); i++)
-        {
-            p = whites.get(i);
-            type = p.getClass().getName();
-            posX=p.posX;
-            posY=p.posY;
-            insertPiece(id, type, posX, posY);
-        }
-        for (int j=0; j<blacks.size(); j++)
-        {
-            p = blacks.get(j);
-            type = p.getClass().getName();
-            posX=p.posX;
-            posY=p.posY;
-            insertPiece(id, type, posX, posY);
         }
     }
 

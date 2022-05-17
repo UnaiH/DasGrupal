@@ -6,15 +6,16 @@ public class Player
 {
     private String name;
     private ArrayList<Integer> rankELO;
-    private ArrayList<Game> gamesInCourse;
-    private ArrayList<Game> gamesFinished;
+    //private ArrayList<Game> gamesInCourse;
+    //private ArrayList<Game> gamesFinished;
     public Player(String pName)
     {
         name=pName;
         rankELO = new ArrayList<>();
-        gamesInCourse = new ArrayList<>();
-        gamesFinished = new ArrayList<>();
+        //gamesInCourse = new ArrayList<>();
+        //gamesFinished = new ArrayList<>();
     }
+    /*
     public void addInCourse(Game game)
     {
         gamesInCourse.add(game);
@@ -24,5 +25,5 @@ public class Player
         gamesInCourse.remove(game);
         gamesFinished.add(game);
     }
-
+    */
 }
