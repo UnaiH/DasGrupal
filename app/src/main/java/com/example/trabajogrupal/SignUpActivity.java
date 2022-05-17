@@ -59,11 +59,11 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                                     Boolean resultadoPhp = workInfo.getOutputData().getBoolean("exito", false);
                                     Log.i("TAG", "onChanged: " + resultadoPhp);
                                     if (resultadoPhp) {
-                                        Intent i = new Intent(getApplicationContext(), SignUpActivity.class);
-                                        i.putExtra("email", email);
-                                        setResult(RESULT_OK, i);
+                                        Intent iBack = new Intent();
+
+                                        setResult(RESULT_OK);
                                         finish();
-                                        startActivity(i);
+
                                     } else {
                                         Toast.makeText(SignUpActivity.this, "El email ya está en uso, por favor pruebe con otro", Toast.LENGTH_SHORT).show();
                                     }

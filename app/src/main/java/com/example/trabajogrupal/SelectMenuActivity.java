@@ -32,4 +32,10 @@ public class SelectMenuActivity extends AppCompatActivity {
         Intent i = new Intent(this, Preferencies.class);
         startActivity(i);
     }
+
+    public void onClickLogout(View view) {
+        Intent i = new Intent(this, MainActivity.class);
+        startActivity(i);
+        finish();
+    }
 }

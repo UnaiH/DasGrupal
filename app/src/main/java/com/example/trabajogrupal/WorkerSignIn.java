@@ -32,10 +32,10 @@ public class WorkerSignIn extends Worker{
     public Result doWork()
     {
         String user = getInputData().getString("email");
-        String pass = getInputData().getString("pass");
+        String pass = getInputData().getString("password");
         Log.i("TAG1", "doWork: "+user);
         Log.i("TAG1", "doWork: "+pass);
-        String direccion = "http://ec2-52-56-170-196.eu-west-2.compute.amazonaws.com/prehecho001/WEB/GroupProyect/Register.php";
+        String direccion = "http://ec2-52-56-170-196.eu-west-2.compute.amazonaws.com/prehecho001/WEB/GroupProyect/login.php";
         HttpURLConnection urlConnection = null;
         try
         {

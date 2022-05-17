@@ -17,6 +17,7 @@ import androidx.lifecycle.Observer;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     EditText user, pass;
     String userEmail, password;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,14 +52,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         Boolean resultadoPhp = workInfo.getOutputData().getBoolean("exito", false);
                         System.out.println("RESULTADO LOGIN --> " + resultadoPhp);
                         if (resultadoPhp) {//se logueó correctamente
-
-                            /*Intent i = new Intent(Login.this, MainActivity.class);
-                            i.putExtra("user", userEmail);
+                            Intent i = new Intent(MainActivity.this, SelectMenuActivity.class);
                             startActivity(i);
                             finish();
 
-
-                             */
                         } else {
                             Toast.makeText(MainActivity.this, "Email o contraseña incorrecta", Toast.LENGTH_SHORT).show();
                         }
@@ -73,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void onClickSignUp(View view) {
         Intent i = new Intent(this, SignUpActivity.class);
-        startActivityForResult(i,1);
+        startActivityForResult(i, 1);
     }
 
     public void onClickCheckers(View v) {
@@ -81,6 +78,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent i = new Intent(this, CheckersActivity.class);
         startActivity(i);
     }
+
     public void onClickChess(View v) {
         finish();
         Intent i = new Intent(this, ChessActivity.class);
@@ -93,16 +91,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent i = new Intent(this, GlobalRankingActivity.class);
         startActivity(i);
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==1 && resultCode==RESULT_OK){
+        if (requestCode == 1 && resultCode == RESULT_OK) {
             /* TODO dar por logueado al usuario y llevarlo a la actividad correspondiente */
-            Intent i = new Intent(MainActivity.this,SelectMenuActivity.class);
+            Intent i = new Intent(MainActivity.this, SelectMenuActivity.class);
             startActivity(i);
             finish();
         }
     }
+
     public void onClickPref(View v) {
         finish();
         Intent i = new Intent(this, Preferencies.class);
