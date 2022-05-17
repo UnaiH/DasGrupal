@@ -16,14 +16,13 @@
         android:layout_marginEnd="75dp"
         android:ems="10"
         android:hint="Email"
-        android:inputType="textPersonName"
         android:minHeight="48dp"
-        android:text="Email"
-        android:textColor="@color/black"
+        android:textColorHint="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@color/black"/>
 
     <EditText
         android:id="@+id/signupUsername"
@@ -34,14 +33,14 @@
         android:layout_marginEnd="75dp"
         android:ems="10"
         android:hint="@string/usuario"
+        android:textColorHint="@color/black"
         android:inputType="textPersonName"
         android:minHeight="48dp"
-        android:text="@string/usuario"
-        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signupEmail" />
+        app:layout_constraintTop_toBottomOf="@+id/signupEmail"
+        android:textColor="@color/black"/>
 
     <EditText
         android:textColor="@color/black"
@@ -53,12 +52,14 @@
         android:layout_marginEnd="75dp"
         android:ems="10"
         android:hint="Confirm Password"
+        android:textColorHint="@color/black"
         android:inputType="textPassword"
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signupPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/signupPassword"
+        />
 
     <EditText
         android:id="@+id/signupPassword"
@@ -70,6 +71,7 @@
         android:ems="10"
         android:hint="Password"
         android:inputType="textPassword"
+        android:textColorHint="@color/black"
         android:minHeight="48dp"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
@@ -80,7 +82,7 @@
     <Button
         android:id="@+id/button6"
         android:layout_width="320dp"
-        android:layout_height="40dp"
+        android:layout_height="48dp"
         android:layout_marginStart="152dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="153dp"
@@ -92,31 +94,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/confirmPassword" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="82dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="221dp"
-        android:text="@string/contr"
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signupUsername" />
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="82dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="221dp"
-        android:text="@string/confPas"
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.122"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signupPassword" />
 </androidx.constraintlayout.widget.ConstraintLayout>

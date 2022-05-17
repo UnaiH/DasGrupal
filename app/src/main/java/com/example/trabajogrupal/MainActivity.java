@@ -72,7 +72,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void onClickSignUp(View view) {
-        finish();
         Intent i = new Intent(this, SignUpActivity.class);
         startActivityForResult(i,1);
     }
@@ -99,6 +98,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==1 && resultCode==RESULT_OK){
             /* TODO dar por logueado al usuario y llevarlo a la actividad correspondiente */
+            Intent i = new Intent(MainActivity.this,SelectMenuActivity.class);
+            startActivity(i);
+            finish();
         }
     }
     public void onClickPref(View v) {
