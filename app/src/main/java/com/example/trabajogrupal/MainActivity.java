@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         System.out.println("RESULTADO LOGIN --> " + resultadoPhp);
                         if (resultadoPhp) {//se logueó correctamente
                             Intent i = new Intent(MainActivity.this, SelectMenuActivity.class);
+                            i.putExtra("user",userEmail);
                             startActivity(i);
                             finish();
 
@@ -96,8 +97,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == RESULT_OK) {
-            /* TODO dar por logueado al usuario y llevarlo a la actividad correspondiente */
             Intent i = new Intent(MainActivity.this, SelectMenuActivity.class);
+            String user=getIntent().getStringExtra("email");
+            i.putExtra("email",user);
             startActivity(i);
             finish();
         }

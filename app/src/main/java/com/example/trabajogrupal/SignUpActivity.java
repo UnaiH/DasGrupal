@@ -60,8 +60,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                                     Log.i("TAG", "onChanged: " + resultadoPhp);
                                     if (resultadoPhp) {
                                         Intent iBack = new Intent();
-
                                         setResult(RESULT_OK);
+                                        iBack.putExtra("user",email);
                                         finish();
 
                                     } else {
