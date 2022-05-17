@@ -17,7 +17,7 @@ $parametro = $_POST["idGame"];
 $parametro2 = $_POST["posX"];
 $parametro3 = $_POST["posY"];
 # Ejecutar la sentencia SQL
-$resultado = mysqli_query($con, "DELETE FROM Piece WHERE idGame=$parametro AND posX=$parametro2 AND posY=$parametro3)");
+$resultado = mysqli_query($con, "DELETE FROM Piece WHERE idGame=$parametro AND posX=$parametro2 AND posY=$parametro3");
 
 # Comprobar si se ha ejecutado correctamente
 if (!$resultado) 
