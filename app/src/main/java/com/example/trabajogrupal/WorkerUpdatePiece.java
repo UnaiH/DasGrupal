@@ -41,7 +41,7 @@ public class WorkerUpdatePiece extends Worker
             int posXNew = getInputData().getInt("posXNew", -1);
             int posYNew = getInputData().getInt("posYNew", -1);
 
-            Log.i("workerPHP","data: " + idGame + "-" + posXOld + "-" + posYOld + "-" + posXNew + "-" + posYNew);
+            Log.i("workerPHP","Update: " + idGame + "-" + posXOld + "-" + posYOld + "-" + posXNew + "-" + posYNew);
 
             PrintWriter out = new PrintWriter(urlConnection.getOutputStream());
             String parametros = "idGame="+idGame+"&posXOld="+posXOld+"&posYOld="+posYOld+"&posXNew="+posXNew+"&posYNew="+posYNew;

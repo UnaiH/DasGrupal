@@ -13,21 +13,6 @@ import java.util.ArrayList;
 
 public class GameActivity extends AppCompatActivity
 {
-    protected void loadPieces(Piece[] pieces, int id)
-    {
-        Piece p;
-        String type;
-        int posX;
-        int posY;
-        for (int i=0; i<pieces.length; i++)
-        {
-            p = pieces[i];
-            type = p.getClass().getName();
-            posX=p.posX;
-            posY=p.posY;
-            insertPiece(id, type, posX, posY);
-        }
-    }
     protected void insertPiece(int idGame, String type, int posX, int posY)
     {
         Data.Builder data = new Data.Builder();
@@ -100,6 +85,37 @@ public class GameActivity extends AppCompatActivity
                     {
                         if (workInfo != null && workInfo.getState().isFinished()) {
                             Log.i("workerPHP", "Piece updated");
+                        }
+                    }
+                });
+        WorkManager.getInstance(this).enqueue(otwr);
+    }
+
+    protected void getPieces(int idGame)
+    {
+        Data.Builder data = new Data.Builder();
+
+        data.putInt("idGame", idGame);
+
+        OneTimeWorkRequest otwr = new OneTimeWorkRequest.Builder(WorkerSelectPieces.class)
+                .setInputData(data.build())
+                .build();
+        WorkManager.getInstance(this).getWorkInfoByIdLiveData(otwr.getId())
+                .observe(this, new Observer<WorkInfo>()
+                {
+                    @Override
+                    public void onChanged(WorkInfo workInfo)
+                    {
+                        if (workInfo != null && workInfo.getState().isFinished())
+                        {
+                            String[] listPieces = workInfo.getOutputData().getStringArray("lista");
+                            for (int i=0; i<listPieces.length; i+=3)
+                            {
+                                String type = listPieces[i];
+                                int posX = Integer.valueOf(listPieces[i + 1]);
+                                int posY = Integer.valueOf(listPieces[i + 2]);
+                                Log.i("workerPHP", "Pieces recovered: " + type + "  " + posX + "-" + posY);
+                            }
                         }
                     }
                 });

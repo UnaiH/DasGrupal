@@ -17,7 +17,6 @@ public class CheckersActivity extends GameActivity {
     private CheckersBoard board;
     private int idGame;
     private String currentTurn;
-    private HashMap<String,Piece> mapPieces;
     private ImageButton[][] buttons = new ImageButton[10][10];
     private ArrayList<Integer> redSquares;
     private int[] chosenSquare = new int[2];
@@ -36,7 +35,6 @@ public class CheckersActivity extends GameActivity {
         setContentView(R.layout.activity_checkers);
         user = getIntent().getStringExtra("user");
         setUpBoard();
-        loadPieces(mapPieces.values().toArray(new Piece[0]), idGame);
     }
 
     private void setUpBoard()
@@ -48,7 +46,6 @@ public class CheckersActivity extends GameActivity {
         idGame = rand.nextInt(999999);
         currentTurn="White";
         board = new CheckersBoard();
-        mapPieces = new HashMap<>();
         whiteCounts=12;
         blackCounts=12;
 
@@ -139,26 +136,31 @@ public class CheckersActivity extends GameActivity {
             ImageButton a = buttons[coordinateX][coordinateY];
 
             String name = a.toString();
-            Piece p = null;
-            if (coordinateY<=3)
+            Piece p;
+            if (coordinateX<1 || coordinateX >8 || coordinateY<1 || coordinateY>8)
             {
-                p = new Piece_Checkers_White(name, "White", coordinateX, coordinateY);
-                mapPieces.put(p.name,p);
-                board.addPiece(p,coordinateX,coordinateY);
-                a.setImageResource(R.drawable.checkers_white);
+                Log.i("Checkers","illegal coordinate:" + coordinateX + "-" + coordinateY);
+                return;
             }
-            else if(coordinateY>=6)
-            {
-                p = new Piece_Checkers_Black(name, "Black", coordinateX, coordinateY);
-                mapPieces.put(p.name,p);
-                board.addPiece(p,coordinateX,coordinateY);
-                a.setImageResource(R.drawable.checkers_black);
-            }
-            else
+            if (coordinateY>=4 && coordinateY<=5)
             {
                 a.setImageResource(R.drawable.checkers_empty);
             }
-
+            else
+            {
+                if (coordinateY<=3)
+                {
+                    p = new Piece_Checkers_White(name, "White", coordinateX, coordinateY);
+                    a.setImageResource(R.drawable.checkers_white);
+                }
+                else
+                {
+                    p = new Piece_Checkers_Black(name, "Black", coordinateX, coordinateY);
+                    a.setImageResource(R.drawable.checkers_black);
+                }
+                insertPiece(idGame,p.getClass().getName(),coordinateX,coordinateY);
+                board.addPiece(p,coordinateX,coordinateY);
+            }
         }
     }
 
@@ -288,7 +290,7 @@ public class CheckersActivity extends GameActivity {
                     }
                     else
                     {
-                        Log.i("Chess","currentTurn error: " + currentTurn);
+                        Log.i("Checkers","currentTurn error: " + currentTurn);
                     }
                     return;
                 }
@@ -326,6 +328,61 @@ public class CheckersActivity extends GameActivity {
             Log.i("Checkers",moves.get(i) + "-" + moves.get(i+1));
         }
 
+    }
+
+    private void movePiece(int posX, int posY, int finalX, int finalY)
+    {
+        Piece startPiece = board.returnPiece(posX, posY);
+        if (startPiece instanceof Piece_Checkers_White || startPiece instanceof Piece_Checkers_Black)
+        {
+            if ((finalX==posX+2 || finalX==posX-2) && (finalY==posY+2 || finalY==posY-2))    //if it is a jump
+            {
+                int middleX = (posX+finalX)/2;
+                int middleY = (posY+finalY)/2;
+                board.removePiece(middleX,middleY);
+                deletePiece(idGame,middleX,middleY);
+                if (currentTurn.equals("White"))
+                {
+                    blackCounts--;
+                }
+                else if (currentTurn.equals("Black"))
+                {
+                    whiteCounts--;
+                }
+                else
+                {
+                    Log.i("Chess", "currentTurn error: " + currentTurn);
+                    return;
+                }
+
+                drawProperPiece(null,middleX,middleY);
+                if(whiteCounts==0 || blackCounts==0)
+                {
+                    Toast.makeText(this,"You win", Toast.LENGTH_LONG).show();
+                    getPieces(idGame);
+                }
+            }
+            boolean crowned;
+            crowned = board.movePiece(posX, posY, finalX, finalY);
+            drawProperPiece(null,posX,posY);
+            if (crowned)
+            {
+                Piece crownedPiece = board.returnPiece(finalX,finalY);
+                deletePiece(idGame,posX,posY);
+                insertPiece(idGame, crownedPiece.getClass().getName(), finalX, finalY);
+                drawProperPiece(crownedPiece,finalX,finalY);
+            }
+            else
+            {
+                updatePiece(idGame,posX,posY,finalX,finalY);
+                drawProperPiece(startPiece,finalX,finalY);
+            }
+
+        }
+        else
+        {
+            Log.i("Checkers", "Piece: " + posX + "-" + posY + " has wrong type.");
+        }
     }
 
     //transforms the image of a button to a red square
@@ -378,64 +435,6 @@ public class CheckersActivity extends GameActivity {
             Log.i("Checkers", "Piece: " + x + "-" + y + " has wrong type.");
         }
     }
-
-    private void movePiece(int posX, int posY, int finalX, int finalY)
-    {
-        Piece startPiece = board.returnPiece(posX, posY);
-        Piece endPiece = board.returnPiece(finalX, finalY);
-        if (startPiece instanceof Piece_Checkers_White || startPiece instanceof Piece_Checkers_Black)
-        {
-            if ((finalX==posX+2 || finalX==posX-2) && (finalY==posY+2 || finalY==posY-2))    //if it is a jump
-            {
-                int middleX = (posX+finalX)/2;
-                int middleY = (posY+finalY)/2;
-                Piece middlePiece = board.returnPiece(middleX, middleY);
-                mapPieces.remove(middlePiece.name);
-                board.removePiece(middleX,middleY);
-                if (currentTurn.equals("White"))
-                {
-                    blackCounts--;
-                }
-                else if (currentTurn.equals("Black"))
-                {
-                    whiteCounts--;
-                }
-                else
-                {
-                    Log.i("Chess", "currentTurn error: " + currentTurn);
-                    return;
-                }
-
-                drawProperPiece(null,middleX,middleY);
-                if(whiteCounts==0 || blackCounts==0)
-                {
-                    Toast.makeText(this,"You win", Toast.LENGTH_LONG).show();
-                }
-            }
-            boolean crowned=false;
-            crowned = board.movePiece(posX, posY, finalX, finalY);
-            drawProperPiece(null,posX,posY);
-            if (crowned)
-            {
-                Piece crownedPiece = board.returnPiece(finalX,finalY);
-                mapPieces.remove(startPiece.name);
-                mapPieces.put(crownedPiece.name,crownedPiece);
-                drawProperPiece(crownedPiece,finalX,finalY);
-            }
-            else
-            {
-                drawProperPiece(startPiece,finalX,finalY);
-            }
-
-        }
-        else
-        {
-            Log.i("Checkers", "Piece: " + posX + "-" + posY + " has wrong type.");
-            return;
-        }
-    }
-
-
 
     //Para que no se salga de la App
     @Override
