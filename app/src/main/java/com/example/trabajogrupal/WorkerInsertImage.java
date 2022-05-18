@@ -36,6 +36,7 @@ public class WorkerInsertImage extends Worker {
     public Result doWork() {
         user = getInputData().getString("user");
         image = myDB.getImage(user);
+        Log.i("Tag1","image: "+image);
         String image64 = Base64.encodeToString(image, Base64.DEFAULT);
         String server = "http://ec2-52-56-170-196.eu-west-2.compute.amazonaws.com/prehecho001/WEB/GroupProyect/insertImage.php";
         HttpURLConnection urlConnection = null;

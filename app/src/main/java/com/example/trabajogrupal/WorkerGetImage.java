@@ -73,8 +73,8 @@ public class WorkerGetImage extends Worker {
                 }else{
                     String image64 = resultado;
                     byte[] decoded = Base64.decode(resultado,Base64.DEFAULT);
-                    myDB.clearImagen(user);
-                    myDB.insertImage(user,decoded);
+
+                    myDB.updateImage(user,decoded);
                     datos = new Data.Builder().putBoolean("exito",true).build();
                 }
                 return Result.success(datos);

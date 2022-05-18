@@ -44,6 +44,7 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         userTextView = findViewById(R.id.profile_username);
         user = getIntent().getStringExtra("user");
+        userTextView.setText(user);
         image = findViewById(R.id.profileImage);
         btn_camera = findViewById(R.id.btn_profileCamera);
         btn_gallery = findViewById(R.id.btn_profileGallery);
@@ -58,7 +59,7 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent iGallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(iGallery, 1);
+                startActivityForResult(iGallery, 10);
 
             }
         });
@@ -67,7 +68,7 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1 && resultCode == RESULT_OK) {
+        if (requestCode == 10 && resultCode == RESULT_OK) {
             Uri chosenImage = data.getData();
             myDB.clearImagen(user);
             InputStream inputStream = null;
@@ -139,8 +140,10 @@ public class ProfileActivity extends AppCompatActivity {
                     if (resultadoPhp) {
 
                         byte[] decodificado = myDB.getImage(user);
-                        Bitmap elBitmap = BitmapFactory.decodeByteArray(decodificado, 0, decodificado.length);
-                        image.setImageBitmap(elBitmap);
+                        if(decodificado!=null) {
+                            Bitmap elBitmap = BitmapFactory.decodeByteArray(decodificado, 0, decodificado.length);
+                            image.setImageBitmap(elBitmap);
+                        }
                     }
                 }
             }

@@ -1,5 +1,6 @@
 package com.example.trabajogrupal;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -37,7 +38,14 @@ public class LocalDB extends SQLiteOpenHelper {
         c.close();
         return imagen;
     }
-
+    public void updateImage(String user, byte[] foto){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("image", foto);
+        db.update("Image", values, "user=?", new String[]{user});
+        db.close();
+        System.out.println("Update hecho");
+    }
     public void clearImagen(String user){
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete("Image","user=?",new String[]{String.valueOf(user)});

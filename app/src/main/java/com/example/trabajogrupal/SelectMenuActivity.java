@@ -78,6 +78,21 @@ public class SelectMenuActivity extends AppCompatActivity {
         startActivityForResult(i, 1);
     }
 
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            byte[] decodificado = myDB.getImage(user);
+            if(decodificado!=null){
+                Bitmap elBitmap = BitmapFactory.decodeByteArray(decodificado, 0, decodificado.length);
+                btn_profile.setImageBitmap(elBitmap);
+            }
+            //cargarFotoPerfil(user);
+        }
+    }
+
     public void cargarFotoPerfil(String user) {
         /*Obtiene la foto de la BBDD y la pone en el imageview*/
         Data datos = new Data.Builder().putString("user", user).build();
@@ -87,24 +102,17 @@ public class SelectMenuActivity extends AppCompatActivity {
             public void onChanged(WorkInfo workInfo) {
                 if (workInfo != null && workInfo.getState().isFinished()) {
                     Boolean resultadoPhp = workInfo.getOutputData().getBoolean("exito", false);
-                    System.out.println("RESULTADO INSERT IMAGEN --> " + resultadoPhp);
+                    System.out.println("RESULTADO Select IMAGEN --> " + resultadoPhp);
                     if (resultadoPhp) {
-
                         byte[] decodificado = myDB.getImage(user);
-                        Bitmap elBitmap = BitmapFactory.decodeByteArray(decodificado, 0, decodificado.length);
-                        btn_profile.setImageBitmap(elBitmap);
+                        if(decodificado!=null){
+                            Bitmap elBitmap = BitmapFactory.decodeByteArray(decodificado, 0, decodificado.length);
+                            btn_profile.setImageBitmap(elBitmap);
+                        }
                     }
                 }
             }
         });
         WorkManager.getInstance(SelectMenuActivity.this).enqueue(otwr);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1 && resultCode == RESULT_OK) {
-            cargarFotoPerfil(user);
-        }
     }
 }
