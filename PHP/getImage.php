@@ -13,13 +13,13 @@ if (mysqli_connect_errno($con)){
 
 
 $email = $_POST["email"];
-$image =$_POST["image"];
+
 
 
 $stmt = mysqli_query($con,"SELECT * FROM Images WHERE User='$email'");
 if(mysqli_num_rows($stmt)>0){
     $fila = mysqli_fetch_row($stmt);
-    $resultado[] array('resultado'=> $fila[1]);
+    $resultado[] = array('resultado'=> $fila[1]);
 }else{    
     $resultado[] = array('resultado' => false);
 }
