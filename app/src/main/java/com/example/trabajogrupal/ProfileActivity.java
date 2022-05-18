@@ -95,7 +95,7 @@ public class ProfileActivity extends AppCompatActivity {
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             bitmapRedimensionado.compress(Bitmap.CompressFormat.PNG, 100, stream);
             byte[] fotoTransformada = stream.toByteArray();
-            //myDB.insertImage(user, fotoTransformada);
+            myDB.insertImage(user, fotoTransformada);
             image.setImageBitmap(foto);
 
             /*Subir la foto a la BBDD remota */
@@ -128,7 +128,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     public void cargarFotoPerfil(String user) {
         /*Obtiene la foto de la BBDD y la pone en el imageview*/
-        Data datos = new Data.Builder().putString("usuario", user).build();
+        Data datos = new Data.Builder().putString("user", user).build();
         OneTimeWorkRequest otwr = new OneTimeWorkRequest.Builder(WorkerGetImage.class).setInputData(datos).build();
         WorkManager.getInstance(ProfileActivity.this).getWorkInfoByIdLiveData(otwr.getId()).observe(ProfileActivity.this, new Observer<WorkInfo>() {
             @Override
@@ -137,12 +137,10 @@ public class ProfileActivity extends AppCompatActivity {
                     Boolean resultadoPhp = workInfo.getOutputData().getBoolean("exito", false);
                     System.out.println("RESULTADO INSERT IMAGEN --> " + resultadoPhp);
                     if (resultadoPhp) {
-                        String foto64 = workInfo.getOutputData().getString("image64");
-                        if (foto64 != null) {
-                            byte[] decodificado = Base64.decode(foto64,Base64.DEFAULT);
-                            Bitmap elBitmap = BitmapFactory.decodeByteArray(decodificado, 0, decodificado.length);
-                            image.setImageBitmap(elBitmap);
-                        }
+
+                        byte[] decodificado = myDB.getImage(user);
+                        Bitmap elBitmap = BitmapFactory.decodeByteArray(decodificado, 0, decodificado.length);
+                        image.setImageBitmap(elBitmap);
                     }
                 }
             }

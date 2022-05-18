@@ -25,12 +25,13 @@ public class SelectMenuActivity extends AppCompatActivity {
     String user;
     LocalDB myDB;
     ImageButton btn_profile;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         new Languages().setLangua(this);
         super.onCreate(savedInstanceState);
 
-        Themes tem=new Themes();
+        Themes tem = new Themes();
         tem.setThemes(this);
 
         setContentView(activity_select_menu);
@@ -73,12 +74,13 @@ public class SelectMenuActivity extends AppCompatActivity {
     public void onClickProfile(View view) {
         Intent i = new Intent(this, ProfileActivity.class);
 
-        i.putExtra("user",user);
+        i.putExtra("user", user);
         startActivityForResult(i, 1);
     }
+
     public void cargarFotoPerfil(String user) {
         /*Obtiene la foto de la BBDD y la pone en el imageview*/
-        Data datos = new Data.Builder().putString("usuario", user).build();
+        Data datos = new Data.Builder().putString("user", user).build();
         OneTimeWorkRequest otwr = new OneTimeWorkRequest.Builder(WorkerGetImage.class).setInputData(datos).build();
         WorkManager.getInstance(SelectMenuActivity.this).getWorkInfoByIdLiveData(otwr.getId()).observe(SelectMenuActivity.this, new Observer<WorkInfo>() {
             @Override
@@ -87,18 +89,17 @@ public class SelectMenuActivity extends AppCompatActivity {
                     Boolean resultadoPhp = workInfo.getOutputData().getBoolean("exito", false);
                     System.out.println("RESULTADO INSERT IMAGEN --> " + resultadoPhp);
                     if (resultadoPhp) {
-                        String foto64 = workInfo.getOutputData().getString("image64");
-                        if (foto64 != null) {
-                            byte[] decodificado = Base64.decode(foto64,Base64.DEFAULT);
-                            Bitmap elBitmap = BitmapFactory.decodeByteArray(decodificado, 0, decodificado.length);
-                            btn_profile.setImageBitmap(elBitmap);
-                        }
+
+                        byte[] decodificado = myDB.getImage(user);
+                        Bitmap elBitmap = BitmapFactory.decodeByteArray(decodificado, 0, decodificado.length);
+                        btn_profile.setImageBitmap(elBitmap);
                     }
                 }
             }
         });
         WorkManager.getInstance(SelectMenuActivity.this).enqueue(otwr);
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

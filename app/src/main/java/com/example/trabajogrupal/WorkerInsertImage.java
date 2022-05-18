@@ -3,6 +3,7 @@ package com.example.trabajogrupal;
 import android.content.Context;
 import android.net.Uri;
 import android.util.Base64;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.work.Data;
@@ -38,13 +39,13 @@ public class WorkerInsertImage extends Worker {
         String image64 = Base64.encodeToString(image, Base64.DEFAULT);
         String server = "http://ec2-52-56-170-196.eu-west-2.compute.amazonaws.com/prehecho001/WEB/GroupProyect/insertImage.php";
         HttpURLConnection urlConnection = null;
-
+        Log.i("Tag1","InsertImage: "+user);
         try {
             URL destino = new URL(server);
             urlConnection = (HttpURLConnection) destino.openConnection();
             urlConnection.setConnectTimeout(5000);
             urlConnection.setReadTimeout(5000);
-            Uri.Builder builder = new Uri.Builder().appendQueryParameter("user", user).appendQueryParameter("image",image64);
+            Uri.Builder builder = new Uri.Builder().appendQueryParameter("email", user).appendQueryParameter("image",image64);
             String parametros = builder.build().getEncodedQuery();
             urlConnection.setRequestMethod("POST");
             urlConnection.setDoOutput(true);

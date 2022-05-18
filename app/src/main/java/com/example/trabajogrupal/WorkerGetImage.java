@@ -2,6 +2,7 @@ package com.example.trabajogrupal;
 
 import android.content.Context;
 import android.net.Uri;
+import android.util.Base64;
 
 import androidx.annotation.NonNull;
 import androidx.work.Data;
@@ -21,15 +22,17 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class WorkerGetImage extends Worker {
+    LocalDB myDB;
     public WorkerGetImage(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
+        myDB = new LocalDB(context,"Chess",null,1);
     }
 
     @NonNull
     @Override
     public Result doWork() {
-        String user = getInputData().getString("usuario");
-
+        String user = getInputData().getString("user");
+        String auxImage = "x";
         System.out.println("User-> " + user);
         String server = "http://ec2-52-56-170-196.eu-west-2.compute.amazonaws.com/prehecho001/WEB/GroupProyect/getImage.php";
         HttpURLConnection urlConnection = null;
@@ -38,7 +41,7 @@ public class WorkerGetImage extends Worker {
             urlConnection = (HttpURLConnection) destino.openConnection();
             urlConnection.setConnectTimeout(5000);
             urlConnection.setReadTimeout(5000);
-            Uri.Builder builder = new Uri.Builder().appendQueryParameter("user", user);
+            Uri.Builder builder = new Uri.Builder().appendQueryParameter("email", user).appendQueryParameter("image",auxImage);
             String parametros = builder.build().getEncodedQuery();
             urlConnection.setRequestMethod("POST");
             urlConnection.setDoOutput(true);
@@ -68,8 +71,11 @@ public class WorkerGetImage extends Worker {
                 if(resultado.equals("false")){
                     datos = new Data.Builder().putBoolean("exito",false).build();
                 }else{
-
-                    datos = new Data.Builder().putBoolean("exito",true).putString("image64",resultado).build();
+                    String image64 = resultado;
+                    byte[] decoded = Base64.decode(resultado,Base64.DEFAULT);
+                    myDB.clearImagen(user);
+                    myDB.insertImage(user,decoded);
+                    datos = new Data.Builder().putBoolean("exito",true).build();
                 }
                 return Result.success(datos);
             }else{
