@@ -1,6 +1,11 @@
 package com.example.trabajogrupal;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.work.Data;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkInfo;
+import androidx.work.WorkManager;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -8,6 +13,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +24,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
 public class ProfileActivity extends AppCompatActivity {
     ImageView image;
@@ -31,7 +38,7 @@ public class ProfileActivity extends AppCompatActivity {
         new Languages().setLangua(this);
         super.onCreate(savedInstanceState);
 
-        Themes tem=new Themes();
+        Themes tem = new Themes();
         tem.setThemes(this);
 
         setContentView(R.layout.activity_profile);
@@ -44,13 +51,7 @@ public class ProfileActivity extends AppCompatActivity {
         myDB = new LocalDB(this, "Chess", null, 1);
 
 
-        byte[] currentImage = myDB.getImage(user);
-        Log.i("TAG", "currentImage: " + currentImage);
-        if (currentImage != null) {
-            ByteArrayInputStream imageStream = new ByteArrayInputStream(currentImage);
-            Bitmap theImage = BitmapFactory.decodeStream(imageStream);
-            image.setImageBitmap(theImage);
-        }
+        cargarFotoPerfil(user);
 
 
         btn_gallery.setOnClickListener(new View.OnClickListener() {
@@ -90,15 +91,62 @@ public class ProfileActivity extends AppCompatActivity {
             } else {
                 altoFinal = (int) ((float) anchoDestino / ratioImagen);
             }
-            Bitmap bitmapRedimensionado = Bitmap.createScaledBitmap(foto,anchoFinal,altoFinal,true);
+            Bitmap bitmapRedimensionado = Bitmap.createScaledBitmap(foto, anchoFinal, altoFinal, true);
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             bitmapRedimensionado.compress(Bitmap.CompressFormat.PNG, 100, stream);
             byte[] fotoTransformada = stream.toByteArray();
-            myDB.insertImage(user, fotoTransformada);
+            //myDB.insertImage(user, fotoTransformada);
             image.setImageBitmap(foto);
+
+            /*Subir la foto a la BBDD remota */
+            Uri.Builder builder = new Uri.Builder();
+            builder.appendQueryParameter("user", user);
+            String foto64 = Base64.encodeToString(fotoTransformada, Base64.DEFAULT);
+            builder.appendQueryParameter("image", foto64);
+            Data datos = new Data.Builder().putString("user", user).build();
+            OneTimeWorkRequest otwr = new OneTimeWorkRequest.Builder(WorkerInsertImage.class).setInputData(datos).build();
+            WorkManager.getInstance(ProfileActivity.this).getWorkInfoByIdLiveData(otwr.getId()).observe(ProfileActivity.this, new Observer<WorkInfo>() {
+                @Override
+                public void onChanged(WorkInfo workInfo) {
+                    if (workInfo != null && workInfo.getState().isFinished()) {
+                        Boolean resultadoPhp = workInfo.getOutputData().getBoolean("exito", false);
+                        System.out.println("RESULTADO INSERT IMAGEN --> " + resultadoPhp);
+                        if (resultadoPhp) {
+                            Intent i = getIntent();
+                            startActivity(i);
+                            finish();
+                        }
+                    }
+                }
+            });
+            WorkManager.getInstance(ProfileActivity.this).enqueue(otwr);
 
             setResult(RESULT_OK);
             finish();
         }
+    }
+
+    public void cargarFotoPerfil(String user) {
+        /*Obtiene la foto de la BBDD y la pone en el imageview*/
+        Data datos = new Data.Builder().putString("usuario", user).build();
+        OneTimeWorkRequest otwr = new OneTimeWorkRequest.Builder(WorkerGetImage.class).setInputData(datos).build();
+        WorkManager.getInstance(ProfileActivity.this).getWorkInfoByIdLiveData(otwr.getId()).observe(ProfileActivity.this, new Observer<WorkInfo>() {
+            @Override
+            public void onChanged(WorkInfo workInfo) {
+                if (workInfo != null && workInfo.getState().isFinished()) {
+                    Boolean resultadoPhp = workInfo.getOutputData().getBoolean("exito", false);
+                    System.out.println("RESULTADO INSERT IMAGEN --> " + resultadoPhp);
+                    if (resultadoPhp) {
+                        String foto64 = workInfo.getOutputData().getString("image64");
+                        if (foto64 != null) {
+                            byte[] decodificado = Base64.decode(foto64,Base64.DEFAULT);
+                            Bitmap elBitmap = BitmapFactory.decodeByteArray(decodificado, 0, decodificado.length);
+                            image.setImageBitmap(elBitmap);
+                        }
+                    }
+                }
+            }
+        });
+        WorkManager.getInstance(ProfileActivity.this).enqueue(otwr);
     }
 }
