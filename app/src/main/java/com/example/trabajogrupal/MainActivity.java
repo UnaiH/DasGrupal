@@ -2,7 +2,12 @@ package com.example.trabajogrupal;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,11 +16,23 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.work.Data;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 import androidx.lifecycle.Observer;
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     EditText user, pass;
@@ -24,13 +41,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TextView text;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        new Languages().setLangua(this);
+        new LanguagesWorker().setLangua(this);
         super.onCreate(savedInstanceState);
-
-        Themes tem=new Themes();
+        ThemesWorker tem=new ThemesWorker();
         tem.setThemes(this);
 
+        pedirpermisosLocalizar();
+
         setContentView(R.layout.activity_main);
+
         /*
         but = findViewById(R.id.button3);
         tem.setButColorBlack(but, this);
@@ -128,7 +147,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void onClickPref(View v) {
         finish();
-        Intent i = new Intent(this, Preferencies.class);
+        Intent i = new Intent(this, PreferenciesActivity.class);
         startActivity(i);
     }
+
+    public void pedirpermisosLocalizar() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        }
+        else if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+        }
+    }
+
 }

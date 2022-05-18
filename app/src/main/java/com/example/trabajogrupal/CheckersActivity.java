@@ -26,10 +26,10 @@ public class CheckersActivity extends GameActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-        new Languages().setLangua(this);
+        new LanguagesWorker().setLangua(this);
         super.onCreate(savedInstanceState);
 
-        Themes tem=new Themes();
+        ThemesWorker tem=new ThemesWorker();
         tem.setThemes(this);
 
         setContentView(R.layout.activity_checkers);

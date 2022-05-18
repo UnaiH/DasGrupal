@@ -14,17 +14,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 
 public class ProfileActivity extends AppCompatActivity {
     ImageView image;
@@ -35,10 +32,10 @@ public class ProfileActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        new Languages().setLangua(this);
+        new LanguagesWorker().setLangua(this);
         super.onCreate(savedInstanceState);
 
-        Themes tem = new Themes();
+        ThemesWorker tem = new ThemesWorker();
         tem.setThemes(this);
 
         setContentView(R.layout.activity_profile);

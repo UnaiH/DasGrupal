@@ -7,9 +7,9 @@ import android.preference.PreferenceManager;
 
 import java.util.Locale;
 
-public class Languages {
+public class LanguagesWorker {
     private String langua="en";
-    public Languages(){
+    public LanguagesWorker(){
 
     }
     public void setLangua(Context context){

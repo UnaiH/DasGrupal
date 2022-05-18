@@ -7,26 +7,32 @@ import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.time.ZoneId;
 import java.util.regex.Pattern;
 
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
     String email, pass, confirmPass, username;
     EditText emailText, passText, confirmPassText, usernameText;
+    Context ctxt;
+    Activity activ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        new Languages().setLangua(this);
+        new LanguagesWorker().setLangua(this);
         super.onCreate(savedInstanceState);
-        Themes tem=new Themes();
+        ThemesWorker tem=new ThemesWorker();
         tem.setThemes(this);
         setContentView(R.layout.activity_sign_up);
+        ctxt=this;
+        activ=this;
     }
 
     @Override
@@ -62,6 +68,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                                     Boolean resultadoPhp = workInfo.getOutputData().getBoolean("exito", false);
                                     Log.i("TAG", "onChanged: " + resultadoPhp);
                                     if (resultadoPhp) {
+                                        new DefineCountryWorker().localizacionBD(username, ctxt,activ);
                                         Intent iBack = new Intent();
                                         setResult(RESULT_OK);
                                         iBack.putExtra("user",email);

@@ -12,10 +12,10 @@ public class GlobalRankingActivity extends AppCompatActivity {
     private ListView list;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        new Languages().setLangua(this);
+        new LanguagesWorker().setLangua(this);
         super.onCreate(savedInstanceState);
 
-        Themes tem=new Themes();
+        ThemesWorker tem=new ThemesWorker();
         tem.setThemes(this);
 
         usernames=new String[0];

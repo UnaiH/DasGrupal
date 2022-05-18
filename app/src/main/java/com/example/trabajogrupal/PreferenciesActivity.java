@@ -8,15 +8,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
 
-public class Preferencies extends AppCompatActivity {
+public class PreferenciesActivity extends AppCompatActivity {
 
     private String user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        new Languages().setLangua(this);
+        new LanguagesWorker().setLangua(this);
         super.onCreate(savedInstanceState);
 
-        Themes tem=new Themes();
+        ThemesWorker tem=new ThemesWorker();
         tem.setThemes(this);
 
         setContentView(R.layout.activity_preferencias);
@@ -42,7 +42,7 @@ public class Preferencies extends AppCompatActivity {
         }
     }
     public void onBackPressed(){
-        Intent i = new Intent(Preferencies.this, SelectMenuActivity.class);
+        Intent i = new Intent(PreferenciesActivity.this, SelectMenuActivity.class);
         i.putExtra("user", user);
         setResult(RESULT_OK, i);
         finish();

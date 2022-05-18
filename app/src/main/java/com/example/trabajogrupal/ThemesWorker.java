@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 import androidx.annotation.ColorRes;
 
-public class Themes {
-    public Themes(){
+public class ThemesWorker {
+    public ThemesWorker(){
 
     }
     public void setThemes(Context context){
