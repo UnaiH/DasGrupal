@@ -20,6 +20,7 @@ public class ChessActivity extends GameActivity
     private ImageButton[][] buttons = new ImageButton[10][10];
     private ArrayList<Integer> redSquares;
     private int[] chosenSquare = new int[2];
+    private String user;
 
 
     @Override
@@ -27,7 +28,7 @@ public class ChessActivity extends GameActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chess);
-
+        user = getIntent().getStringExtra("user");
         setUpBoard();
         loadPieces(mapPieces.values().toArray(new Piece[0]), idGame);
         //deletePiece(game.getId(), 1,1);
@@ -680,8 +681,10 @@ public class ChessActivity extends GameActivity
     public void onBackPressed()
     {
         super.onBackPressed();
-        finish();
         Intent i = new Intent(this, SelectMenuActivity.class);
+        i.putExtra("user", user);
+        setResult(RESULT_OK, i);
+        finish();
         startActivity(i);
     }
 }

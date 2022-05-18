@@ -21,6 +21,7 @@ public class SelectMenuActivity extends AppCompatActivity {
     ImageButton btn_profile;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        new Languages().setLangua(this);
         super.onCreate(savedInstanceState);
         setContentView(activity_select_menu);
         user = getIntent().getStringExtra("user");
@@ -30,20 +31,26 @@ public class SelectMenuActivity extends AppCompatActivity {
     }
 
     public void onClickCheckers(View v) {
-        finish();
         Intent i = new Intent(this, CheckersActivity.class);
+        i.putExtra("user", user);
+        setResult(RESULT_OK, i);
+        finish();
         startActivity(i);
     }
 
     public void onClickChess(View v) {
-        finish();
         Intent i = new Intent(this, ChessActivity.class);
+        i.putExtra("user", user);
+        setResult(RESULT_OK, i);
+        finish();
         startActivity(i);
     }
 
     public void onClickPreferencies(View v) {
-        finish();
         Intent i = new Intent(this, Preferencies.class);
+        i.putExtra("user", user);
+        setResult(RESULT_OK, i);
+        finish();
         startActivity(i);
     }
 

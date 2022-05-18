@@ -8,7 +8,7 @@
         <ListPreference
             android:entries="@array/listaidiomas"
             android:entryValues="@array/listaidiomas"
-            android:key="@string/idiomas"
+            android:key="idiomas"
             android:summary="@string/defIdm"
             android:title="@string/lanques"
             android:defaultValue="English"/>

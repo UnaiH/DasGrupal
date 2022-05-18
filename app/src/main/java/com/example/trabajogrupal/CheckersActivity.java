@@ -13,6 +13,7 @@ import java.util.Random;
 
 public class CheckersActivity extends GameActivity {
 
+    private String user;
     private CheckersBoard board;
     private int idGame;
     private String currentTurn;
@@ -28,7 +29,7 @@ public class CheckersActivity extends GameActivity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkers);
-
+        user = getIntent().getStringExtra("user");
         setUpBoard();
         loadPieces(mapPieces.values().toArray(new Piece[0]), idGame);
     }
@@ -436,8 +437,10 @@ public class CheckersActivity extends GameActivity {
     public void onBackPressed()
     {
         super.onBackPressed();
-        finish();
         Intent i = new Intent(this, SelectMenuActivity.class);
+        i.putExtra("user", user);
+        setResult(RESULT_OK, i);
+        finish();
         startActivity(i);
     }
 }

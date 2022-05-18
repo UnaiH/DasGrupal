@@ -10,10 +10,13 @@ import android.preference.PreferenceFragment;
 
 public class Preferencies extends AppCompatActivity {
 
+    private String user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        new Languages().setLangua(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preferencias);
+        user = getIntent().getStringExtra("user");
         Fragment fragmento = new preferencias();
         FragmentTransaction ftransc = getFragmentManager().beginTransaction();
         if (savedInstanceState==null){
@@ -36,6 +39,8 @@ public class Preferencies extends AppCompatActivity {
     }
     public void onBackPressed(){
         Intent i = new Intent(Preferencies.this, SelectMenuActivity.class);
+        i.putExtra("user", user);
+        setResult(RESULT_OK, i);
         finish();
         startActivity(i);
     }
