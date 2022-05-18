@@ -12,7 +12,7 @@ if (mysqli_connect_errno($con)){
 }
 
 
-$email = $_POST["email"];
+
 
 
 $stmt = mysqli_query($con,"SELECT * FROM Usuario GROUP BY Usuario.country ORDER BY Usuario.eloCheckers Desc");
