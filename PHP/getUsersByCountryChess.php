@@ -12,8 +12,6 @@ if (mysqli_connect_errno($con)){
 }
 
 
-$email = $_POST["email"];
-$country =$_POST["country"];
 
 $stmt = mysqli_query($con,"SELECT * FROM Usuario GROUP BY Usuario.country ORDER BY Usuario.eloChess Desc");
 if ($stmt->num_rows > 0){
