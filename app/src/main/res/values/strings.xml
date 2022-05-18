@@ -21,4 +21,6 @@
     <string name="select">Select</string>
     <string name="gallery">Gallery</string>
     <string name="camera">Camera</string>
+    <string name="green">Green</string>
+    <string name="blue">Blue</string>
 </resources>

@@ -30,6 +30,10 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         new Languages().setLangua(this);
         super.onCreate(savedInstanceState);
+
+        Themes tem=new Themes();
+        tem.setThemes(this);
+
         setContentView(R.layout.activity_profile);
         userTextView = findViewById(R.id.profile_username);
         user = getIntent().getStringExtra("user");

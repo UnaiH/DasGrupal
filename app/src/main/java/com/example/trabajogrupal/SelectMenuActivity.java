@@ -23,6 +23,10 @@ public class SelectMenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         new Languages().setLangua(this);
         super.onCreate(savedInstanceState);
+
+        Themes tem=new Themes();
+        tem.setThemes(this);
+
         setContentView(activity_select_menu);
         user = getIntent().getStringExtra("user");
         myDB = new LocalDB(this, "Chess", null, 1);

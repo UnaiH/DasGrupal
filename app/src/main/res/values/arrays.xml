@@ -10,5 +10,7 @@
     <string-array name="Temas">
         <item>@string/defi</item>
         <item>@string/osc</item>
+        <item>@string/green</item>
+        <item>@string/blue</item>
     </string-array>
 </resources>

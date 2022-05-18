@@ -24,6 +24,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         new Languages().setLangua(this);
         super.onCreate(savedInstanceState);
+        Themes tem=new Themes();
+        tem.setThemes(this);
         setContentView(R.layout.activity_sign_up);
     }
 

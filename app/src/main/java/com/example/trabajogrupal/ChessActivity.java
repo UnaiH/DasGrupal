@@ -28,6 +28,10 @@ public class ChessActivity extends GameActivity
     {
         new Languages().setLangua(this);
         super.onCreate(savedInstanceState);
+
+        Themes tem=new Themes();
+        tem.setThemes(this);
+
         setContentView(R.layout.activity_chess);
         user = getIntent().getStringExtra("user");
         setUpBoard();
