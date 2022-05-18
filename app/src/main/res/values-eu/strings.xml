@@ -22,4 +22,6 @@
     <string name="select">Hautatu</string>
     <string name="gallery">Galeria</string>
     <string name="camera">Kamera</string>
+    <string name="green">Berdea</string>
+    <string name="blue">Urdina</string>
 </resources>

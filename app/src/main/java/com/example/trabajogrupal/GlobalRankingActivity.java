@@ -14,6 +14,10 @@ public class GlobalRankingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         new Languages().setLangua(this);
         super.onCreate(savedInstanceState);
+
+        Themes tem=new Themes();
+        tem.setThemes(this);
+
         usernames=new String[0];
         elos=new int[0];
         setContentView(R.layout.activity_global_ranking);

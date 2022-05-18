@@ -4,8 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.work.Data;
@@ -17,12 +20,29 @@ import androidx.lifecycle.Observer;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     EditText user, pass;
     String userEmail, password;
-
+    Button but;
+    TextView text;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         new Languages().setLangua(this);
         super.onCreate(savedInstanceState);
+
+        Themes tem=new Themes();
+        tem.setThemes(this);
+
         setContentView(R.layout.activity_main);
+        /*
+        but = findViewById(R.id.button3);
+        tem.setButColorBlack(but, this);
+        but = findViewById(R.id.button);
+        tem.setButColorWhite(but, this);
+        but = findViewById(R.id.button5);
+        tem.setButColorBlack(but, this);
+        text = findViewById(R.id.userSignIn);
+        tem.setVTextColorWhite(text, this);
+        text = findViewById(R.id.PasswordSignIn);
+        tem.setVTextColorWhite(text, this);*/
+
     }
 
     @Override

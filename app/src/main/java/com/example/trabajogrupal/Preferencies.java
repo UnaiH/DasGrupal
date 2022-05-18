@@ -15,6 +15,10 @@ public class Preferencies extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         new Languages().setLangua(this);
         super.onCreate(savedInstanceState);
+
+        Themes tem=new Themes();
+        tem.setThemes(this);
+
         setContentView(R.layout.activity_preferencias);
         user = getIntent().getStringExtra("user");
         Fragment fragmento = new preferencias();

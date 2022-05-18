@@ -29,6 +29,10 @@ public class CheckersActivity extends GameActivity {
     {
         new Languages().setLangua(this);
         super.onCreate(savedInstanceState);
+
+        Themes tem=new Themes();
+        tem.setThemes(this);
+
         setContentView(R.layout.activity_checkers);
         user = getIntent().getStringExtra("user");
         setUpBoard();

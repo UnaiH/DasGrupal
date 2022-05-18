@@ -21,4 +21,30 @@
         <item name="android:background">#FFFFFF</item>
         <item name="android:statusBarColor" tools:targetApi="l">#555588</item>
     </style>
+    <style name="Dark" parent="Theme.AppCompat">
+        <item name="android:title">#FFFFFF</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:background">#202020</item>
+        <item name="android:statusBarColor" tools:targetApi="l">#404040</item>
+        <item name="colorPrimary">#000000</item>
+        <item name="colorAccent">#FFFFFF</item>
+    </style>
+
+    <style name="Blue" parent="Theme.AppCompat">
+        <item name="android:title">#FFFFFF</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:background">#2020B0</item>
+        <item name="android:statusBarColor" tools:targetApi="l">#4040C0</item>
+        <item name="colorPrimary">#000000</item>
+    </style>
+
+    <style name="Green" parent="Theme.AppCompat">
+        <item name="android:title">#FFFFFF</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:background">#108010</item>
+        <item name="android:statusBarColor" tools:targetApi="l">#109010</item>
+        <item name="colorPrimary">#000000</item>
+    </style>
+
+
 </resources>
