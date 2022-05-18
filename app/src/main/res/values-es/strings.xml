@@ -18,4 +18,8 @@
     <string name="temapp">En este apartado se puede elegir el tema a emplear en la app</string>
     <string name="defi">Predefinido</string>
     <string name="osc">Oscuro</string>
+    <string name="logout">Salir</string>
+    <string name="select">Elegir</string>
+    <string name="gallery">Galería</string>
+    <string name="camera">Cámara</string>
 </resources>

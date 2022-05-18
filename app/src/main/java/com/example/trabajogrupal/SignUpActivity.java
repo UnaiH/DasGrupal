@@ -22,6 +22,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     EditText emailText, passText, confirmPassText, usernameText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        new Languages().setLangua(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
     }

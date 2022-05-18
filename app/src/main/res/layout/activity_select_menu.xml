@@ -61,7 +61,7 @@
         android:layout_marginStart="291dp"
         android:layout_marginTop="23dp"
         android:layout_marginEnd="28dp"
-        android:text="Logout"
+        android:text="@string/logout"
         android:onClick="onClickLogout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

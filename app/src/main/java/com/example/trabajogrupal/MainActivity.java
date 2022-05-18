@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        new Languages().setLangua(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }

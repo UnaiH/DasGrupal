@@ -18,4 +18,8 @@
     <string name="temapp">Sekzio honetan App-ren gaia aukeratu dezakezu</string>
     <string name="defi">Lehenetsia</string>
     <string name="osc">Iluna</string>
+    <string name="logout">Irten</string>
+    <string name="select">Hautatu</string>
+    <string name="gallery">Galeria</string>
+    <string name="camera">Kamera</string>
 </resources>

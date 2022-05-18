@@ -28,6 +28,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        new Languages().setLangua(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         userTextView = findViewById(R.id.profile_username);

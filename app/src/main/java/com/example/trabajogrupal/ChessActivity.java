@@ -26,6 +26,7 @@ public class ChessActivity extends GameActivity
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+        new Languages().setLangua(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chess);
         user = getIntent().getStringExtra("user");

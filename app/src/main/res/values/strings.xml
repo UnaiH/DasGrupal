@@ -17,4 +17,8 @@
     <string name="temapp">In this section you can select the app theme</string>
     <string name="defi">Default</string>
     <string name="osc">Dark</string>
+    <string name="logout">Logout</string>
+    <string name="select">Select</string>
+    <string name="gallery">Gallery</string>
+    <string name="camera">Camera</string>
 </resources>

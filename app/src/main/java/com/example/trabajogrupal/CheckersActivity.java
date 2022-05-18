@@ -27,6 +27,7 @@ public class CheckersActivity extends GameActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+        new Languages().setLangua(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkers);
         user = getIntent().getStringExtra("user");

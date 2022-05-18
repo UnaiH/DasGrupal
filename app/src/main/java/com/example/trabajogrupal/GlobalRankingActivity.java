@@ -12,6 +12,7 @@ public class GlobalRankingActivity extends AppCompatActivity {
     private ListView list;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        new Languages().setLangua(this);
         super.onCreate(savedInstanceState);
         usernames=new String[0];
         elos=new int[0];
