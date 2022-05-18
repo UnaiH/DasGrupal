@@ -39,7 +39,7 @@ public class WorkerDeletePiece extends Worker
             int posX = getInputData().getInt("posX", -1);
             int posY = getInputData().getInt("posY", -1);
 
-            Log.i("workerPHP","data: " + idGame + "-" + posX + "-" + posY);
+            Log.i("workerPHP","Delete: " + idGame + "-" + posX + "-" + posY);
 
             PrintWriter out = new PrintWriter(urlConnection.getOutputStream());
             String parametros = "idGame="+idGame+"&posX="+posX+"&posY="+posY;

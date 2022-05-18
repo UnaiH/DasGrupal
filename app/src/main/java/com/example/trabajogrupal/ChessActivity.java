@@ -8,7 +8,6 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Random;
 
 public class ChessActivity extends GameActivity
@@ -16,7 +15,6 @@ public class ChessActivity extends GameActivity
     private ChessBoard board;
     private int idGame;
     private String currentTurn;
-    private HashMap<String,Piece> mapPieces;
     private ImageButton[][] buttons = new ImageButton[10][10];
     private ArrayList<Integer> redSquares;
     private int[] chosenSquare = new int[2];
@@ -35,9 +33,6 @@ public class ChessActivity extends GameActivity
         setContentView(R.layout.activity_chess);
         user = getIntent().getStringExtra("user");
         setUpBoard();
-        loadPieces(mapPieces.values().toArray(new Piece[0]), idGame);
-        //deletePiece(game.getId(), 1,1);
-        //updatePiece(game.getId(),2,2,12,13);
 
     }
 
@@ -50,7 +45,6 @@ public class ChessActivity extends GameActivity
         idGame = rand.nextInt(999999);
         currentTurn="White";
         board = new ChessBoard();
-        mapPieces = new HashMap<>();
 
         for (int i=0; i<10; i++)
         {
@@ -144,107 +138,12 @@ public class ChessActivity extends GameActivity
             ImageButton button = buttons[coordinateX][coordinateY];
 
             String name = button.toString();
-            Piece p;
-            if (coordinateY==1)
+            if (coordinateX<1 || coordinateX >8 || coordinateY<1 || coordinateY>8)
             {
-                if(coordinateX==1 || coordinateX==8)
-                {
-                    p = new Piece_Chess_Rook_White(name, "White", coordinateX, coordinateY);
-                    mapPieces.put(p.name,p);
-                    board.addPiece(p,coordinateX,coordinateY);
-                    button.setImageResource(R.drawable.chess_white_rook);
-                }
-                else if(coordinateX==2 || coordinateX==7)
-                {
-                    p = new Piece_Chess_Knight_White(name, "White", coordinateX, coordinateY);
-                    mapPieces.put(p.name,p);
-                    board.addPiece(p,coordinateX,coordinateY);
-                    button.setImageResource(R.drawable.chess_white_knight);
-                }
-                else if(coordinateX==3 || coordinateX==6)
-                {
-                    p = new Piece_Chess_Bishop_White(name, "White", coordinateX, coordinateY);
-                    mapPieces.put(p.name,p);
-                    board.addPiece(p,coordinateX,coordinateY);
-                    button.setImageResource(R.drawable.chess_white_bishop);
-                }
-                else if(coordinateX==4)
-                {
-                    p = new Piece_Chess_Queen_White(name, "White", coordinateX, coordinateY);
-                    mapPieces.put(p.name,p);
-                    board.addPiece(p,coordinateX,coordinateY);
-                    button.setImageResource(R.drawable.chess_white_queen);
-                }
-                else if(coordinateX==5)
-                {
-                    p = new Piece_Chess_King_White(name, "White", coordinateX, coordinateY);
-                    mapPieces.put(p.name,p);
-                    board.addPiece(p,coordinateX,coordinateY);
-                    button.setImageResource(R.drawable.chess_white_king);
-                }
-                else
-                {
-                    Log.i("Chess","illegal coordinate:" + coordinateX + "-" + coordinateY);
-                }
-
+                Log.i("Chess","illegal coordinate:" + coordinateX + "-" + coordinateY);
+                return;
             }
-            else if(coordinateY==2)
-            {
-                p = new Piece_Chess_Pawn_White(name, "White", coordinateX, coordinateY);
-                mapPieces.put(p.name,p);
-                board.addPiece(p,coordinateX,coordinateY);
-                button.setImageResource(R.drawable.chess_white_pawn);
-            }
-            else if(coordinateY==7)
-            {
-                p = new Piece_Chess_Pawn_Black(name, "Black", coordinateX, coordinateY);
-                mapPieces.put(p.name,p);
-                board.addPiece(p,coordinateX,coordinateY);
-                button.setImageResource(R.drawable.chess_black_pawn);
-            }
-            else if(coordinateY==8)
-            {
-                if(coordinateX==1 || coordinateX==8)
-                {
-                    p = new Piece_Chess_Rook_Black(name, "Black", coordinateX, coordinateY);
-                    mapPieces.put(p.name,p);
-                    board.addPiece(p,coordinateX,coordinateY);
-                    button.setImageResource(R.drawable.chess_black_rook);
-                }
-                else if(coordinateX==2 || coordinateX==7)
-                {
-                    p = new Piece_Chess_Knight_Black(name, "Black", coordinateX, coordinateY);
-                    mapPieces.put(p.name,p);
-                    board.addPiece(p,coordinateX,coordinateY);
-                    button.setImageResource(R.drawable.chess_black_knight);
-                }
-                else if(coordinateX==3 || coordinateX==6)
-                {
-                    p = new Piece_Chess_Bishop_Black(name, "Black", coordinateX, coordinateY);
-                    mapPieces.put(p.name,p);
-                    board.addPiece(p,coordinateX,coordinateY);
-                    button.setImageResource(R.drawable.chess_black_bishop);
-                }
-                else if(coordinateX==4)
-                {
-                    p = new Piece_Chess_Queen_Black(name, "Black", coordinateX, coordinateY);
-                    mapPieces.put(p.name,p);
-                    board.addPiece(p,coordinateX,coordinateY);
-                    button.setImageResource(R.drawable.chess_black_queen);
-                }
-                else if(coordinateX==5)
-                {
-                    p = new Piece_Chess_King_Black(name, "Black", coordinateX, coordinateY);
-                    mapPieces.put(p.name,p);
-                    board.addPiece(p,coordinateX,coordinateY);
-                    button.setImageResource(R.drawable.chess_black_king);
-                }
-                else
-                {
-                    Log.i("Chess","illegal coordinate:" + coordinateX + "-" + coordinateY);
-                }
-            }
-            else
+            if (coordinateY>=3 && coordinateY<=6)
             {
                 if ((coordinateX+coordinateY)%2==0)
                 {
@@ -254,6 +153,78 @@ public class ChessActivity extends GameActivity
                 {
                     button.setImageResource(R.drawable.checkers_empty_white);
                 }
+            }
+            else
+            {
+                Piece p;
+                if (coordinateY==1)
+                {
+                    if(coordinateX==1 || coordinateX==8)
+                    {
+                        p = new Piece_Chess_Rook_White(name, "White", coordinateX, coordinateY);
+                        button.setImageResource(R.drawable.chess_white_rook);
+                    }
+                    else if(coordinateX==2 || coordinateX==7)
+                    {
+                        p = new Piece_Chess_Knight_White(name, "White", coordinateX, coordinateY);
+                        button.setImageResource(R.drawable.chess_white_knight);
+                    }
+                    else if(coordinateX==3 || coordinateX==6)
+                    {
+                        p = new Piece_Chess_Bishop_White(name, "White", coordinateX, coordinateY);
+                        button.setImageResource(R.drawable.chess_white_bishop);
+                    }
+                    else if(coordinateX==4)
+                    {
+                        p = new Piece_Chess_Queen_White(name, "White", coordinateX, coordinateY);
+                        button.setImageResource(R.drawable.chess_white_queen);
+                    }
+                    else
+                    {
+                        p = new Piece_Chess_King_White(name, "White", coordinateX, coordinateY);
+                        button.setImageResource(R.drawable.chess_white_king);
+                    }
+                }
+                else if(coordinateY==2)
+                {
+                    p = new Piece_Chess_Pawn_White(name, "White", coordinateX, coordinateY);
+                    button.setImageResource(R.drawable.chess_white_pawn);
+                }
+                else if(coordinateY==7)
+                {
+                    p = new Piece_Chess_Pawn_Black(name, "Black", coordinateX, coordinateY);
+                    button.setImageResource(R.drawable.chess_black_pawn);
+                }
+                else
+                {
+                    if(coordinateX==1 || coordinateX==8)
+                    {
+                        p = new Piece_Chess_Rook_Black(name, "Black", coordinateX, coordinateY);
+                        button.setImageResource(R.drawable.chess_black_rook);
+                    }
+                    else if(coordinateX==2 || coordinateX==7)
+                    {
+                        p = new Piece_Chess_Knight_Black(name, "Black", coordinateX, coordinateY);
+                        button.setImageResource(R.drawable.chess_black_knight);
+                    }
+                    else if(coordinateX==3 || coordinateX==6)
+                    {
+                        p = new Piece_Chess_Bishop_Black(name, "Black", coordinateX, coordinateY);
+                        button.setImageResource(R.drawable.chess_black_bishop);
+                    }
+                    else if(coordinateX==4)
+                    {
+                        p = new Piece_Chess_Queen_Black(name, "Black", coordinateX, coordinateY);
+                        button.setImageResource(R.drawable.chess_black_queen);
+                    }
+                    else
+                    {
+                        p = new Piece_Chess_King_Black(name, "Black", coordinateX, coordinateY);
+                        button.setImageResource(R.drawable.chess_black_king);
+                    }
+                }
+                insertPiece(idGame,p.getClass().getName(),coordinateX,coordinateY);
+                board.addPiece(p,coordinateX,coordinateY);
             }
         }
     }
@@ -516,14 +487,12 @@ public class ChessActivity extends GameActivity
             markSquare(moves.get(i),moves.get(i+1));
             Log.i("Chess",moves.get(i) + "-" + moves.get(i+1));
         }
-
     }
-
-
 
     private void movePiece(int posX, int posY, int finalX, int finalY)
     {
         Piece startPiece = board.returnPiece(posX, posY);
+        deletePiece(idGame,finalX,finalY);
         if (startPiece!=null)
         {
             boolean[] specialConditions;
@@ -538,18 +507,13 @@ public class ChessActivity extends GameActivity
             if (promoted)
             {
                 Piece crownedPiece = board.returnPiece(finalX,finalY);
-                if (startPiece instanceof Piece_Chess_Pawn_White)
-                {
-                    mapPieces.remove(startPiece.name);
-                    mapPieces.put(crownedPiece.name,crownedPiece);
-                    //add insertPiece()
-                }
-                if (startPiece instanceof Piece_Chess_Pawn_Black)
-                {
-                    mapPieces.remove(startPiece.name);
-                    mapPieces.put(crownedPiece.name,crownedPiece);
-                }
+                deletePiece(idGame,posX,posY);
+                insertPiece(idGame,crownedPiece.getClass().getName(),finalX,finalY);
                 drawProperPiece(crownedPiece,finalX,finalY);
+            }
+            else
+            {
+                updatePiece(idGame,posX,posY,finalX,finalY);
             }
             drawProperPiece(startPiece,finalX,finalY);
             if (castled)
@@ -579,13 +543,12 @@ public class ChessActivity extends GameActivity
             if(finished)
             {
                 Toast.makeText(this,"You win", Toast.LENGTH_LONG).show();
+                getPieces(idGame);
             }
-
         }
         else
         {
             Log.i("Chess", "Piece: " + posX + "-" + posY + " has wrong type.");
-            return;
         }
     }
 
