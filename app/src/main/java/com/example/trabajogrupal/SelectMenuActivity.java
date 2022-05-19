@@ -111,4 +111,12 @@ public class SelectMenuActivity extends AppCompatActivity {
             }
         }
     }
+
+    public void onClickGamesInCourse(View v) {
+        Intent i = new Intent(this, GamesInCourseActivity.class);
+        i.putExtra("user", user);
+        setResult(RESULT_OK, i);
+        finish();
+        startActivity(i);
+    }
 }

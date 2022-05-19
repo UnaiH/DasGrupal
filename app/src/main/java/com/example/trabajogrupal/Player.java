@@ -1,5 +1,7 @@
 package com.example.trabajogrupal;
 
+import android.graphics.Bitmap;
+
 import java.util.ArrayList;
 
 public class Player
@@ -7,16 +9,17 @@ public class Player
     private String name;
     private ArrayList<Integer> rankELO;
     private String pais;
-    //private ArrayList<Game> gamesInCourse;
-    //private ArrayList<Game> gamesFinished;
+    private ArrayList<GameInCourse> gamesInCourse;
+    private ArrayList<GameFinished> gamesFinished;
+    private Bitmap image;
     public Player(String pName, int pEloCheckers, int pEloChess)
     {
         name=pName;
         rankELO = new ArrayList<>();
         rankELO.add(pEloCheckers);
         rankELO.add(pEloChess);
-        //gamesInCourse = new ArrayList<>();
-        //gamesFinished = new ArrayList<>();
+        gamesInCourse = new ArrayList<GameInCourse>();
+        gamesFinished = new ArrayList<GameFinished>();
     }
     public Integer getElo(Integer pos){
         return rankELO.get(pos);
@@ -27,15 +30,28 @@ public class Player
     public String getPais(){
         return pais;
     }
-    /*
-    public void addInCourse(Game game)
+    public void addInCourse(GameInCourse gameInCourse)
     {
-        gamesInCourse.add(game);
+        gamesInCourse.add(gameInCourse);
     }
-    public void finishGame(Game game)
+    public void removeInCourse(GameInCourse gameInCourse)
     {
-        gamesInCourse.remove(game);
-        gamesFinished.add(game);
+        gamesInCourse.remove(gameInCourse);
     }
-    */
+    public void finishGame(GameFinished gameFinished)
+    {
+        gamesFinished.add(gameFinished);
+    }
+
+    public Bitmap getImage() {
+        return image;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public ArrayList<GameInCourse> getGamesInCourse() {
+        return gamesInCourse;
+    }
 }

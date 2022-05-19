@@ -11,7 +11,7 @@ public class PlayerCatalogue
 {
     private static PlayerCatalogue myPlayerCatalogue =null;
     private HashMap<String,Player> mapPlayers;
-    private String currentUser;
+    private Player currentUser;
 
     private PlayerCatalogue ()
     {
@@ -55,12 +55,12 @@ public class PlayerCatalogue
         return listPlayers;
     }
 
-    public void setCurrentUser(String pUser)
+    public void setCurrentUser(Player pUser)
     {
         currentUser=pUser;
     }
 
-    public String getCurrentUser()
+    public Player getCurrentUser()
     {
         return currentUser;
     }
