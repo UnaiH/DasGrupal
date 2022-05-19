@@ -2,29 +2,35 @@ package com.example.trabajogrupal;
 
 import java.util.ArrayList;
 
-public class Player
-{
-    private String name;
+public class Player {
+    private String username, pais, email;
+    private int eloCheckers, eloChess;
     private ArrayList<Integer> rankELO;
-    private String pais;
+
     //private ArrayList<Game> gamesInCourse;
     //private ArrayList<Game> gamesFinished;
-    public Player(String pName, int pEloCheckers, int pEloChess)
-    {
-        name=pName;
+    public Player(String pUsername, String pPais, String pEmail, int pEloCheckers, int pEloChess) {
+        username = pUsername;
+        pais = pPais;
+        email = pEmail;
+        eloCheckers = pEloCheckers;
+        eloChess = pEloChess;
         rankELO = new ArrayList<>();
         rankELO.add(pEloCheckers);
         rankELO.add(pEloChess);
         //gamesInCourse = new ArrayList<>();
         //gamesFinished = new ArrayList<>();
     }
-    public Integer getElo(Integer pos){
+
+    public Integer getElo(Integer pos) {
         return rankELO.get(pos);
     }
-    public void setPais(String Pais){
-        pais=Pais;
+
+    public void setPais(String Pais) {
+        pais = Pais;
     }
-    public String getPais(){
+
+    public String getPais() {
         return pais;
     }
     /*

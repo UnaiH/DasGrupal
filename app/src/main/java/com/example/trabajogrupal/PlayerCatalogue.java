@@ -7,56 +7,46 @@ import java.util.HashMap;
 
 
 //clase que guarda todos los anuncios
-public class PlayerCatalogue
-{
-    private static PlayerCatalogue myPlayerCatalogue =null;
-    private HashMap<String,Player> mapPlayers;
+public class PlayerCatalogue {
+    private static PlayerCatalogue myPlayerCatalogue = null;
+    private HashMap<String, Player> mapPlayers;
     private String currentUser;
 
-    private PlayerCatalogue ()
-    {
-        this.mapPlayers =new HashMap<String,Player>();
+    private PlayerCatalogue() {
+        this.mapPlayers = new HashMap<String, Player>();
     }
-    public static synchronized PlayerCatalogue getMyPlayerCatalogue()
-    {
-        if (myPlayerCatalogue ==null)
-        {
-            myPlayerCatalogue =new PlayerCatalogue();
+
+    public static synchronized PlayerCatalogue getMyPlayerCatalogue() {
+        if (myPlayerCatalogue == null) {
+            myPlayerCatalogue = new PlayerCatalogue();
         }
         return myPlayerCatalogue;
     }
 
-    public void addPlayer(String mail, int eloCheckers, int eloChess)
-    {
-        if (this.returnPlayer(mail)==null)
-        {
-            Player player = new Player(mail, eloCheckers, eloChess);
+    public void addPlayer(String mail, int eloCheckers, int eloChess, String username, String pais) {
+        if (this.returnPlayer(mail) == null) {
+            Player player = new Player(username, pais, mail, eloCheckers, eloChess);
             mapPlayers.put(mail, player);
         }
     }
 
-    public Player returnPlayer(String mail)
-    {
-        Player p=null;
-        if (mapPlayers.containsKey(mail))
-        {
-            p= mapPlayers.get(mail);
+    public Player returnPlayer(String mail) {
+        Player p = null;
+        if (mapPlayers.containsKey(mail)) {
+            p = mapPlayers.get(mail);
         }
         return p;
     }
 
-    public ArrayList<String> returnMails()
-    {
+    public ArrayList<String> returnMails() {
         ArrayList<String> listPlayers = new ArrayList<>();
-        for (String key : mapPlayers.keySet() )
-        {
+        for (String key : mapPlayers.keySet()) {
             listPlayers.add(key);
         }
         return listPlayers;
     }
-
-    public void setCurrentUser(String pUser)
-    {
-        currentUser=pUser;
+    public HashMap<String,Player> getMapPlayers(){return mapPlayers;}
+    public void setCurrentUser(String pUser) {
+        currentUser = pUser;
     }
 }
