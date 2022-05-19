@@ -17,6 +17,9 @@
         android:theme="@style/Theme.TrabajoGrupal"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ChooseRanking"
+            android:exported="false" />
+        <activity
             android:name=".ProfileActivity"
             android:exported="false" />
         <activity
@@ -31,9 +34,6 @@
             android:theme="@style/Menu" />
         <activity
             android:name=".CheckersActivity"
-            android:exported="false" />
-        <activity
-            android:name=".GlobalRankingActivity"
             android:exported="false" />
         <activity
             android:name=".SignUpActivity"

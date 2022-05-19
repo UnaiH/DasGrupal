@@ -23,4 +23,5 @@
     <string name="camera">Camera</string>
     <string name="green">Green</string>
     <string name="blue">Blue</string>
+    <string name="codPais">Country Code: </string>
 </resources>

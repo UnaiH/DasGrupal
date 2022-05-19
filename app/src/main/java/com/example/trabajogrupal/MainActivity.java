@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void onClickRanking(View v) {
         finish();
-        Intent i = new Intent(this, GlobalRankingActivity.class);
+        Intent i = new Intent(this, ChooseRanking.class);
         startActivity(i);
     }
 
