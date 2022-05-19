@@ -2,10 +2,12 @@ package com.example.trabajogrupal;
 
 import android.net.Uri;
 import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -64,10 +66,20 @@ public class PlayerCatalogue {
     public ArrayList<String> getPaises(){
         this.getUsersByCountry();
         for(String key: mapPlayersByCountry.keySet()){
-            this.listaPaises.add(key);
+            if(!listaPaises.contains(key)) {
+                this.listaPaises.add(key);
+            }
         }
         return this.listaPaises;
     }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public List<Player> getUsersDescOrder(String game){
+        //TODO hacer que devuelva una lista<Player> ordenada DESC en función del juego que se le pase por parámetro.
+
+        return null;
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     public List<Player> getUsersByCountryCheckers(String pais){
         if(this.mapPlayersByCountry.containsKey(pais)){

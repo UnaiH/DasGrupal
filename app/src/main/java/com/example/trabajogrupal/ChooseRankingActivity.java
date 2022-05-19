@@ -35,6 +35,7 @@ public class ChooseRankingActivity extends AppCompatActivity implements View.OnC
     String[] paises, jugadoresNombre;
 
     ArrayList<String> paisesArrayList;
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,10 +50,6 @@ public class ChooseRankingActivity extends AppCompatActivity implements View.OnC
         llenarCatalogo();
         ranking = findViewById(R.id.listas);
         listaPaises = findViewById(R.id.spinnerPais);
-        paisesArrayList = new ArrayList<>();
-        PlayerCatalogue catalogue = PlayerCatalogue.getMyPlayerCatalogue();
-        paisesArrayList = catalogue.getPaises();
-        Log.i("Direcciones", "onCreate: " + paisesArrayList);
 
 
     }
@@ -60,73 +57,130 @@ public class ChooseRankingActivity extends AppCompatActivity implements View.OnC
     @Override
     public void onClick(View view) {
     }
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void onClickChess(View view) {
         PlayerCatalogue catalogue = PlayerCatalogue.getMyPlayerCatalogue();
-        if(!listaPaises.getSelectedItem().toString().equals("Select")){
-            String pais = listaPaises.getSelectedItem().toString();
-            List<Player> jugadoresList = catalogue.getUsersByCountryChess(pais);
-            jugadoresNombre = new String[jugadoresList.size()];
-            int pos = 0;
-            for(Player i: jugadoresList){
-                jugadoresNombre[pos] = i.getUsername();
+        String selected = listaPaises.getSelectedItem().toString();
+        if (selected.equals("Select")) {
 
-                pos++;
-            }
-            ArrayAdapter elAdaptador = new ArrayAdapter<String>(ChooseRankingActivity.this, android.R.layout.simple_list_item_2,android.R.id.text1,jugadoresNombre){
-                @Override
-                public View getView(int position, View convertView, ViewGroup parent){
-                    View vista = super.getView(position,convertView,parent);
-                    TextView lineaPrincipal = (TextView) vista.findViewById(android.R.id.text1);
-                    TextView lineaSecundaria = (TextView) vista.findViewById(android.R.id.text2);
-                    String nombre = jugadoresList.get(position).getUsername();
-                    String puntuacion = String.valueOf(jugadoresList.get(position).getEloChess());
-                    lineaPrincipal.setText(nombre);
-                    lineaSecundaria.setText(puntuacion);
-                    return vista;
-                }
-            };
-            ranking.setAdapter(elAdaptador);
-            System.out.println(jugadoresNombre);
-        }else{
             Toast.makeText(this, "Por favor selecciona un país", Toast.LENGTH_SHORT).show();
+
+        } else {
+            if (listaPaises.getSelectedItem().toString().equals("Global")) {
+                List<Player> jugadoresList = catalogue.getUsersDescOrder("Chess");
+                jugadoresNombre = new String[jugadoresList.size()];
+                int pos = 0;
+                for (Player i : jugadoresList) {
+                    jugadoresNombre[pos] = i.getUsername();
+                    pos++;
+                }
+                System.out.println(jugadoresNombre);
+                ArrayAdapter elAdaptador = new ArrayAdapter<String>(ChooseRankingActivity.this, android.R.layout.simple_list_item_2, android.R.id.text1, jugadoresNombre) {
+                    @Override
+                    public View getView(int position, View convertView, ViewGroup parent) {
+                        View vista = super.getView(position, convertView, parent);
+                        TextView lineaPrincipal = (TextView) vista.findViewById(android.R.id.text1);
+                        TextView lineaSecundaria = (TextView) vista.findViewById(android.R.id.text2);
+                        String nombre = jugadoresList.get(position).getUsername() + " " + jugadoresList.get(position).getPais();
+                        String puntuacion = String.valueOf(jugadoresList.get(position).getEloCheckers());
+                        lineaPrincipal.setText(nombre);
+                        lineaSecundaria.setText(puntuacion);
+                        return vista;
+                    }
+                };
+                ranking.setAdapter(elAdaptador);
+            } else {
+                String pais = listaPaises.getSelectedItem().toString();
+                List<Player> jugadoresList = catalogue.getUsersByCountryChess(pais);
+                jugadoresNombre = new String[jugadoresList.size()];
+                int pos = 0;
+                for (Player i : jugadoresList) {
+                    jugadoresNombre[pos] = i.getUsername();
+
+                    pos++;
+                }
+                ArrayAdapter elAdaptador = new ArrayAdapter<String>(ChooseRankingActivity.this, android.R.layout.simple_list_item_2, android.R.id.text1, jugadoresNombre) {
+                    @Override
+                    public View getView(int position, View convertView, ViewGroup parent) {
+                        View vista = super.getView(position, convertView, parent);
+                        TextView lineaPrincipal = (TextView) vista.findViewById(android.R.id.text1);
+                        TextView lineaSecundaria = (TextView) vista.findViewById(android.R.id.text2);
+                        String nombre = jugadoresList.get(position).getUsername();
+                        String puntuacion = String.valueOf(jugadoresList.get(position).getEloChess());
+                        lineaPrincipal.setText(nombre);
+                        lineaSecundaria.setText(puntuacion);
+                        return vista;
+                    }
+                };
+                ranking.setAdapter(elAdaptador);
+                System.out.println(jugadoresNombre);
+            }
         }
     }
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void onClickCheckers(View view) {
         PlayerCatalogue catalogue = PlayerCatalogue.getMyPlayerCatalogue();
-        if(!listaPaises.getSelectedItem().toString().equals("Select")){
-            String pais = listaPaises.getSelectedItem().toString();
-            List<Player> jugadoresList = catalogue.getUsersByCountryCheckers(pais);
-            jugadoresNombre = new String[jugadoresList.size()];
-            int pos = 0;
-            for(Player i: jugadoresList){
-                jugadoresNombre[pos] = i.getUsername();
-                pos++;
-            }
-            ArrayAdapter elAdaptador = new ArrayAdapter<String>(ChooseRankingActivity.this, android.R.layout.simple_list_item_2,android.R.id.text1,jugadoresNombre){
-              @Override
-              public View getView(int position, View convertView, ViewGroup parent){
-                  View vista = super.getView(position,convertView,parent);
-                  TextView lineaPrincipal = (TextView) vista.findViewById(android.R.id.text1);
-                  TextView lineaSecundaria = (TextView) vista.findViewById(android.R.id.text2);
-                  String nombre = jugadoresList.get(position).getUsername();
-                  String puntuacion = String.valueOf(jugadoresList.get(position).getEloCheckers());
-                  lineaPrincipal.setText(nombre);
-                  lineaSecundaria.setText(puntuacion);
-                  return vista;
-              }
-            };
-            ranking.setAdapter(elAdaptador);
-            System.out.println(jugadoresNombre);
-        }else{
+
+        String selected = listaPaises.getSelectedItem().toString();
+        if (selected.equals("Select")) {
             Toast.makeText(this, "Por favor selecciona un país", Toast.LENGTH_SHORT).show();
+        } else {
+            if (listaPaises.getSelectedItem().toString().equals("Global")) {
+                List<Player> jugadoresList = catalogue.getUsersDescOrder("Checkers");
+                Log.i("Ranking", "num-> " + jugadoresList.size());
+                jugadoresNombre = new String[jugadoresList.size()];
+                int pos = 0;
+                for (Player i : jugadoresList) {
+                    jugadoresNombre[pos] = i.getUsername();
+                    pos++;
+                }
+                ArrayAdapter elAdaptador = new ArrayAdapter<String>(ChooseRankingActivity.this, android.R.layout.simple_list_item_2, android.R.id.text1, jugadoresNombre) {
+                    @Override
+                    public View getView(int position, View convertView, ViewGroup parent) {
+                        View vista = super.getView(position, convertView, parent);
+                        TextView lineaPrincipal = (TextView) vista.findViewById(android.R.id.text1);
+                        TextView lineaSecundaria = (TextView) vista.findViewById(android.R.id.text2);
+                        String nombre = jugadoresList.get(position).getUsername() + " " + jugadoresList.get(position).getPais();
+                        String puntuacion = String.valueOf(jugadoresList.get(position).getEloCheckers());
+                        lineaPrincipal.setText(nombre);
+                        lineaSecundaria.setText(puntuacion);
+                        return vista;
+                    }
+                };
+                ranking.setAdapter(elAdaptador);
+            } else {
+                String pais = listaPaises.getSelectedItem().toString();
+                List<Player> jugadoresList = catalogue.getUsersByCountryCheckers(pais);
+                jugadoresNombre = new String[jugadoresList.size()];
+                int pos = 0;
+                for (Player i : jugadoresList) {
+                    jugadoresNombre[pos] = i.getUsername();
+                    pos++;
+                }
+                ArrayAdapter elAdaptador = new ArrayAdapter<String>(ChooseRankingActivity.this, android.R.layout.simple_list_item_2, android.R.id.text1, jugadoresNombre) {
+                    @Override
+                    public View getView(int position, View convertView, ViewGroup parent) {
+                        View vista = super.getView(position, convertView, parent);
+                        TextView lineaPrincipal = (TextView) vista.findViewById(android.R.id.text1);
+                        TextView lineaSecundaria = (TextView) vista.findViewById(android.R.id.text2);
+                        String nombre = jugadoresList.get(position).getUsername();
+                        String puntuacion = String.valueOf(jugadoresList.get(position).getEloCheckers());
+                        lineaPrincipal.setText(nombre);
+                        lineaSecundaria.setText(puntuacion);
+                        return vista;
+                    }
+                };
+                ranking.setAdapter(elAdaptador);
+                System.out.println(jugadoresNombre);
+            }
         }
 
 
-
     }
-    public void llenarCatalogo(){
+
+    public void llenarCatalogo() {
         OneTimeWorkRequest otwr = new OneTimeWorkRequest.Builder(WorkerGetUsersForRanking.class).build();
         WorkManager.getInstance(ChooseRankingActivity.this).getWorkInfoByIdLiveData(otwr.getId()).observe(ChooseRankingActivity.this, new Observer<WorkInfo>() {
             @RequiresApi(api = Build.VERSION_CODES.N)
@@ -146,24 +200,27 @@ public class ChooseRankingActivity extends AppCompatActivity implements View.OnC
                         PlayerCatalogue catalogue = PlayerCatalogue.getMyPlayerCatalogue();
                         paisesArrayList = catalogue.getPaises();
                         System.out.println(paisesArrayList);
-                        paises = new String[paisesArrayList.size()+1];
+                        paises = new String[paisesArrayList.size() + 2];
                         paises[0] = "Select";
-                        int pos = 1;
-                        for(String pais : paisesArrayList){
+                        paises[1] = "Global";
+                        int pos = 2;
+                        for (String pais : paisesArrayList) {
                             paises[pos] = pais;
                             pos++;
                         }
-                        ArrayAdapter<String> adapterSpinner = new ArrayAdapter<>(ChooseRankingActivity.this,android.R.layout.simple_spinner_dropdown_item, paises);
+                        ArrayAdapter<String> adapterSpinner = new ArrayAdapter<>(ChooseRankingActivity.this, android.R.layout.simple_spinner_dropdown_item, paises);
                         listaPaises.setAdapter(adapterSpinner);
                         //Log.i("Resultado", "onChanged: " + catalogue.getUsersByCountry());
-                        Log.i("FiltradoPais","ES-> "+catalogue.getUsersByCountryCheckers("ES"));
-                        Log.i("FiltradoPais","ES-> "+catalogue.getUsersByCountryChess("ES"));
+                        List<Player> jugadoresList = catalogue.getUsersDescOrder("Checkers");
+                        Log.i("GLOBAL", "--> " + jugadoresList);
+                        Log.i("FiltradoPais", "ES-> " + catalogue.getUsersByCountryCheckers("ES"));
+                        Log.i("FiltradoPais", "ES-> " + catalogue.getUsersByCountryChess("ES"));
 
-                        Log.i("FiltradoPais","FR-> "+catalogue.getUsersByCountryCheckers("FR"));
-                        Log.i("FiltradoPais","FR-> "+catalogue.getUsersByCountryChess("FR"));
+                        Log.i("FiltradoPais", "FR-> " + catalogue.getUsersByCountryCheckers("FR"));
+                        Log.i("FiltradoPais", "FR-> " + catalogue.getUsersByCountryChess("FR"));
 
-                        Log.i("FiltradoPais","CN-> "+catalogue.getUsersByCountryCheckers("CN"));
-                        Log.i("FiltradoPais","CN-> "+catalogue.getUsersByCountryChess("CN"));
+                        Log.i("FiltradoPais", "CN-> " + catalogue.getUsersByCountryCheckers("CN"));
+                        Log.i("FiltradoPais", "CN-> " + catalogue.getUsersByCountryChess("CN"));
 
                     }
                 }
@@ -171,6 +228,7 @@ public class ChooseRankingActivity extends AppCompatActivity implements View.OnC
         });
         WorkManager.getInstance(ChooseRankingActivity.this).enqueue(otwr);
     }
+
     public void getDatosJugador(String s) {
         // "email":"daniel.juape3@gmail.com","username":"Daddy","eloCheckers":"1001","country":"FR"
         String[] datosSinComas = s.split(",");
@@ -186,10 +244,10 @@ public class ChooseRankingActivity extends AppCompatActivity implements View.OnC
         String email = valores.get(0), username = valores.get(1), pais = valores.get(4);
         int eloCheckers = Integer.parseInt(valores.get(2)), eloChess = Integer.parseInt(valores.get(3));
         PlayerCatalogue catalogoJugador = PlayerCatalogue.getMyPlayerCatalogue();
+
         catalogoJugador.addPlayer(email, eloCheckers, eloChess, username, pais);
 
     }
-
 
 
     public void onBackPressed() {
