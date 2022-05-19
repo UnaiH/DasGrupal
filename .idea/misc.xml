@@ -3,18 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Daniel/Documents/GitHub/DasGrupal/app/src/main/res/layout-land/activity_global_ranking.xml" value="0.27380952380952384" />
-        <entry key="..\:/Users/Daniel/Documents/GitHub/DasGrupal/app/src/main/res/layout/activity_checkers.xml" value="0.3234375" />
-        <entry key="..\:/Users/Daniel/Documents/GitHub/DasGrupal/app/src/main/res/layout/activity_choose_ranking.xml" value="0.3234375" />
-        <entry key="..\:/Users/Daniel/Documents/GitHub/DasGrupal/app/src/main/res/layout/activity_global_ranking.xml" value="0.3234375" />
         <entry key="..\:/Users/Daniel/Documents/GitHub/DasGrupal/app/src/main/res/layout/activity_main.xml" value="0.27291666666666664" />
-        <entry key="..\:/Users/Daniel/Documents/GitHub/DasGrupal/app/src/main/res/layout/activity_profile.xml" value="0.5" />
+        <entry key="..\:/Users/Daniel/Documents/GitHub/DasGrupal/app/src/main/res/layout/activity_profile.xml" value="0.23802083333333332" />
         <entry key="..\:/Users/Daniel/Documents/GitHub/DasGrupal/app/src/main/res/layout/activity_select_menu.xml" value="0.20625" />
-        <entry key="..\:/Users/Daniel/Documents/GitHub/DasGrupal/app/src/main/res/xml/spinner.xml" value="0.33967391304347827" />
         <entry key="..\:/Users/fanju/AndroidStudioProjects/DasGrupal/app/src/main/res/layout/activity_checkers.xml" value="0.35054347826086957" />
         <entry key="..\:/Users/fanju/AndroidStudioProjects/DasGrupal/app/src/main/res/layout/activity_chess.xml" value="0.13" />
         <entry key="..\:/Users/fanju/AndroidStudioProjects/DasGrupal/app/src/main/res/layout/activity_main.xml" value="0.271532184950136" />
         <entry key="..\:/Users/fanju/AndroidStudioProjects/DasGrupal/app/src/main/res/layout/activity_select_menu.xml" value="0.1" />
+        <entry key="..\:/Users/jonka/AndroidStudioProjects/TrabajoGrupal/app/src/main/res/layout-land/activity_main.xml" value="0.19753086419753085" />
+        <entry key="..\:/Users/jonka/AndroidStudioProjects/TrabajoGrupal/app/src/main/res/layout-land/activity_preferencias.xml" value="0.19753086419753085" />
+        <entry key="..\:/Users/jonka/AndroidStudioProjects/TrabajoGrupal/app/src/main/res/layout-land/activity_select_menu.xml" value="0.19753086419753085" />
+        <entry key="..\:/Users/jonka/AndroidStudioProjects/TrabajoGrupal/app/src/main/res/layout-land/activity_sign_up.xml" value="0.19753086419753085" />
+        <entry key="..\:/Users/jonka/AndroidStudioProjects/TrabajoGrupal/app/src/main/res/layout-land/globalrankingelement.xml" value="0.19753086419753085" />
         <entry key="..\:/Users/jonka/AndroidStudioProjects/TrabajoGrupal/app/src/main/res/layout/activity_checkers.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/jonka/AndroidStudioProjects/TrabajoGrupal/app/src/main/res/layout/activity_chess.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/jonka/AndroidStudioProjects/TrabajoGrupal/app/src/main/res/layout/activity_choose_ranking.xml" value="0.25" />

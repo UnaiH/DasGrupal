@@ -25,4 +25,10 @@
     <string name="green">Green</string>
     <string name="blue">Blue</string>
     <string name="codPais">"Country Code: "</string>
+    <string name="porselectpais">Please select a country</string>
+    <string name="bademail">Wrong email or password</string>
+    <string name="todosCamp">Please complete all fields</string>
+    <string name="otroemail">This email is in use, please try with other</string>
+    <string name="contrnoval">Incorrect password. Your password must have a minimum of eight characters, at least one uppercase letter, one lowercase letter, one number and one special character.</string>
+    <string name="correonovalido">invalid email</string>
 </resources>

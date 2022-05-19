@@ -64,7 +64,7 @@ public class ChooseRankingActivity extends AppCompatActivity implements View.OnC
         String selected = listaPaises.getSelectedItem().toString();
         if (selected.equals("Select")) {
 
-            Toast.makeText(this, "Por favor selecciona un país", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.porselectpais, Toast.LENGTH_SHORT).show();
 
         } else {
             if (listaPaises.getSelectedItem().toString().equals("Global")) {
@@ -125,7 +125,7 @@ public class ChooseRankingActivity extends AppCompatActivity implements View.OnC
 
         String selected = listaPaises.getSelectedItem().toString();
         if (selected.equals("Select")) {
-            Toast.makeText(this, "Por favor selecciona un país", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.porselectpais, Toast.LENGTH_SHORT).show();
         } else {
             if (listaPaises.getSelectedItem().toString().equals("Global")) {
                 List<Player> jugadoresList = catalogue.getUsersDescOrder("Checkers");

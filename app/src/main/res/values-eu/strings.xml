@@ -25,4 +25,10 @@
     <string name="green">Berdea</string>
     <string name="blue">Urdina</string>
     <string name="codPais">"Herialdealdearen Kodigoa: "</string>
+    <string name="porselectpais">Mesedez aukeratu herialde bat</string>
+    <string name="bademail">Email edo Pasahitza okerra</string>
+    <string name="todosCamp">Mesedez bete eremu guztiak</string>
+    <string name="otroemail">Email hau erabiltzen ari da, mesedez erabili beste bat</string>
+    <string name="contrnoval">Pasahitz okerra. Zure pasahitzak gutxienez zortzi karaktere izan behar ditu, gutxienez letra larri bat, letra xehe bat, zenbaki bat eta karaktere berezi bat.</string>
+    <string name="correonovalido">Posta elektroniko baliogabea</string>
 </resources>

@@ -68,24 +68,24 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                                     Boolean resultadoPhp = workInfo.getOutputData().getBoolean("exito", false);
                                     Log.i("TAG", "onChanged: " + resultadoPhp);
                                     if (resultadoPhp) {
-                                        new DefineCountryWorker().localizacionBD(username, ctxt,activ);
+                                        //new DefineCountryWorker().localizacionBD(username, ctxt,activ);
                                         Intent iBack = new Intent();
                                         setResult(RESULT_OK);
                                         iBack.putExtra("user",email);
                                         finish();
 
                                     } else {
-                                        Toast.makeText(SignUpActivity.this, "El email ya está en uso, por favor pruebe con otro", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(SignUpActivity.this, R.string.otroemail, Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             }
                         });
                 WorkManager.getInstance(this).enqueue(otwr);
             } else {
-                Toast.makeText(SignUpActivity.this, "Contraseña incorrecta. Tu contraseña debe tener mínimo ocho caracteres, al menos una letra mayúscula, una letra minúscula, un número y un carácter especial.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SignUpActivity.this, R.string.contrnoval, Toast.LENGTH_SHORT).show();
             }
         } else {
-            Toast.makeText(SignUpActivity.this, "Correo electrónico inválido", Toast.LENGTH_SHORT).show();
+            Toast.makeText(SignUpActivity.this, R.string.correonovalido, Toast.LENGTH_SHORT).show();
 
         }
     }
