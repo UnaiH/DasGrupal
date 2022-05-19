@@ -88,10 +88,11 @@ public class SelectMenuActivity extends AppCompatActivity {
                     Boolean resultadoPhp = workInfo.getOutputData().getBoolean("exito", false);
                     System.out.println("RESULTADO INSERT IMAGEN --> " + resultadoPhp);
                     if (resultadoPhp) {
-
                         byte[] decodificado = myDB.getImage(user);
-                        Bitmap elBitmap = BitmapFactory.decodeByteArray(decodificado, 0, decodificado.length);
-                        btn_profile.setImageBitmap(elBitmap);
+                        if(decodificado!=null){
+                            Bitmap elBitmap = BitmapFactory.decodeByteArray(decodificado, 0, decodificado.length);
+                            btn_profile.setImageBitmap(elBitmap);
+                        }
                     }
                 }
             }
@@ -103,7 +104,11 @@ public class SelectMenuActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == RESULT_OK) {
-            cargarFotoPerfil(user);
+            byte[] decodificado = myDB.getImage(user);
+            if(decodificado!=null){
+                Bitmap elBitmap = BitmapFactory.decodeByteArray(decodificado, 0, decodificado.length);
+                btn_profile.setImageBitmap(elBitmap);
+            }
         }
     }
 }

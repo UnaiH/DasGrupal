@@ -51,6 +51,13 @@ public class ProfileActivity extends AppCompatActivity {
 
         cargarFotoPerfil(user);
 
+        btn_camera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent elIntentFoto = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(elIntentFoto, 777);
+            }
+        });
 
         btn_gallery.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,38 +99,79 @@ public class ProfileActivity extends AppCompatActivity {
             Bitmap bitmapRedimensionado = Bitmap.createScaledBitmap(foto, anchoFinal, altoFinal, true);
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             bitmapRedimensionado.compress(Bitmap.CompressFormat.PNG, 100, stream);
+
             byte[] fotoTransformada = stream.toByteArray();
             myDB.insertImage(user, fotoTransformada);
             image.setImageBitmap(foto);
 
             /*Subir la foto a la BBDD remota */
-            Uri.Builder builder = new Uri.Builder();
-            builder.appendQueryParameter("user", user);
-            String foto64 = Base64.encodeToString(fotoTransformada, Base64.DEFAULT);
-            builder.appendQueryParameter("image", foto64);
-            Data datos = new Data.Builder().putString("user", user).build();
-            OneTimeWorkRequest otwr = new OneTimeWorkRequest.Builder(WorkerInsertImage.class).setInputData(datos).build();
-            WorkManager.getInstance(ProfileActivity.this).getWorkInfoByIdLiveData(otwr.getId()).observe(ProfileActivity.this, new Observer<WorkInfo>() {
-                @Override
-                public void onChanged(WorkInfo workInfo) {
-                    if (workInfo != null && workInfo.getState().isFinished()) {
-                        Boolean resultadoPhp = workInfo.getOutputData().getBoolean("exito", false);
-                        System.out.println("RESULTADO INSERT IMAGEN --> " + resultadoPhp);
-                        if (resultadoPhp) {
-                            Intent i = getIntent();
-                            startActivity(i);
-                            finish();
-                        }
-                    }
-                }
-            });
-            WorkManager.getInstance(ProfileActivity.this).enqueue(otwr);
+            insertarFotoPerfil(user,fotoTransformada);
 
             setResult(RESULT_OK);
             finish();
         }
-    }
+        if (requestCode == 777) { //Recogemos la miniatura, la almacenamos en la BBDD del servidor
+            if (resultCode == RESULT_OK) {
+                Bundle extras = data.getExtras();
+                Bitmap laMiniatura = (Bitmap) extras.get("data");
+                //redimensionamos
+                int anchoDestino = image.getWidth();
+                int altoDestino = image.getHeight();
+                int anchoImagen = laMiniatura.getWidth();
+                int altoImagen = laMiniatura.getHeight();
+                float ratioImagen = (float) anchoImagen / (float) altoImagen;
+                float ratioDestino = (float) anchoDestino / (float) altoDestino;
+                int anchoFinal = anchoDestino;
+                int altoFinal = altoDestino;
+                if (ratioDestino > ratioImagen) {
+                    anchoFinal = (int) ((float) altoDestino * ratioImagen);
+                } else {
+                    altoFinal = (int) ((float) anchoDestino / ratioImagen);
+                }
+                Bitmap bitmapRedimensionado = Bitmap.createScaledBitmap(laMiniatura, anchoFinal, altoFinal, true);
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bitmapRedimensionado.compress(Bitmap.CompressFormat.PNG,100,stream);
+                byte[] fotoTransformada = stream.toByteArray();
+                if(myDB.getImage(user)!=null){
+                    myDB.updateImage(user,fotoTransformada);
+                }else{
+                    myDB.insertImage(user,fotoTransformada);
+                }
+                insertarFotoPerfil(user,fotoTransformada);
+                image.setImageBitmap(laMiniatura);
+                setResult(RESULT_OK);
+                finish();
+            }
 
+        }
+    }
+    public void insertarFotoPerfil(String user, byte[] fotoTransformada){
+
+
+        /*Subir la foto a la BBDD remota */
+        Uri.Builder builder = new Uri.Builder();
+        builder.appendQueryParameter("user", user);
+        String foto64 = Base64.encodeToString(fotoTransformada, Base64.DEFAULT);
+        builder.appendQueryParameter("image", foto64);
+        Data datos = new Data.Builder().putString("user", user).build();
+        OneTimeWorkRequest otwr = new OneTimeWorkRequest.Builder(WorkerInsertImage.class).setInputData(datos).build();
+        WorkManager.getInstance(ProfileActivity.this).getWorkInfoByIdLiveData(otwr.getId()).observe(ProfileActivity.this, new Observer<WorkInfo>() {
+            @Override
+            public void onChanged(WorkInfo workInfo) {
+                if (workInfo != null && workInfo.getState().isFinished()) {
+                    Boolean resultadoPhp = workInfo.getOutputData().getBoolean("exito", false);
+                    System.out.println("RESULTADO INSERT IMAGEN --> " + resultadoPhp);
+                    if (resultadoPhp) {
+                        Intent i = getIntent();
+                        startActivity(i);
+                        finish();
+                    }
+                }
+            }
+        });
+        WorkManager.getInstance(ProfileActivity.this).enqueue(otwr);
+
+    }
     public void cargarFotoPerfil(String user) {
         /*Obtiene la foto de la BBDD y la pone en el imageview*/
         Data datos = new Data.Builder().putString("user", user).build();
