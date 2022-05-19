@@ -13,10 +13,7 @@ import java.util.Random;
 
 public class CheckersActivity extends GameActivity {
 
-    private String user;
     private CheckersBoard board;
-    private int idGame;
-    private String currentTurn;
     private ImageButton[][] buttons = new ImageButton[10][10];
     private ArrayList<Integer> redSquares;
     private int[] chosenSquare = new int[2];
@@ -33,14 +30,11 @@ public class CheckersActivity extends GameActivity {
         tem.setThemes(this);
 
         setContentView(R.layout.activity_checkers);
-        user = getIntent().getStringExtra("user");
         setUpBoard();
     }
 
     private void setUpBoard()
     {
-        Player player1 = new Player("whitePlayer");
-        Player player2 = new Player("blackPlayer");
 
         Random rand = new Random();
         idGame = rand.nextInt(999999);
@@ -93,40 +87,29 @@ public class CheckersActivity extends GameActivity {
         ImageButton F8 = findViewById(R.id.CheckersF8);
         ImageButton H8 = findViewById(R.id.CheckersH8);
 
-        coordinates.add(1); coordinates.add(1); buttons[1][1]=A1;
-        coordinates.add(3); coordinates.add(1); buttons[3][1]=C1;
-        coordinates.add(5); coordinates.add(1); buttons[5][1]=E1;
-        coordinates.add(7); coordinates.add(1); buttons[7][1]=G1;
-        coordinates.add(2); coordinates.add(2); buttons[2][2]=B2;
-        coordinates.add(4); coordinates.add(2); buttons[4][2]=D2;
-        coordinates.add(6); coordinates.add(2); buttons[6][2]=F2;
-        coordinates.add(8); coordinates.add(2); buttons[8][2]=H2;
-        coordinates.add(1); coordinates.add(3); buttons[1][3]=A3;
-        coordinates.add(3); coordinates.add(3); buttons[3][3]=C3;
-        coordinates.add(5); coordinates.add(3); buttons[5][3]=E3;
-        coordinates.add(7); coordinates.add(3); buttons[7][3]=G3;
-        coordinates.add(2); coordinates.add(4); buttons[2][4]=B4;
-        coordinates.add(4); coordinates.add(4); buttons[4][4]=D4;
-        coordinates.add(6); coordinates.add(4); buttons[6][4]=F4;
-        coordinates.add(8); coordinates.add(4); buttons[8][4]=H4;
-        coordinates.add(1); coordinates.add(5); buttons[1][5]=A5;
-        coordinates.add(3); coordinates.add(5); buttons[3][5]=C5;
-        coordinates.add(5); coordinates.add(5); buttons[5][5]=E5;
-        coordinates.add(7); coordinates.add(5); buttons[7][5]=G5;
-        coordinates.add(2); coordinates.add(6); buttons[2][6]=B6;
-        coordinates.add(4); coordinates.add(6); buttons[4][6]=D6;
-        coordinates.add(6); coordinates.add(6); buttons[6][6]=F6;
-        coordinates.add(8); coordinates.add(6); buttons[8][6]=H6;
-        coordinates.add(1); coordinates.add(7); buttons[1][7]=A7;
-        coordinates.add(3); coordinates.add(7); buttons[3][7]=C7;
-        coordinates.add(5); coordinates.add(7); buttons[5][7]=E7;
-        coordinates.add(7); coordinates.add(7); buttons[7][7]=G7;
-        coordinates.add(2); coordinates.add(8); buttons[2][8]=B8;
-        coordinates.add(4); coordinates.add(8); buttons[4][8]=D8;
-        coordinates.add(6); coordinates.add(8); buttons[6][8]=F8;
-        coordinates.add(8); coordinates.add(8); buttons[8][8]=H8;
+        for (int j=1; j<9; j++)
+        {
+            for (int i=1; i<9; i++)
+            {
+                if ((i+j)%2==0)
+                {
+                    coordinates.add(i);
+                    coordinates.add(j);
+                }
+            }
+        }
 
-
+        buttons[1][1]=A1; buttons[3][1]=C1; buttons[5][1]=E1;
+        buttons[7][1]=G1; buttons[2][2]=B2; buttons[4][2]=D2;
+        buttons[6][2]=F2; buttons[8][2]=H2; buttons[1][3]=A3;
+        buttons[3][3]=C3; buttons[5][3]=E3; buttons[7][3]=G3;
+        buttons[2][4]=B4; buttons[4][4]=D4; buttons[6][4]=F4;
+        buttons[8][4]=H4; buttons[1][5]=A5; buttons[3][5]=C5;
+        buttons[5][5]=E5; buttons[7][5]=G5; buttons[2][6]=B6;
+        buttons[4][6]=D6; buttons[6][6]=F6; buttons[8][6]=H6;
+        buttons[1][7]=A7; buttons[3][7]=C7; buttons[5][7]=E7;
+        buttons[7][7]=G7; buttons[2][8]=B8; buttons[4][8]=D8;
+        buttons[6][8]=F8; buttons[8][8]=H8;
 
 
         for (int i = 0; i< coordinates.size(); i+=2)
@@ -283,6 +266,7 @@ public class CheckersActivity extends GameActivity {
                     if (currentTurn.equals("White"))
                     {
                         currentTurn="Black";
+                        updateTurn(idGame,"Black");
                     }
                     else if (currentTurn.equals("Black"))
                     {
@@ -442,7 +426,7 @@ public class CheckersActivity extends GameActivity {
     {
         super.onBackPressed();
         Intent i = new Intent(this, SelectMenuActivity.class);
-        i.putExtra("user", user);
+        //i.putExtra("user", user);
         setResult(RESULT_OK, i);
         finish();
         startActivity(i);

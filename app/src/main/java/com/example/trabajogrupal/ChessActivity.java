@@ -13,12 +13,9 @@ import java.util.Random;
 public class ChessActivity extends GameActivity
 {
     private ChessBoard board;
-    private int idGame;
-    private String currentTurn;
     private ImageButton[][] buttons = new ImageButton[10][10];
     private ArrayList<Integer> redSquares;
     private int[] chosenSquare = new int[2];
-    private String user;
 
 
     @Override
@@ -31,16 +28,12 @@ public class ChessActivity extends GameActivity
         tem.setThemes(this);
 
         setContentView(R.layout.activity_chess);
-        user = getIntent().getStringExtra("user");
         setUpBoard();
 
     }
 
     private void setUpBoard()
     {
-        Player player1 = new Player("whitePlayer");
-        Player player2 = new Player("blackPlayer");
-
         Random rand = new Random();
         idGame = rand.nextInt(999999);
         currentTurn="White";
@@ -650,7 +643,7 @@ public class ChessActivity extends GameActivity
     {
         super.onBackPressed();
         Intent i = new Intent(this, SelectMenuActivity.class);
-        i.putExtra("user", user);
+        //i.putExtra("user", user);
         setResult(RESULT_OK, i);
         finish();
         startActivity(i);

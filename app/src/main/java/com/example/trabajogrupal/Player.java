@@ -9,15 +9,14 @@ public class Player
     private String pais;
     //private ArrayList<Game> gamesInCourse;
     //private ArrayList<Game> gamesFinished;
-    public Player(String pName)
+    public Player(String pName, int pEloCheckers, int pEloChess)
     {
         name=pName;
         rankELO = new ArrayList<>();
+        rankELO.add(pEloCheckers);
+        rankELO.add(pEloChess);
         //gamesInCourse = new ArrayList<>();
         //gamesFinished = new ArrayList<>();
-    }
-    public void addElo(Integer elo){
-        rankELO.add(elo);
     }
     public Integer getElo(Integer pos){
         return rankELO.get(pos);

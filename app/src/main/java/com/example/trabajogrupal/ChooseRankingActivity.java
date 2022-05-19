@@ -12,12 +12,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ChooseRanking extends AppCompatActivity implements View.OnClickListener {
+public class ChooseRankingActivity extends AppCompatActivity implements View.OnClickListener {
     private TextView paisesTexto;
     private String[] usernames;
     private int[] elos;
@@ -44,7 +42,7 @@ public class ChooseRanking extends AppCompatActivity implements View.OnClickList
     public void onClickCheckers(View view) {
 
         OneTimeWorkRequest otwr = new OneTimeWorkRequest.Builder(WorkerGetUsersByCountryCheckers.class).build();
-        WorkManager.getInstance(ChooseRanking.this).getWorkInfoByIdLiveData(otwr.getId()).observe(ChooseRanking.this, new Observer<WorkInfo>() {
+        WorkManager.getInstance(ChooseRankingActivity.this).getWorkInfoByIdLiveData(otwr.getId()).observe(ChooseRankingActivity.this, new Observer<WorkInfo>() {
             @Override
             public void onChanged(WorkInfo workInfo) {
                 if (workInfo != null && workInfo.getState().isFinished()) {
@@ -64,7 +62,7 @@ public class ChooseRanking extends AppCompatActivity implements View.OnClickList
                 }
             }
         });
-        WorkManager.getInstance(ChooseRanking.this).enqueue(otwr);
+        WorkManager.getInstance(ChooseRankingActivity.this).enqueue(otwr);
 
         usernames=new String[0];
         elos=new int[0];
@@ -82,7 +80,7 @@ public class ChooseRanking extends AppCompatActivity implements View.OnClickList
         list.setAdapter(adapter);
     }
     public void onBackPressed(){
-        Intent i = new Intent(ChooseRanking.this, MainActivity.class);
+        Intent i = new Intent(ChooseRankingActivity.this, MainActivity.class);
         setResult(RESULT_OK, i);
         finish();
         startActivity(i);

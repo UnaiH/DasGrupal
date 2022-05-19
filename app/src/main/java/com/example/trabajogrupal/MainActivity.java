@@ -5,11 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,10 +25,6 @@ import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
-
-import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     EditText user, pass;
@@ -129,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void onClickRanking(View v) {
         finish();
-        Intent i = new Intent(this, ChooseRanking.class);
+        Intent i = new Intent(this, ChooseRankingActivity.class);
         startActivity(i);
     }
 
