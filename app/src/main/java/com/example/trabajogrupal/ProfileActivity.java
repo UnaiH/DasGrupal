@@ -10,13 +10,17 @@ import androidx.work.WorkManager;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.io.ByteArrayOutputStream;
@@ -26,9 +30,13 @@ import java.io.InputStream;
 public class ProfileActivity extends AppCompatActivity {
     ImageView image;
     TextView userTextView;
-    Button btn_gallery, btn_camera, btn_select;
+    Button btn_gallery, btn_camera, btn_save;
+    Spinner dropdown;
     LocalDB myDB;
     String user;
+    byte[] fotoTransformada;
+    String[] itemsDropdown;
+    Bitmap bitMapFoto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +45,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         ThemesWorker tem = new ThemesWorker();
         tem.setThemes(this);
-
+        myDB = new LocalDB(this, "Chess", null, 1);
         setContentView(R.layout.activity_profile);
         userTextView = findViewById(R.id.profile_username);
         user = getIntent().getStringExtra("user");
@@ -45,10 +53,46 @@ public class ProfileActivity extends AppCompatActivity {
         image = findViewById(R.id.profileImage);
         btn_camera = findViewById(R.id.btn_profileCamera);
         btn_gallery = findViewById(R.id.btn_profileGallery);
-        btn_select = findViewById(R.id.btn_profileSelect);
-        myDB = new LocalDB(this, "Chess", null, 1);
+        btn_save = findViewById(R.id.btn_profileGuardar);
 
+        /*Dropdown para seleccionar 4 avatares que ofrece la app*/
+        dropdown = findViewById(R.id.spinnerSelect);
+        itemsDropdown = new String[]{"Select","Avatar 1", "Avatar 2", "Avatar 3", "Avatar 4"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, itemsDropdown);
+        dropdown.setAdapter(adapter);
+        dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String avatar = itemsDropdown[i].toLowerCase();
+                String uri = null;
+                switch (avatar) {
+                    case "avatar 1":
+                        uri = "@drawable/avatar1";
+                        break;
+                    case "avatar 2":
+                        uri = "@drawable/avatar2";
+                        break;
+                    case "avatar 3":
+                        uri = "@drawable/avatar3";
+                        break;
+                    case "avatar 4":
+                        uri = "@drawable/avatar4";
+                        break;
+                }
+                if (uri != null) {
+                    int imageResource = getResources().getIdentifier(uri, null, getPackageName());
+                    bitMapFoto = BitmapFactory.decodeResource(getResources(), imageResource);
+                    compressFoto();
+                    Drawable res = getResources().getDrawable(imageResource);
+                    image.setImageDrawable(res);
+                }
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
         cargarFotoPerfil(user);
 
         btn_camera.setOnClickListener(new View.OnClickListener() {
@@ -64,7 +108,23 @@ public class ProfileActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent iGallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(iGallery, 10);
+            }
+        });
+        btn_save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+                if (fotoTransformada != null) {
+                    if (myDB.getImage(user) != null) {
+                        myDB.updateImage(user, fotoTransformada);
+                    } else {
+                        myDB.insertImage(user, fotoTransformada);
+                    }
+                    insertarFotoPerfil(user, fotoTransformada);
+                }
+
+                setResult(RESULT_OK);
+                finish();
             }
         });
     }
@@ -74,78 +134,54 @@ public class ProfileActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 10 && resultCode == RESULT_OK) {
             Uri chosenImage = data.getData();
-            myDB.clearImagen(user);
             InputStream inputStream = null;
             try {
                 inputStream = getContentResolver().openInputStream(chosenImage);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
-            Bitmap foto = BitmapFactory.decodeStream(inputStream);
+            bitMapFoto = BitmapFactory.decodeStream(inputStream);
 
-            int anchoDestino = image.getWidth();
-            int altoDestino = image.getHeight();
-            int anchoImagen = foto.getWidth();
-            int altoImagen = foto.getHeight();
-            float ratioImagen = (float) anchoImagen / (float) altoImagen;
-            float ratioDestino = (float) anchoDestino / (float) altoDestino;
-            int anchoFinal = anchoDestino;
-            int altoFinal = altoDestino;
-            if (ratioDestino > ratioImagen) {
-                anchoFinal = (int) ((float) altoDestino * ratioImagen);
-            } else {
-                altoFinal = (int) ((float) anchoDestino / ratioImagen);
-            }
-            Bitmap bitmapRedimensionado = Bitmap.createScaledBitmap(foto, anchoFinal, altoFinal, true);
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bitmapRedimensionado.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            compressFoto();
 
-            byte[] fotoTransformada = stream.toByteArray();
-            myDB.insertImage(user, fotoTransformada);
-            image.setImageBitmap(foto);
+            image.setImageBitmap(bitMapFoto);
 
-            /*Subir la foto a la BBDD remota */
-            insertarFotoPerfil(user,fotoTransformada);
 
-            setResult(RESULT_OK);
-            finish();
         }
         if (requestCode == 777) { //Recogemos la miniatura, la almacenamos en la BBDD del servidor
             if (resultCode == RESULT_OK) {
                 Bundle extras = data.getExtras();
-                Bitmap laMiniatura = (Bitmap) extras.get("data");
-                //redimensionamos
-                int anchoDestino = image.getWidth();
-                int altoDestino = image.getHeight();
-                int anchoImagen = laMiniatura.getWidth();
-                int altoImagen = laMiniatura.getHeight();
-                float ratioImagen = (float) anchoImagen / (float) altoImagen;
-                float ratioDestino = (float) anchoDestino / (float) altoDestino;
-                int anchoFinal = anchoDestino;
-                int altoFinal = altoDestino;
-                if (ratioDestino > ratioImagen) {
-                    anchoFinal = (int) ((float) altoDestino * ratioImagen);
-                } else {
-                    altoFinal = (int) ((float) anchoDestino / ratioImagen);
-                }
-                Bitmap bitmapRedimensionado = Bitmap.createScaledBitmap(laMiniatura, anchoFinal, altoFinal, true);
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                bitmapRedimensionado.compress(Bitmap.CompressFormat.PNG,100,stream);
-                byte[] fotoTransformada = stream.toByteArray();
-                if(myDB.getImage(user)!=null){
-                    myDB.updateImage(user,fotoTransformada);
-                }else{
-                    myDB.insertImage(user,fotoTransformada);
-                }
-                insertarFotoPerfil(user,fotoTransformada);
-                image.setImageBitmap(laMiniatura);
-                setResult(RESULT_OK);
-                finish();
+                bitMapFoto = (Bitmap) extras.get("data");
+                compressFoto();
+                image.setImageBitmap(bitMapFoto);
+
             }
 
         }
     }
-    public void insertarFotoPerfil(String user, byte[] fotoTransformada){
+
+    public void compressFoto() {
+        int anchoDestino = image.getWidth();
+        int altoDestino = image.getHeight();
+        int anchoImagen = bitMapFoto.getWidth();
+        int altoImagen = bitMapFoto.getHeight();
+        float ratioImagen = (float) anchoImagen / (float) altoImagen;
+        float ratioDestino = (float) anchoDestino / (float) altoDestino;
+        int anchoFinal = anchoDestino;
+        int altoFinal = altoDestino;
+        if (ratioDestino > ratioImagen) {
+            anchoFinal = (int) ((float) altoDestino * ratioImagen);
+        } else {
+            altoFinal = (int) ((float) anchoDestino / ratioImagen);
+        }
+        Bitmap bitmapRedimensionado = Bitmap.createScaledBitmap(bitMapFoto, anchoFinal, altoFinal, true);
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmapRedimensionado.compress(Bitmap.CompressFormat.PNG, 100, stream);
+
+        fotoTransformada = stream.toByteArray();
+    }
+
+    public void insertarFotoPerfil(String user, byte[] fotoTransformada) {
 
 
         /*Subir la foto a la BBDD remota */
@@ -172,6 +208,7 @@ public class ProfileActivity extends AppCompatActivity {
         WorkManager.getInstance(ProfileActivity.this).enqueue(otwr);
 
     }
+
     public void cargarFotoPerfil(String user) {
         /*Obtiene la foto de la BBDD y la pone en el imageview*/
         Data datos = new Data.Builder().putString("user", user).build();
@@ -185,7 +222,7 @@ public class ProfileActivity extends AppCompatActivity {
                     if (resultadoPhp) {
 
                         byte[] decodificado = myDB.getImage(user);
-                        if(decodificado!=null) {
+                        if (decodificado != null) {
                             Bitmap elBitmap = BitmapFactory.decodeByteArray(decodificado, 0, decodificado.length);
                             image.setImageBitmap(elBitmap);
                         }
