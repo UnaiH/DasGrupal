@@ -22,8 +22,10 @@ public class Player {
         //gamesFinished = new ArrayList<>();
     }
 
-    public Integer getElo(Integer pos) {
-        return rankELO.get(pos);
+    public int getEloCheckers(){return eloCheckers;}
+
+    public int getEloChess() {
+        return eloChess;
     }
 
     public void setPais(String Pais) {

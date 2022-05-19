@@ -1,5 +1,6 @@
 package com.example.trabajogrupal;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.work.OneTimeWorkRequest;
@@ -7,6 +8,7 @@ import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -46,6 +48,7 @@ public class ChooseRankingActivity extends AppCompatActivity implements View.OnC
 
         OneTimeWorkRequest otwr = new OneTimeWorkRequest.Builder(WorkerGetUsersForRanking.class).build();
         WorkManager.getInstance(ChooseRankingActivity.this).getWorkInfoByIdLiveData(otwr.getId()).observe(ChooseRankingActivity.this, new Observer<WorkInfo>() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onChanged(WorkInfo workInfo) {
                 if (workInfo != null && workInfo.getState().isFinished()) {
@@ -60,7 +63,15 @@ public class ChooseRankingActivity extends AppCompatActivity implements View.OnC
                             }
                         }
                         PlayerCatalogue catalogue = PlayerCatalogue.getMyPlayerCatalogue();
-                        Log.i("Resultado", "onChanged: " + catalogue.getMapPlayers());
+                        Log.i("Resultado", "onChanged: " + catalogue.getUsersByCountry());
+                        Log.i("FiltradoPais","ES-> "+catalogue.getUsersByCountryCheckers("ES"));
+                        Log.i("FiltradoPais","ES-> "+catalogue.getUsersByCountryChess("ES"));
+
+                        Log.i("FiltradoPais","FR-> "+catalogue.getUsersByCountryCheckers("FR"));
+                        Log.i("FiltradoPais","FR-> "+catalogue.getUsersByCountryChess("FR"));
+
+                        Log.i("FiltradoPais","CN-> "+catalogue.getUsersByCountryCheckers("CN"));
+                        Log.i("FiltradoPais","CN-> "+catalogue.getUsersByCountryChess("CN"));
 
                     }
                 }
