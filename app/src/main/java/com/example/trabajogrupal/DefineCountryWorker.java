@@ -5,10 +5,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
@@ -82,6 +84,48 @@ public class DefineCountryWorker {
                                             });
                                     WorkManager.getInstance(context).enqueue(otwr);
 
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                });
+            }
+        }
+    }
+
+    public void getCountry(Context context, Activity activity, TextView paisTexto){
+        Geocoder geo = new Geocoder(context, Locale.getDefault());
+        if(checkPlayServices(context,activity)) {
+            if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            }
+            else if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+            }
+            if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED||ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                final String[] pais = {""};
+                client = LocationServices.getFusedLocationProviderClient(context);
+                client.getLastLocation().addOnSuccessListener(activity, new OnSuccessListener<Location>(){
+                    @Override
+                    public void onSuccess(Location location) {
+                        // se escribe la ultima posicion del movil (generalmente la actual).
+                        // Got last known location. In some rare situations this can be null.
+                        if (location != null) {
+                            List<Address> direccion;
+                            try {
+                                direccion=geo.getFromLocation(location.getLatitude(),location.getLongitude(),1);
+                                ActLat=location.getLatitude();
+                                ActLog=location.getLongitude();
+                                local=location;
+                                if(!direccion.isEmpty()) {
+                                    pais[0] =direccion.get(0).getCountryCode();
+                                    Log.i("Direcciones", "onSuccess: "+ pais[0]);
+                                    Country count=Country.getMiCountry();
+                                    count.setNombre(pais[0]);
+                                    paisTexto.setText(R.string.codPais);
+                                    paisTexto.setText(paisTexto.getText() + pais[0]);
                                 }
                             } catch (IOException e) {
                                 e.printStackTrace();

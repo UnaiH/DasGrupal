@@ -17,6 +17,9 @@
         android:theme="@style/Theme.TrabajoGrupal"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ChooseRanking"
+            android:exported="false" />
+        <activity
             android:name=".ProfileActivity"
             android:exported="false" />
         <activity

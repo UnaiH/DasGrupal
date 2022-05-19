@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ListView;
 
 public class GlobalRankingActivity extends AppCompatActivity {
@@ -14,6 +15,8 @@ public class GlobalRankingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         new LanguagesWorker().setLangua(this);
         super.onCreate(savedInstanceState);
+        Country count=Country.getMiCountry();
+        Log.i("Direcciones", "onCreate: "+ count.getNombre());
 
         ThemesWorker tem=new ThemesWorker();
         tem.setThemes(this);

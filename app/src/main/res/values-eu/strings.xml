@@ -24,4 +24,5 @@
     <string name="camera">Kamera</string>
     <string name="green">Berdea</string>
     <string name="blue">Urdina</string>
+    <string name="codPais">"Herialdealdearen Kodigoa: "</string>
 </resources>
