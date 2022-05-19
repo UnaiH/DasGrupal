@@ -1,7 +1,5 @@
 package com.example.trabajogrupal;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -12,19 +10,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.Observer;
 import androidx.work.Data;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
-import androidx.lifecycle.Observer;
-
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnSuccessListener;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     EditText user, pass;
@@ -85,6 +78,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         System.out.println("RESULTADO LOGIN --> " + resultadoPhp);
                         if (resultadoPhp) {//se logueó correctamente
                             Intent i = new Intent(MainActivity.this, SelectMenuActivity.class);
+                            PlayerCatalogue catalogue = PlayerCatalogue.getMyPlayerCatalogue();
+                            catalogue.setCurrentUser(userEmail);
                             i.putExtra("user",userEmail);
                             startActivity(i);
                             finish();
@@ -128,10 +123,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1 && resultCode == RESULT_OK) {
+        if (requestCode == 1 && resultCode == RESULT_OK) { //Se registró correctamente y se le da por logueado automáticamente
             Intent i = new Intent(MainActivity.this, SelectMenuActivity.class);
             String user=getIntent().getStringExtra("email");
             i.putExtra("email",user);
+            PlayerCatalogue catalogue = PlayerCatalogue.getMyPlayerCatalogue();
+            catalogue.setCurrentUser(user);
             startActivity(i);
             finish();
         }

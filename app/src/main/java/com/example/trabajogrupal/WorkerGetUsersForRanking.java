@@ -21,15 +21,15 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class WorkerGetUsersByCountryCheckers extends Worker {
-    public WorkerGetUsersByCountryCheckers(@NonNull Context context, @NonNull WorkerParameters workerParams) {
+public class WorkerGetUsersForRanking extends Worker {
+    public WorkerGetUsersForRanking(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
     }
 
     @NonNull
     @Override
     public Result doWork() {
-        String server = "http://ec2-52-56-170-196.eu-west-2.compute.amazonaws.com/prehecho001/WEB/GroupProyect/getUsersByCountryCheckers.php";
+        String server = "http://ec2-52-56-170-196.eu-west-2.compute.amazonaws.com/prehecho001/WEB/GroupProyect/getUsersForRanking.php";
         HttpURLConnection urlConnection = null;
         try {
             URL destino = new URL(server);
