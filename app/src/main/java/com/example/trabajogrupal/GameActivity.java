@@ -15,7 +15,7 @@ public class GameActivity extends AppCompatActivity
     protected String player2;
     protected int idGame;
     protected String currentTurn;
-
+    protected String currentUser;
     protected void insertPiece(int idGame, String type, int posX, int posY)
     {
         Data.Builder data = new Data.Builder();
@@ -59,8 +59,63 @@ public class GameActivity extends AppCompatActivity
                     @Override
                     public void onChanged(WorkInfo workInfo)
                     {
-                        if (workInfo != null && workInfo.getState().isFinished()) {
+                        if (workInfo != null && workInfo.getState().isFinished())
+                        {
                             Log.i("workerPHP", "Piece deleted");
+                        }
+                    }
+                });
+        WorkManager.getInstance(this).enqueue(otwr);
+    }
+
+    protected void deletePiece_updatePiece(int idGame, int posX, int posY, int finalX, int finalY)
+    {
+        Data.Builder data = new Data.Builder();
+
+        data.putInt("idGame", idGame);
+        data.putInt("posX", finalX);
+        data.putInt("posY", finalY);
+
+        OneTimeWorkRequest otwr = new OneTimeWorkRequest.Builder(WorkerDeletePiece.class)
+                .setInputData(data.build())
+                .build();
+        WorkManager.getInstance(this).getWorkInfoByIdLiveData(otwr.getId())
+                .observe(this, new Observer<WorkInfo>()
+                {
+                    @Override
+                    public void onChanged(WorkInfo workInfo)
+                    {
+                        if (workInfo != null && workInfo.getState().isFinished())
+                        {
+                            Log.i("workerPHP", "Piece deleted --> updatePiece");
+                            updatePiece(idGame, posX, posY, finalX, finalY);
+                        }
+                    }
+                });
+        WorkManager.getInstance(this).enqueue(otwr);
+    }
+
+    protected void deletePiece_updatePiece_updatePieceType(int idGame, int posX, int posY, int finalX, int finalY, String type)
+    {
+        Data.Builder data = new Data.Builder();
+
+        data.putInt("idGame", idGame);
+        data.putInt("posX", finalX);
+        data.putInt("posY", finalY);
+
+        OneTimeWorkRequest otwr = new OneTimeWorkRequest.Builder(WorkerDeletePiece.class)
+                .setInputData(data.build())
+                .build();
+        WorkManager.getInstance(this).getWorkInfoByIdLiveData(otwr.getId())
+                .observe(this, new Observer<WorkInfo>()
+                {
+                    @Override
+                    public void onChanged(WorkInfo workInfo)
+                    {
+                        if (workInfo != null && workInfo.getState().isFinished())
+                        {
+                            Log.i("workerPHP", "Piece deleted --> updatePiece_updatePieceType");
+                            updatePiece_updatePieceType(idGame, posX, posY, finalX, finalY, type);
                         }
                     }
                 });
@@ -94,6 +149,63 @@ public class GameActivity extends AppCompatActivity
         WorkManager.getInstance(this).enqueue(otwr);
     }
 
+    protected void updatePiece_updatePieceType(int idGame, int posXOld, int posYOld, int posXNew, int posYNew, String type)
+    {
+        Data.Builder data = new Data.Builder();
+
+        data.putInt("idGame", idGame);
+        data.putInt("posXOld", posXOld);
+        data.putInt("posYOld", posYOld);
+        data.putInt("posXNew", posXNew);
+        data.putInt("posYNew", posYNew);
+
+        OneTimeWorkRequest otwr = new OneTimeWorkRequest.Builder(WorkerUpdatePiece.class)
+                .setInputData(data.build())
+                .build();
+        WorkManager.getInstance(this).getWorkInfoByIdLiveData(otwr.getId())
+                .observe(this, new Observer<WorkInfo>()
+                {
+                    @Override
+                    public void onChanged(WorkInfo workInfo)
+                    {
+                        if (workInfo != null && workInfo.getState().isFinished())
+                        {
+                            Log.i("workerPHP", "Piece updated --> updatePieceType");
+                            updatePieceType(idGame,posXNew, posYNew , type);
+                        }
+                    }
+                });
+        WorkManager.getInstance(this).enqueue(otwr);
+    }
+
+    protected void updatePieceType(int idGame, int posX, int posY, String type)
+    {
+        Data.Builder data = new Data.Builder();
+
+        data.putInt("idGame", idGame);
+        data.putInt("posX", posX);
+        data.putInt("posY", posY);
+        data.putString("type", type);
+
+        OneTimeWorkRequest otwr = new OneTimeWorkRequest.Builder(WorkerUpdatePieceType.class)
+                .setInputData(data.build())
+                .build();
+        WorkManager.getInstance(this).getWorkInfoByIdLiveData(otwr.getId())
+                .observe(this, new Observer<WorkInfo>()
+                {
+                    @Override
+                    public void onChanged(WorkInfo workInfo)
+                    {
+                        if (workInfo != null && workInfo.getState().isFinished()) {
+                            Log.i("workerPHP", "Piece type updated");
+                        }
+                    }
+                });
+        WorkManager.getInstance(this).enqueue(otwr);
+    }
+
+
+
     protected void getPieces(int idGame)
     {
         Data.Builder data = new Data.Builder();
@@ -115,8 +227,8 @@ public class GameActivity extends AppCompatActivity
                             for (int i=0; i<listPieces.length; i+=3)
                             {
                                 String type = listPieces[i];
-                                int posX = Integer.valueOf(listPieces[i + 1]);
-                                int posY = Integer.valueOf(listPieces[i + 2]);
+                                int posX = Integer.parseInt(listPieces[i + 1]);
+                                int posY = Integer.parseInt(listPieces[i + 2]);
                                 Log.i("workerPHP", "Pieces recovered: " + type + "  " + posX + "-" + posY);
                             }
                         }
@@ -142,7 +254,7 @@ public class GameActivity extends AppCompatActivity
                     public void onChanged(WorkInfo workInfo)
                     {
                         if (workInfo != null && workInfo.getState().isFinished()) {
-                            Log.i("workerPHP", "Piece updated");
+                            Log.i("workerPHP", "Turn changed");
                         }
                     }
                 });

@@ -15,13 +15,14 @@ if (mysqli_connect_errno($con)){
 
 
 
-$stmt = mysqli_query($con,"SELECT * FROM Usuario GROUP BY Usuario.country ORDER BY Usuario.eloCheckers Desc");
+$stmt = mysqli_query($con,"SELECT * FROM Usuario");
 if ($stmt->num_rows > 0){
 	while($row = $stmt->fetch_assoc()){
 		$arrayresultado =array(
 		'email'=>$row['email'],
 		'username'=>$row['username'],		
 		'eloCheckers'=>$row['eloCheckers'],
+		'eloChess'=>$row['eloChess'],	
 		'country'=>$row['country']);	
 		$resultado[] = array('resultado' => $arrayresultado);
 	}	

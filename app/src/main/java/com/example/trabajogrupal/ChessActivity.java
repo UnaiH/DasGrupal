@@ -23,11 +23,17 @@ public class ChessActivity extends GameActivity
     {
         new LanguagesWorker().setLangua(this);
         super.onCreate(savedInstanceState);
-
         ThemesWorker tem=new ThemesWorker();
         tem.setThemes(this);
-
         setContentView(R.layout.activity_chess);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null)
+        {
+            idGame= extras.getInt("idGame");
+        }
+        currentUser = PlayerCatalogue.getMyPlayerCatalogue().getCurrentUser();
+
         setUpBoard();
 
     }
@@ -436,10 +442,12 @@ public class ChessActivity extends GameActivity
                     if (currentTurn.equals("White"))
                     {
                         currentTurn="Black";
+                        updateTurn(idGame,"Black");
                     }
                     else if (currentTurn.equals("Black"))
                     {
                         currentTurn="White";
+                        updateTurn(idGame,"White");
                     }
                     else
                     {
@@ -485,7 +493,6 @@ public class ChessActivity extends GameActivity
     private void movePiece(int posX, int posY, int finalX, int finalY)
     {
         Piece startPiece = board.returnPiece(posX, posY);
-        deletePiece(idGame,finalX,finalY);
         if (startPiece!=null)
         {
             boolean[] specialConditions;
@@ -497,16 +504,20 @@ public class ChessActivity extends GameActivity
             castled = specialConditions[1];
             finished = specialConditions[2];
             drawProperPiece(null,posX,posY);
+            if(finished)
+            {
+                Toast.makeText(this,"You win", Toast.LENGTH_LONG).show();
+                getPieces(idGame);
+            }
             if (promoted)
             {
-                Piece crownedPiece = board.returnPiece(finalX,finalY);
-                deletePiece(idGame,posX,posY);
-                insertPiece(idGame,crownedPiece.getClass().getName(),finalX,finalY);
-                drawProperPiece(crownedPiece,finalX,finalY);
+                Piece promotedPiece = board.returnPiece(finalX,finalY);
+                deletePiece_updatePiece_updatePieceType(idGame,posX,posY,finalX,finalY,promotedPiece.getClass().getName());
+                drawProperPiece(promotedPiece,finalX,finalY);
             }
             else
             {
-                updatePiece(idGame,posX,posY,finalX,finalY);
+                deletePiece_updatePiece(idGame, posX, posY, finalX, finalY);
             }
             drawProperPiece(startPiece,finalX,finalY);
             if (castled)
@@ -532,11 +543,6 @@ public class ChessActivity extends GameActivity
                     Log.i("Chess", "Incorrect castling");
                     return;
                 }
-            }
-            if(finished)
-            {
-                Toast.makeText(this,"You win", Toast.LENGTH_LONG).show();
-                getPieces(idGame);
             }
         }
         else

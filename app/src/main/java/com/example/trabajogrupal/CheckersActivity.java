@@ -25,11 +25,17 @@ public class CheckersActivity extends GameActivity {
     {
         new LanguagesWorker().setLangua(this);
         super.onCreate(savedInstanceState);
-
         ThemesWorker tem=new ThemesWorker();
         tem.setThemes(this);
-
         setContentView(R.layout.activity_checkers);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null)
+        {
+            idGame= extras.getInt("idGame");
+        }
+        currentUser = PlayerCatalogue.getMyPlayerCatalogue().getCurrentUser();
+
         setUpBoard();
     }
 
@@ -271,6 +277,7 @@ public class CheckersActivity extends GameActivity {
                     else if (currentTurn.equals("Black"))
                     {
                         currentTurn="White";
+                        updateTurn(idGame,"White");
                     }
                     else
                     {
@@ -352,8 +359,7 @@ public class CheckersActivity extends GameActivity {
             if (crowned)
             {
                 Piece crownedPiece = board.returnPiece(finalX,finalY);
-                deletePiece(idGame,posX,posY);
-                insertPiece(idGame, crownedPiece.getClass().getName(), finalX, finalY);
+                updatePiece_updatePieceType(idGame, posX,posY,finalX,finalY, crownedPiece.getClass().getName());
                 drawProperPiece(crownedPiece,finalX,finalY);
             }
             else

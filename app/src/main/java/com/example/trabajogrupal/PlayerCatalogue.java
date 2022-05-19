@@ -49,4 +49,9 @@ public class PlayerCatalogue {
     public void setCurrentUser(String pUser) {
         currentUser = pUser;
     }
+
+    public String getCurrentUser()
+    {
+        return currentUser;
+    }
 }

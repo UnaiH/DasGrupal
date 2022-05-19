@@ -15,16 +15,16 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 //worker que borra un usuario
-public class WorkerUpdateTurn extends Worker
+public class WorkerUpdatePieceType extends Worker
 {
-    public WorkerUpdateTurn(@NonNull Context context, @NonNull WorkerParameters workerParams) {
+    public WorkerUpdatePieceType(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
     }
 
     @NonNull
     @Override
     public ListenableWorker.Result doWork() {
-        String direccion = "http://ec2-52-56-170-196.eu-west-2.compute.amazonaws.com/prehecho001/WEB/GroupProyect/UpdateTurn.php";
+        String direccion = "http://ec2-52-56-170-196.eu-west-2.compute.amazonaws.com/prehecho001/WEB/GroupProyect/UpdatePieceType.php";
         HttpURLConnection urlConnection = null;
         try {
             URL destino = new URL(direccion);
@@ -36,17 +36,19 @@ public class WorkerUpdateTurn extends Worker
             urlConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
 
             int idGame = getInputData().getInt("idGame", -1);
-            String currentTurn = getInputData().getString("currentTurn");
+            int posX = getInputData().getInt("posX", -1);
+            int posY = getInputData().getInt("posY", -1);
+            String type = getInputData().getString("type");
 
-            Log.i("workerPHP","Turn: " + idGame + " change to " + currentTurn);
+            Log.i("workerPHP","Update: " + idGame + "-" + posX + "-" + posY + "-" + type);
 
             PrintWriter out = new PrintWriter(urlConnection.getOutputStream());
-            String parametros = "idGame="+idGame+"&currentTurn="+currentTurn;
+            String parametros = "idGame="+idGame+"&posX="+posX+"&posYOld="+posY+"&type="+type;
             out.print(parametros);
             out.close();
 
             int statusCode = urlConnection.getResponseCode();
-            Log.i("workerPHP", "statusCodeUpdateTurn: " + statusCode);
+            Log.i("workerPHP", "statusCodeUpdatePieceType: " + statusCode);
             if (statusCode == 200) {
                 return Result.success();
             }
