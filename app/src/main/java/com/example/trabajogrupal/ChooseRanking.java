@@ -2,7 +2,6 @@ package com.example.trabajogrupal;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
-import androidx.work.Data;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
@@ -15,11 +14,17 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class ChooseRanking extends AppCompatActivity implements View.OnClickListener {
     private TextView paisesTexto;
     private String[] usernames;
     private int[] elos;
     private ListView list;
+    private HashMap<String,Player> usuPaisCheck =new HashMap<String,Player>();
+    private HashMap<String,Player> usuPaisChess =new HashMap<String,Player>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         new LanguagesWorker().setLangua(this);
@@ -44,12 +49,17 @@ public class ChooseRanking extends AppCompatActivity implements View.OnClickList
             public void onChanged(WorkInfo workInfo) {
                 if (workInfo != null && workInfo.getState().isFinished()) {
                     Boolean resultadoPhp = workInfo.getOutputData().getBoolean("exito", false);
-                    System.out.println("RESULTADO LOGIN --> " + resultadoPhp);
-                    if (resultadoPhp) {//se logueó correctamente
-                        String[]
+                    System.out.println("RESULTADO --> " + resultadoPhp);
+                    if (resultadoPhp) {
+                        String[] resultados = workInfo.getOutputData().getStringArray("datosUsuario");
+                        Integer index = 0;
+                        String aux;
+                        while (index < resultados.length) {
+                            aux = resultados[index];
 
-                    } else {
-                        Toast.makeText(ChooseRanking.this, "Email o contraseña incorrecta", Toast.LENGTH_SHORT).show();
+                            index++;
+                        }
+                        Log.i("Resultado", "onChanged: " + resultados[0]);
                     }
                 }
             }
@@ -70,5 +80,11 @@ public class ChooseRanking extends AppCompatActivity implements View.OnClickList
         GlobalRankingAdapter adapter = new GlobalRankingAdapter(this, usernames, elos);
         list=findViewById(R.id.globalRanking);
         list.setAdapter(adapter);
+    }
+    public void onBackPressed(){
+        Intent i = new Intent(ChooseRanking.this, MainActivity.class);
+        setResult(RESULT_OK, i);
+        finish();
+        startActivity(i);
     }
 }

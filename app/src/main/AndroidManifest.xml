@@ -36,9 +36,6 @@
             android:name=".CheckersActivity"
             android:exported="false" />
         <activity
-            android:name=".GlobalRankingActivity"
-            android:exported="false" />
-        <activity
             android:name=".SignUpActivity"
             android:exported="false"
             android:theme="@style/Menu" />
