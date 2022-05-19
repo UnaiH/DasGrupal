@@ -15,7 +15,7 @@ if (mysqli_connect_errno($con)){
 
 
 
-$stmt = mysqli_query($con,"SELECT * FROM Usuario GROUP BY Usuario.country ORDER BY Usuario.eloCheckers Desc");
+$stmt = mysqli_query($con,"SELECT * FROM Usuario ORDER BY Usuario.eloCheckers Desc");
 if ($stmt->num_rows > 0){
 	while($row = $stmt->fetch_assoc()){
 		$arrayresultado =array(
