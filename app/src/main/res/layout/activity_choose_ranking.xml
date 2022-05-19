@@ -21,7 +21,7 @@
         android:id="@+id/button7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
+        android:layout_marginStart="36dp"
         android:layout_marginTop="124dp"
         android:onClick="onClickCheckers"
         android:text="@string/checkers"
@@ -32,7 +32,7 @@
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="124dp"
         android:onClick="onClickChess"
         android:text="@string/chess"
@@ -44,9 +44,20 @@
         android:layout_width="346dp"
         android:layout_height="435dp"
         android:layout_marginStart="1dp"
-        android:layout_marginTop="196dp"
+        android:layout_marginTop="192dp"
         android:layout_marginEnd="1dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/spinnerPais"
+        android:layout_width="98dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="11dp"
+        android:layout_marginTop="124dp"
+        app:layout_constraintStart_toEndOf="@+id/button7"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpeakableTextPresentCheck" />
 </androidx.constraintlayout.widget.ConstraintLayout>

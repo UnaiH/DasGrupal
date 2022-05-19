@@ -55,12 +55,14 @@ public class PlayerCatalogue {
         return p;
     }
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public Map<String,List<Player>> getUsersByCountry(){
+    public void getUsersByCountry(){
         this.mapPlayersByCountry= this.usuarios.stream().collect(Collectors.groupingBy(Player::getPais));
 
-        return this.mapPlayersByCountry;
+
     }
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public ArrayList<String> getPaises(){
+        this.getUsersByCountry();
         for(String key: mapPlayersByCountry.keySet()){
             this.listaPaises.add(key);
         }

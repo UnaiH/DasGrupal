@@ -28,6 +28,10 @@ public class Player {
         return eloChess;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
     public void setPais(String Pais) {
         pais = Pais;
     }
