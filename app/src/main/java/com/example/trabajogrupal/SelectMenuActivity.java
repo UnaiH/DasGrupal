@@ -25,16 +25,20 @@ public class SelectMenuActivity extends AppCompatActivity {
     String user;
     LocalDB myDB;
     ImageButton btn_profile;
+    PlayerCatalogue catalogue;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         new LanguagesWorker().setLangua(this);
         super.onCreate(savedInstanceState);
 
-        ThemesWorker tem=new ThemesWorker();
+        ThemesWorker tem = new ThemesWorker();
         tem.setThemes(this);
 
         setContentView(activity_select_menu);
-        user = getIntent().getStringExtra("user");
+        catalogue = PlayerCatalogue.getMyPlayerCatalogue();
+        //user = getIntent().getStringExtra("user");
+        user = catalogue.getCurrentUser();
         myDB = new LocalDB(this, "Chess", null, 1);
         btn_profile = findViewById(R.id.btn_Profile);
         cargarFotoPerfil(user);
@@ -42,7 +46,7 @@ public class SelectMenuActivity extends AppCompatActivity {
 
     public void onClickCheckers(View v) {
         Intent i = new Intent(this, CheckersActivity.class);
-        i.putExtra("user", user);
+        //i.putExtra("user", user);
         setResult(RESULT_OK, i);
         finish();
         startActivity(i);
@@ -50,15 +54,19 @@ public class SelectMenuActivity extends AppCompatActivity {
 
     public void onClickChess(View v) {
         Intent i = new Intent(this, ChessActivity.class);
-        i.putExtra("user", user);
+        //i.putExtra("user", user);
         setResult(RESULT_OK, i);
         finish();
         startActivity(i);
     }
-
+    public void onClickSelectRanking(View v){
+        Intent i = new Intent(this, ChooseRankingActivity.class);
+        i.putExtra("flag",true);
+        startActivityForResult(i,2);
+    }
     public void onClickPreferencies(View v) {
         Intent i = new Intent(this, PreferenciesActivity.class);
-        i.putExtra("user", user);
+        //i.putExtra("user", user);
         setResult(RESULT_OK, i);
         finish();
         startActivity(i);
@@ -73,7 +81,7 @@ public class SelectMenuActivity extends AppCompatActivity {
     public void onClickProfile(View view) {
         Intent i = new Intent(this, ProfileActivity.class);
 
-        i.putExtra("user", user);
+        //i.putExtra("user", user);
         startActivityForResult(i, 1);
     }
 
@@ -89,7 +97,7 @@ public class SelectMenuActivity extends AppCompatActivity {
                     System.out.println("RESULTADO INSERT IMAGEN --> " + resultadoPhp);
                     if (resultadoPhp) {
                         byte[] decodificado = myDB.getImage(user);
-                        if(decodificado!=null){
+                        if (decodificado != null) {
                             Bitmap elBitmap = BitmapFactory.decodeByteArray(decodificado, 0, decodificado.length);
                             btn_profile.setImageBitmap(elBitmap);
                         }
@@ -105,10 +113,13 @@ public class SelectMenuActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == RESULT_OK) {
             byte[] decodificado = myDB.getImage(user);
-            if(decodificado!=null){
+            if (decodificado != null) {
                 Bitmap elBitmap = BitmapFactory.decodeByteArray(decodificado, 0, decodificado.length);
                 btn_profile.setImageBitmap(elBitmap);
             }
+        }
+        if(requestCode==2 && resultCode==RESULT_OK){
+
         }
     }
 }

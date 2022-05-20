@@ -68,7 +68,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                                     Boolean resultadoPhp = workInfo.getOutputData().getBoolean("exito", false);
                                     Log.i("TAG", "onChanged: " + resultadoPhp);
                                     if (resultadoPhp) {
-                                        //new DefineCountryWorker().localizacionBD(username, ctxt,activ);
+                                        new DefineCountryWorker().localizacionBD(email, ctxt,activ);
                                         Intent iBack = new Intent();
                                         setResult(RESULT_OK);
                                         iBack.putExtra("user",email);

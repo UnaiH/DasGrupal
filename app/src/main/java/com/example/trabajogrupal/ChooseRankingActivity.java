@@ -50,8 +50,11 @@ public class ChooseRankingActivity extends AppCompatActivity implements View.OnC
         llenarCatalogo();
         ranking = findViewById(R.id.listas);
         listaPaises = findViewById(R.id.spinnerPais);
-
-
+        boolean llamadoDesdeSelectMenu = getIntent().getBooleanExtra("flag",false);
+        if(llamadoDesdeSelectMenu){
+            Intent iBack = new Intent(this,SelectMenuActivity.class);
+            setResult(RESULT_OK,iBack);
+        }
     }
 
     @Override
