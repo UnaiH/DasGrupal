@@ -15,7 +15,7 @@ if (mysqli_connect_errno($con)){
 $email = $_POST["email"];
 $country =$_POST["country"];
 $stmt=mysqli_query($con,"SELECT * FROM Usuario WHERE email='$email'");
-if(mysqli_num_rows($stmt)==0){
+if(mysqli_num_rows($stmt)==1){
     mysqli_query($con,"UPDATE Usuario SET country='$country' WHERE email='$email'");
     $resultado[] = array('resultado' => true);
 }else{

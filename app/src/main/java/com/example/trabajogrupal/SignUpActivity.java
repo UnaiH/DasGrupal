@@ -76,7 +76,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                                         new DefineCountryWorker().localizacionBD(email, ctxt,activ);
                                         Intent iBack = new Intent();
                                         setResult(RESULT_OK);
-                                        iBack.putExtra("email",email);
+                                        iBack.putExtra("user",email);
                                         finish();
                                         getUsers();
                                     } else {
