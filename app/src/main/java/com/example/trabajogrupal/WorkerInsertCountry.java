@@ -34,7 +34,7 @@ public class WorkerInsertCountry extends Worker {
     public Result doWork() {
         user = getInputData().getString("email");
         country = getInputData().getString("country");
-        String server = "http://ec2-52-56-170-196.eu-west-2.compute.amazonaws.com/prehecho001/WEB/GroupProyect/insertCountry.php";
+        String server = "http://ec2-52-56-170-196.eu-west-2.compute.amazonaws.com/prehecho001/WEB/GroupProyect/updateCountry.php";
         HttpURLConnection urlConnection = null;
         Log.i("Tag1", "InsertCountry: " + user+" , "+country);
         try {
@@ -70,8 +70,10 @@ public class WorkerInsertCountry extends Worker {
                 }
                 Data datos;
                 if (resultado.equals("false")) {
+                    Log.i("Resultado1", "Falso");
                     datos = new Data.Builder().putBoolean("exito", false).build();
                 } else {
+                    Log.i("Resultado2", "Verdad");
                     datos = new Data.Builder().putBoolean("exito", true).build();
                 }
                 return Result.success(datos);

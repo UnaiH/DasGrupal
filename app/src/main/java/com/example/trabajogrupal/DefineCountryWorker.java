@@ -70,7 +70,8 @@ public class DefineCountryWorker {
                                     pais[0] =direccion.get(0).getCountryCode();
                                     Log.i("Direcciones", "onSuccess: "+ pais[0]);
                                     Data.Builder data = new Data.Builder();
-                                    data.putString("user", user);
+                                    Log.i("Email", "onSuccess: "+user);
+                                    data.putString("email", user);
                                     data.putString("country", pais[0]);
 
                                     OneTimeWorkRequest otwr = new OneTimeWorkRequest.Builder(WorkerInsertCountry.class)
