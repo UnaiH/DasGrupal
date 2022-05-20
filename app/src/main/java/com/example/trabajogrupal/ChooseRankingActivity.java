@@ -47,14 +47,24 @@ public class ChooseRankingActivity extends AppCompatActivity implements View.OnC
         paisesTexto = findViewById(R.id.PaisesText);
         new DefineCountryWorker().getCountry(this, this, paisesTexto);
         Country count = Country.getMiCountry();
-        llenarCatalogo();
+
         ranking = findViewById(R.id.listas);
         listaPaises = findViewById(R.id.spinnerPais);
-        boolean llamadoDesdeSelectMenu = getIntent().getBooleanExtra("flag",false);
-        if(llamadoDesdeSelectMenu){
-            Intent iBack = new Intent(this,SelectMenuActivity.class);
-            setResult(RESULT_OK,iBack);
+
+        PlayerCatalogue catalogue = PlayerCatalogue.getMyPlayerCatalogue();
+        paisesArrayList = catalogue.getPaises();
+        System.out.println(paisesArrayList);
+        paises = new String[paisesArrayList.size() + 2];
+        paises[0] = "Select";
+        paises[1] = "Global";
+        int pos = 2;
+        for (String pais : paisesArrayList) {
+            paises[pos] = pais;
+            pos++;
         }
+        ArrayAdapter<String> adapterSpinner = new ArrayAdapter<>(ChooseRankingActivity.this, android.R.layout.simple_spinner_dropdown_item, paises);
+        listaPaises.setAdapter(adapterSpinner);
+
     }
 
     @Override
@@ -184,80 +194,4 @@ public class ChooseRankingActivity extends AppCompatActivity implements View.OnC
 
     }
 
-    public void llenarCatalogo() {
-        OneTimeWorkRequest otwr = new OneTimeWorkRequest.Builder(WorkerGetUsersForRanking.class).build();
-        WorkManager.getInstance(ChooseRankingActivity.this).getWorkInfoByIdLiveData(otwr.getId()).observe(ChooseRankingActivity.this, new Observer<WorkInfo>() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onChanged(WorkInfo workInfo) {
-                if (workInfo != null && workInfo.getState().isFinished()) {
-                    Boolean resultadoPhp = workInfo.getOutputData().getBoolean("exito", false);
-                    System.out.println("RESULTADO --> " + resultadoPhp);
-                    if (resultadoPhp) {
-                        String[] resultados = workInfo.getOutputData().getStringArray("datosUsuario");
-
-                        for (int i = 0; i < resultados.length; i++) {
-                            if (!resultados[i].equals("false")) {
-                                getDatosJugador(resultados[i]);
-                            }
-                        }
-                        PlayerCatalogue catalogue = PlayerCatalogue.getMyPlayerCatalogue();
-                        paisesArrayList = catalogue.getPaises();
-                        System.out.println(paisesArrayList);
-                        paises = new String[paisesArrayList.size() + 2];
-                        paises[0] = "Select";
-                        paises[1] = "Global";
-                        int pos = 2;
-                        for (String pais : paisesArrayList) {
-                            paises[pos] = pais;
-                            pos++;
-                        }
-                        ArrayAdapter<String> adapterSpinner = new ArrayAdapter<>(ChooseRankingActivity.this, android.R.layout.simple_spinner_dropdown_item, paises);
-                        listaPaises.setAdapter(adapterSpinner);
-                        //Log.i("Resultado", "onChanged: " + catalogue.getUsersByCountry());
-                        List<Player> jugadoresList = catalogue.getUsersDescOrder("Checkers");
-                        Log.i("GLOBAL", "--> " + jugadoresList);
-                        Log.i("FiltradoPais", "ES-> " + catalogue.getUsersByCountryCheckers("ES"));
-                        Log.i("FiltradoPais", "ES-> " + catalogue.getUsersByCountryChess("ES"));
-
-                        Log.i("FiltradoPais", "FR-> " + catalogue.getUsersByCountryCheckers("FR"));
-                        Log.i("FiltradoPais", "FR-> " + catalogue.getUsersByCountryChess("FR"));
-
-                        Log.i("FiltradoPais", "CN-> " + catalogue.getUsersByCountryCheckers("CN"));
-                        Log.i("FiltradoPais", "CN-> " + catalogue.getUsersByCountryChess("CN"));
-
-                    }
-                }
-            }
-        });
-        WorkManager.getInstance(ChooseRankingActivity.this).enqueue(otwr);
-    }
-
-    public void getDatosJugador(String s) {
-        // "email":"daniel.juape3@gmail.com","username":"Daddy","eloCheckers":"1001","country":"FR"
-        String[] datosSinComas = s.split(",");
-        ArrayList<String> valores = new ArrayList<>();
-        for (int i = 0; i < datosSinComas.length; i++) {
-            valores.add(datosSinComas[i].split(":")[1].replace('"', ' ').trim());
-        }
-        String ultimoValor = valores.get(valores.size() - 1);
-        valores.remove(valores.size() - 1);
-        valores.add(ultimoValor.substring(0, ultimoValor.length() - 2));
-
-        System.out.println("DatosJugador--> " + valores); //[daniel.juape3@gmail.com, Daddy, 1001, FR]
-        String email = valores.get(0), username = valores.get(1), pais = valores.get(4);
-        int eloCheckers = Integer.parseInt(valores.get(2)), eloChess = Integer.parseInt(valores.get(3));
-        PlayerCatalogue catalogoJugador = PlayerCatalogue.getMyPlayerCatalogue();
-
-        catalogoJugador.addPlayer(email, eloCheckers, eloChess, username, pais);
-
-    }
-
-
-    public void onBackPressed() {
-        Intent i = new Intent(ChooseRankingActivity.this, MainActivity.class);
-        setResult(RESULT_OK, i);
-        finish();
-        startActivity(i);
-    }
 }

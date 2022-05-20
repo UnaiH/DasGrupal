@@ -128,52 +128,5 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
     }
-    public void getUsers(){
-        OneTimeWorkRequest otwr = new OneTimeWorkRequest.Builder(WorkerGetUsersForRanking.class).build();
-        WorkManager.getInstance(SignUpActivity.this).getWorkInfoByIdLiveData(otwr.getId()).observe(SignUpActivity.this, new Observer<WorkInfo>() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onChanged(WorkInfo workInfo) {
-                if (workInfo != null && workInfo.getState().isFinished()) {
-                    Boolean resultadoPhp = workInfo.getOutputData().getBoolean("exito", false);
-                    System.out.println("RESULTADO --> " + resultadoPhp);
-                    if (resultadoPhp) {
-                        String[] resultados = workInfo.getOutputData().getStringArray("datosUsuario");
-                        PlayerCatalogue catalogue = PlayerCatalogue.getMyPlayerCatalogue();
-                        for (int i = 0; i < resultados.length; i++) {
-                            if (!resultados[i].equals("false")) {
-                                Player unPlayer = getDatosJugador(resultados[i]);
-                                if(unPlayer.getEmail().equals(email)){
-                                    catalogue.setCurrentPlayer(unPlayer);
-                                }
-                            }
-                        }
 
-
-
-                    }
-                }
-            }
-        });
-        WorkManager.getInstance(SignUpActivity.this).enqueue(otwr);
-    }
-    public Player getDatosJugador(String s) {
-        // "email":"daniel.juape3@gmail.com","username":"Daddy","eloCheckers":"1001","country":"FR"
-        String[] datosSinComas = s.split(",");
-        ArrayList<String> valores = new ArrayList<>();
-        for (int i = 0; i < datosSinComas.length; i++) {
-            valores.add(datosSinComas[i].split(":")[1].replace('"', ' ').trim());
-        }
-        String ultimoValor = valores.get(valores.size() - 1);
-        valores.remove(valores.size() - 1);
-        valores.add(ultimoValor.substring(0, ultimoValor.length() - 2));
-
-        System.out.println("DatosJugador--> " + valores); //[daniel.juape3@gmail.com, Daddy, 1001, FR]
-        String email = valores.get(0), username = valores.get(1), pais = valores.get(4);
-        int eloCheckers = Integer.parseInt(valores.get(2)), eloChess = Integer.parseInt(valores.get(3));
-
-        Player jugador = new Player(username,pais,email,eloCheckers,eloChess);
-
-        return  jugador;
-    }
 }
