@@ -62,8 +62,10 @@ public class SelectMenuActivity extends AppCompatActivity {
     public void onClickSelectRanking(View v){
         Intent i = new Intent(this, ChooseRankingActivity.class);
         i.putExtra("flag",true);
-        startActivityForResult(i,2);
+
+        startActivity(i);
     }
+
     public void onClickPreferencies(View v) {
         Intent i = new Intent(this, PreferenciesActivity.class);
         //i.putExtra("user", user);
