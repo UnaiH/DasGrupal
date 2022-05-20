@@ -28,15 +28,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     String userEmail, password;
     Button but;
     TextView text;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         new LanguagesWorker().setLangua(this);
         super.onCreate(savedInstanceState);
-        ThemesWorker tem=new ThemesWorker();
+        ThemesWorker tem = new ThemesWorker();
         tem.setThemes(this);
 
         pedirpermisosLocalizar();
-
+        getUsers();
         setContentView(R.layout.activity_main);
 
         /*
@@ -84,10 +85,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             Intent i = new Intent(MainActivity.this, SelectMenuActivity.class);
                             PlayerCatalogue catalogue = PlayerCatalogue.getMyPlayerCatalogue();
                             catalogue.setCurrentUser(userEmail);
-                            i.putExtra("user",userEmail);
+                            i.putExtra("user", userEmail);
                             startActivity(i);
                             finish();
-                            getUsers(userEmail);
+                            Player currentUser = catalogue.getPlayer(userEmail);
+                            catalogue.setCurrentPlayer(currentUser);
                         } else {
                             Toast.makeText(MainActivity.this, R.string.bademail, Toast.LENGTH_SHORT).show();
                         }
@@ -128,8 +130,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == RESULT_OK) { //Se registró correctamente y se le da por logueado automáticamente
             Intent i = new Intent(MainActivity.this, SelectMenuActivity.class);
-            String user=getIntent().getStringExtra("email");
-            i.putExtra("email",user);
+            String user = getIntent().getStringExtra("email");
+            i.putExtra("email", user);
             PlayerCatalogue catalogue = PlayerCatalogue.getMyPlayerCatalogue();
             catalogue.setCurrentUser(user);
             startActivity(i);
@@ -146,12 +148,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void pedirpermisosLocalizar() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-        }
-        else if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        } else if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
         }
     }
-    public void getUsers(String email){
+
+    public void getUsers() {
         OneTimeWorkRequest otwr = new OneTimeWorkRequest.Builder(WorkerGetUsersForRanking.class).build();
         WorkManager.getInstance(MainActivity.this).getWorkInfoByIdLiveData(otwr.getId()).observe(MainActivity.this, new Observer<WorkInfo>() {
             @RequiresApi(api = Build.VERSION_CODES.N)
@@ -162,25 +164,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     System.out.println("RESULTADO --> " + resultadoPhp);
                     if (resultadoPhp) {
                         String[] resultados = workInfo.getOutputData().getStringArray("datosUsuario");
-                        PlayerCatalogue catalogue = PlayerCatalogue.getMyPlayerCatalogue();
+
                         for (int i = 0; i < resultados.length; i++) {
                             if (!resultados[i].equals("false")) {
-                                Player unPlayer = getDatosJugador(resultados[i]);
-                                if(unPlayer.getEmail().equals(email)){
-                                    catalogue.setCurrentPlayer(unPlayer);
-                                }
+                                getDatosJugador(resultados[i]);
                             }
                         }
-
-
-
                     }
                 }
             }
         });
         WorkManager.getInstance(MainActivity.this).enqueue(otwr);
     }
-    public Player getDatosJugador(String s) {
+
+    public void getDatosJugador(String s) {
         // "email":"daniel.juape3@gmail.com","username":"Daddy","eloCheckers":"1001","country":"FR"
         String[] datosSinComas = s.split(",");
         ArrayList<String> valores = new ArrayList<>();
@@ -194,9 +191,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         System.out.println("DatosJugador--> " + valores); //[daniel.juape3@gmail.com, Daddy, 1001, FR]
         String email = valores.get(0), username = valores.get(1), pais = valores.get(4);
         int eloCheckers = Integer.parseInt(valores.get(2)), eloChess = Integer.parseInt(valores.get(3));
+        PlayerCatalogue catalogoJugador = PlayerCatalogue.getMyPlayerCatalogue();
 
-        Player jugador = new Player(username,pais,email,eloCheckers,eloChess);
+        catalogoJugador.addPlayer(email, eloCheckers, eloChess, username, pais);
 
-        return  jugador;
     }
 }

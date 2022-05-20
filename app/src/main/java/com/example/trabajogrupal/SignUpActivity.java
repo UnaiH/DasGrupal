@@ -78,7 +78,10 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                                         setResult(RESULT_OK);
                                         iBack.putExtra("user",email);
                                         finish();
-                                        getUsers();
+                                        PlayerCatalogue catalogue = PlayerCatalogue.getMyPlayerCatalogue();
+                                        Player currentPlayer =catalogue.getPlayer(email);
+
+                                        catalogue.setCurrentPlayer(currentPlayer);
                                     } else {
                                         Toast.makeText(SignUpActivity.this, R.string.otroemail, Toast.LENGTH_SHORT).show();
                                     }

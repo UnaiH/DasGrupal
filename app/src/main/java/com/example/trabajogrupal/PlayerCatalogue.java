@@ -154,6 +154,9 @@ public class PlayerCatalogue {
         }
         return listPlayers;
     }
+    public Player getPlayer(String email){
+        return mapPlayers.get(email);
+    }
 
     public HashMap<String, Player> getMapPlayers() {
         return mapPlayers;
