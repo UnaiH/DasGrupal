@@ -64,6 +64,7 @@ public class ChooseRankingActivity extends AppCompatActivity implements View.OnC
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void onClickChess(View view) {
         PlayerCatalogue catalogue = PlayerCatalogue.getMyPlayerCatalogue();
+        Log.i("Select", "onClickChess: "+listaPaises);
         String selected = listaPaises.getSelectedItem().toString();
         if (selected.equals("Select")) {
 

@@ -32,7 +32,7 @@ public class WorkerInsertCountry extends Worker {
     @NonNull
     @Override
     public Result doWork() {
-        user = getInputData().getString("user");
+        user = getInputData().getString("email");
         country = getInputData().getString("country");
         String server = "http://ec2-52-56-170-196.eu-west-2.compute.amazonaws.com/prehecho001/WEB/GroupProyect/insertCountry.php";
         HttpURLConnection urlConnection = null;
