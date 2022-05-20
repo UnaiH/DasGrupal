@@ -23,6 +23,7 @@ public class PlayerCatalogue {
     private Map<String, List<Player>> mapPlayersByCountry;
     private List<Player> usersByCountryCheckers, usersByCountryChess, usuarios;
     private ArrayList<String> listaPaises;
+    private Player currentPlayer;
 
     private PlayerCatalogue() {
         this.mapPlayers = new HashMap<String, Player>();
@@ -38,6 +39,14 @@ public class PlayerCatalogue {
             myPlayerCatalogue = new PlayerCatalogue();
         }
         return myPlayerCatalogue;
+    }
+
+    public void setCurrentPlayer(Player currentPlayer) {
+        this.currentPlayer = currentPlayer;
+    }
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
     }
 
     public void addPlayer(String mail, int eloCheckers, int eloChess, String username, String pais) {
