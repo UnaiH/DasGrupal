@@ -59,10 +59,10 @@ public class GamesInCourseAdapter extends BaseAdapter {
         gameTypeView.setText(gameInCourse.getType());
         int elo = 0;
         if (gameInCourse.getType().equals("Checkers")) {
-            elo = rival.getElo(0);
+            elo = rival.getEloCheckers();
         }
         else if (gameInCourse.getType().equals("Chess")) {
-            elo = rival.getElo(1);
+            elo = rival.getEloChess();
         }
         eloView.setText(elo);
         String turn;

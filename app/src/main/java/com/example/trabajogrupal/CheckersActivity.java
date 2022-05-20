@@ -34,7 +34,7 @@ public class CheckersActivity extends GameActivity {
         {
             idGame= extras.getInt("idGame");
         }
-        currentUser = PlayerCatalogue.getMyPlayerCatalogue().getCurrentUser().getName();
+        currentUser = PlayerCatalogue.getMyPlayerCatalogue().getCurrentUser();
 
         setUpBoard();
     }

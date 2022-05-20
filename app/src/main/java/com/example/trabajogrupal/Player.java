@@ -59,7 +59,7 @@ public class Player {
     }
 
     public String getName() {
-        return name;
+        return username;
     }
 
     public ArrayList<GameInCourse> getGamesInCourse() {

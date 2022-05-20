@@ -22,7 +22,7 @@ public class GamesInCourseActivity extends AppCompatActivity {
         tem.setThemes(this);
         setContentView(R.layout.activity_games_in_course);
 
-        Player currentUser = PlayerCatalogue.getMyPlayerCatalogue().getCurrentUser();
+        Player currentUser = PlayerCatalogue.getMyPlayerCatalogue().returnPlayer(PlayerCatalogue.getMyPlayerCatalogue().getCurrentUser());
         ArrayList<GameInCourse> gamesInCourse = currentUser.getGamesInCourse();
 
         ListView gamesInCourseView = (ListView) findViewById(R.id.gamesInCourse);
