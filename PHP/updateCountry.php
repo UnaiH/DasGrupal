@@ -16,7 +16,7 @@ $email = $_POST["email"];
 $country =$_POST["country"];
 $stmt=mysqli_query($con,"SELECT * FROM Usuario WHERE email='$email'");
 if(mysqli_num_rows($stmt)==0){
-    mysqli_query($con,"INSERT INTO Usuario(country) VALUES ('$country') WHERE email='$email'");
+    mysqli_query($con,"UPDATE Usuario SET country='$country' WHERE email='$email'");
     $resultado[] = array('resultado' => true);
 }else{
     $resultado[] = array('resultado' => false);
