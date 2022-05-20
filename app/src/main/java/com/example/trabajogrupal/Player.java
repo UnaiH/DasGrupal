@@ -32,6 +32,10 @@ public class Player {
         return eloChess;
     }
 
+    public void setEloCheckers(int elo){eloCheckers=elo;}
+
+    public void setEloChess(int elo) {eloChess=elo;}
+
     public String getUsername() {
         return username;
     }

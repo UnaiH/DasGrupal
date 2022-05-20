@@ -31,4 +31,6 @@
     <string name="otroemail">Email hau erabiltzen ari da, mesedez erabili beste bat</string>
     <string name="contrnoval">Pasahitz okerra. Zure pasahitzak gutxienez zortzi karaktere izan behar ditu, gutxienez letra larri bat, letra xehe bat, zenbaki bat eta karaktere berezi bat.</string>
     <string name="correonovalido">Posta elektroniko baliogabea</string>
+    <string name="gameOverTitle">Partida amaitu da</string>
+    <string name="returnToMenu">Itzuli menura</string>
 </resources>

@@ -20,10 +20,11 @@ public class PlayerCatalogue {
     private static PlayerCatalogue myPlayerCatalogue = null;
     private HashMap<String, Player> mapPlayers;
     private String currentUser;
+    private Player currentPlayer;
     private Map<String, List<Player>> mapPlayersByCountry;
     private List<Player> usersByCountryCheckers, usersByCountryChess, usuarios;
     private ArrayList<String> listaPaises;
-    private Player currentPlayer;
+
 
     private PlayerCatalogue() {
         this.mapPlayers = new HashMap<String, Player>();

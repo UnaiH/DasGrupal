@@ -331,7 +331,7 @@ public class CheckersActivity extends GameActivity {
                 int middleX = (posX+finalX)/2;
                 int middleY = (posY+finalY)/2;
                 board.removePiece(middleX,middleY);
-                deletePiece(idGame,middleX,middleY);
+
                 if (currentTurn.equals("White"))
                 {
                     blackCounts--;
@@ -345,13 +345,15 @@ public class CheckersActivity extends GameActivity {
                     Log.i("Chess", "currentTurn error: " + currentTurn);
                     return;
                 }
-
                 drawProperPiece(null,middleX,middleY);
                 if(whiteCounts==0 || blackCounts==0)
                 {
                     Toast.makeText(this,"You win", Toast.LENGTH_LONG).show();
                     getPieces(idGame);
+
+                    return;
                 }
+                deletePiece(idGame,middleX,middleY);
             }
             boolean crowned;
             crowned = board.movePiece(posX, posY, finalX, finalY);

@@ -31,4 +31,6 @@
     <string name="otroemail">El email ya está en uso, por favor pruebe con otro</string>
     <string name="contrnoval">Contraseña incorrecta. Tu contraseña debe tener mínimo ocho caracteres, al menos una letra mayúscula, una letra minúscula, un número y un carácter especial.</string>
     <string name="correonovalido">Correo electrónico inválido</string>
+    <string name="gameOverTitle">La partida ha terminado</string>
+    <string name="returnToMenu">Volver al menú</string>
 </resources>
