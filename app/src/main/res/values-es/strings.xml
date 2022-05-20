@@ -25,4 +25,10 @@
     <string name="green">Verde</string>
     <string name="blue">Azul</string>
     <string name="codPais">"Código de país: "</string>
+    <string name="porselectpais">Por favor selecciona un país</string>
+    <string name="bademail">Email o contraseña incorrecta</string>
+    <string name="todosCamp">Por favor, rellena todos los campos</string>
+    <string name="otroemail">El email ya está en uso, por favor pruebe con otro</string>
+    <string name="contrnoval">Contraseña incorrecta. Tu contraseña debe tener mínimo ocho caracteres, al menos una letra mayúscula, una letra minúscula, un número y un carácter especial.</string>
+    <string name="correonovalido">Correo electrónico inválido</string>
 </resources>

@@ -48,7 +48,8 @@ public class ProfileActivity extends AppCompatActivity {
         myDB = new LocalDB(this, "Chess", null, 1);
         setContentView(R.layout.activity_profile);
         userTextView = findViewById(R.id.profile_username);
-        user = getIntent().getStringExtra("user");
+        PlayerCatalogue catalogue = PlayerCatalogue.getMyPlayerCatalogue();
+        user = catalogue.getCurrentUser();
         userTextView.setText(user);
         image = findViewById(R.id.profileImage);
         btn_camera = findViewById(R.id.btn_profileCamera);

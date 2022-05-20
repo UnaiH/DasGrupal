@@ -50,8 +50,11 @@ public class ChooseRankingActivity extends AppCompatActivity implements View.OnC
         llenarCatalogo();
         ranking = findViewById(R.id.listas);
         listaPaises = findViewById(R.id.spinnerPais);
-
-
+        boolean llamadoDesdeSelectMenu = getIntent().getBooleanExtra("flag",false);
+        if(llamadoDesdeSelectMenu){
+            Intent iBack = new Intent(this,SelectMenuActivity.class);
+            setResult(RESULT_OK,iBack);
+        }
     }
 
     @Override
@@ -64,7 +67,7 @@ public class ChooseRankingActivity extends AppCompatActivity implements View.OnC
         String selected = listaPaises.getSelectedItem().toString();
         if (selected.equals("Select")) {
 
-            Toast.makeText(this, "Por favor selecciona un país", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.porselectpais, Toast.LENGTH_SHORT).show();
 
         } else {
             if (listaPaises.getSelectedItem().toString().equals("Global")) {
@@ -83,7 +86,7 @@ public class ChooseRankingActivity extends AppCompatActivity implements View.OnC
                         TextView lineaPrincipal = (TextView) vista.findViewById(android.R.id.text1);
                         TextView lineaSecundaria = (TextView) vista.findViewById(android.R.id.text2);
                         String nombre = jugadoresList.get(position).getUsername() + " " + jugadoresList.get(position).getPais();
-                        String puntuacion = String.valueOf(jugadoresList.get(position).getEloCheckers());
+                        String puntuacion = String.valueOf(jugadoresList.get(position).getEloChess());
                         lineaPrincipal.setText(nombre);
                         lineaSecundaria.setText(puntuacion);
                         return vista;
@@ -125,7 +128,7 @@ public class ChooseRankingActivity extends AppCompatActivity implements View.OnC
 
         String selected = listaPaises.getSelectedItem().toString();
         if (selected.equals("Select")) {
-            Toast.makeText(this, "Por favor selecciona un país", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.porselectpais, Toast.LENGTH_SHORT).show();
         } else {
             if (listaPaises.getSelectedItem().toString().equals("Global")) {
                 List<Player> jugadoresList = catalogue.getUsersDescOrder("Checkers");

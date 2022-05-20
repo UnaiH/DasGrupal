@@ -43,7 +43,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="148dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="28dp"
         android:layout_marginEnd="169dp"
         android:background="@color/black"
         android:onClick="onClickPreferencies"
@@ -76,8 +76,21 @@
         android:onClick="onClickProfile"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/usuario"
+        android:background="@drawable/usuario"
         tools:ignore="SpeakableTextPresentCheck" />
+
+    <Button
+        android:id="@+id/btn_selectMenu_ranking"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="148dp"
+        android:layout_marginTop="21dp"
+        android:text="Ranking"
+        android:textColor="@color/black"
+        android:background="@color/white"
+        android:onClick="onClickSelectRanking"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pref" />
 
     <Button
         android:id="@+id/gamesInCourse"

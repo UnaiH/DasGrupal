@@ -18,9 +18,9 @@ public class PreferenciesActivity extends AppCompatActivity {
 
         ThemesWorker tem=new ThemesWorker();
         tem.setThemes(this);
-
+        PlayerCatalogue catalogue = PlayerCatalogue.getMyPlayerCatalogue();
         setContentView(R.layout.activity_preferencias);
-        user = getIntent().getStringExtra("user");
+        user = catalogue.getCurrentUser();
         Fragment fragmento = new preferencias();
         FragmentTransaction ftransc = getFragmentManager().beginTransaction();
         if (savedInstanceState==null){
@@ -43,7 +43,7 @@ public class PreferenciesActivity extends AppCompatActivity {
     }
     public void onBackPressed(){
         Intent i = new Intent(PreferenciesActivity.this, SelectMenuActivity.class);
-        i.putExtra("user", user);
+        //i.putExtra("user", user);
         setResult(RESULT_OK, i);
         finish();
         startActivity(i);

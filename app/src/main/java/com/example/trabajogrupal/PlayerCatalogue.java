@@ -20,7 +20,7 @@ public class PlayerCatalogue {
     private static PlayerCatalogue myPlayerCatalogue = null;
     private HashMap<String, Player> mapPlayers;
     private String currentUser;
-    private Map<String,List<Player>> mapPlayersByCountry;
+    private Map<String, List<Player>> mapPlayersByCountry;
     private List<Player> usersByCountryCheckers, usersByCountryChess, usuarios;
     private ArrayList<String> listaPaises;
 
@@ -56,17 +56,19 @@ public class PlayerCatalogue {
         }
         return p;
     }
+
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public void getUsersByCountry(){
-        this.mapPlayersByCountry= this.usuarios.stream().collect(Collectors.groupingBy(Player::getPais));
+    public void getUsersByCountry() {
+        this.mapPlayersByCountry = this.usuarios.stream().collect(Collectors.groupingBy(Player::getPais));
 
 
     }
+
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public ArrayList<String> getPaises(){
+    public ArrayList<String> getPaises() {
         this.getUsersByCountry();
-        for(String key: mapPlayersByCountry.keySet()){
-            if(!listaPaises.contains(key)) {
+        for (String key : mapPlayersByCountry.keySet()) {
+            if (!listaPaises.contains(key) && !key.equals("Global")) {
                 this.listaPaises.add(key);
             }
         }
@@ -74,26 +76,68 @@ public class PlayerCatalogue {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public List<Player> getUsersDescOrder(String game){
+    public List<Player> getUsersDescOrder(String game) {
         //TODO hacer que devuelva una lista<Player> ordenada DESC en función del juego que se le pase por parámetro.
-
-        return null;
+        List<Integer> listaPuntuaciones = new ArrayList<>();
+        List<Player> lista = new ArrayList<>();
+        Map<Integer, List<Player>> a;
+        switch (game) {
+            case "Checkers":
+                listaPuntuaciones = new ArrayList<>();
+                lista = new ArrayList<>();
+                a = new HashMap<>();
+                a = usuarios.stream().collect(Collectors.groupingBy(Player::getEloCheckers));
+                for (Integer i : a.keySet()) {
+                    listaPuntuaciones.add(i);
+                }
+                listaPuntuaciones.sort(Collections.reverseOrder());
+                for (Integer i : listaPuntuaciones) {
+                    List<Player> unaLista = a.get(i);
+                    for (Player j : unaLista) {
+                        if(!j.getPais().equals("Global")) {
+                            lista.add(j);
+                        }
+                    }
+                }
+                break;
+            case "Chess":
+                listaPuntuaciones = new ArrayList<>();
+                lista = new ArrayList<>();
+                a = new HashMap<>();
+                a = usuarios.stream().collect(Collectors.groupingBy(Player::getEloChess));
+                for (Integer i : a.keySet()) {
+                    listaPuntuaciones.add(i);
+                }
+                listaPuntuaciones.sort(Collections.reverseOrder());
+                for (Integer i : listaPuntuaciones) {
+                    List<Player> unaLista = a.get(i);
+                    for (Player j : unaLista) {
+                        if(!j.getPais().equals("Global")) {
+                            lista.add(j);
+                        }
+                    }
+                }
+                break;
+        }
+        return lista;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public List<Player> getUsersByCountryCheckers(String pais){
-        if(this.mapPlayersByCountry.containsKey(pais)){
+    public List<Player> getUsersByCountryCheckers(String pais) {
+        if (this.mapPlayersByCountry.containsKey(pais)) {
             this.usersByCountryCheckers = mapPlayersByCountry.get(pais).stream().sorted(Comparator.comparing(Player::getEloCheckers).reversed()).collect(Collectors.toList());
         }
         return this.usersByCountryCheckers;
     }
+
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public List<Player> getUsersByCountryChess(String pais){
-        if(this.mapPlayersByCountry.containsKey(pais)){
+    public List<Player> getUsersByCountryChess(String pais) {
+        if (this.mapPlayersByCountry.containsKey(pais)) {
             this.usersByCountryChess = mapPlayersByCountry.get(pais).stream().sorted(Comparator.comparing(Player::getEloChess).reversed()).collect(Collectors.toList());
         }
         return this.usersByCountryChess;
     }
+
     public ArrayList<String> returnMails() {
         ArrayList<String> listPlayers = new ArrayList<>();
         for (String key : mapPlayers.keySet()) {

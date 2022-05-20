@@ -85,14 +85,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             finish();
 
                         } else {
-                            Toast.makeText(MainActivity.this, "Email o contraseña incorrecta", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, R.string.bademail, Toast.LENGTH_SHORT).show();
                         }
                     }
                 }
             });
             WorkManager.getInstance(MainActivity.this).enqueue(otwr);
         } else {
-            Toast.makeText(MainActivity.this, "Por favor, rellena todos los campos", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, R.string.todosCamp, Toast.LENGTH_SHORT).show();
         }
     }
 
