@@ -83,7 +83,7 @@ public class ChooseRankingActivity extends AppCompatActivity implements View.OnC
                         TextView lineaPrincipal = (TextView) vista.findViewById(android.R.id.text1);
                         TextView lineaSecundaria = (TextView) vista.findViewById(android.R.id.text2);
                         String nombre = jugadoresList.get(position).getUsername() + " " + jugadoresList.get(position).getPais();
-                        String puntuacion = String.valueOf(jugadoresList.get(position).getEloCheckers());
+                        String puntuacion = String.valueOf(jugadoresList.get(position).getEloChess());
                         lineaPrincipal.setText(nombre);
                         lineaSecundaria.setText(puntuacion);
                         return vista;
