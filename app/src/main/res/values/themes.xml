@@ -18,8 +18,9 @@
         <item name="android:textColor">#000000</item>
         <item name="android:background">#C2C2C2</item>
         <item name="android:statusBarColor" tools:targetApi="l">#555588</item>
-        <item name="android:textSize">20.5dp</item>
+        <item name="android:textSize">19dp</item>
         <item name="android:strokeColor">#000000</item>
+        <item name="android:textStyle">bold</item>
     </style>
     <style name="Dark" parent="Theme.AppCompat">
         <item name="android:title">#FFFFFF</item>
@@ -27,8 +28,9 @@
         <item name="android:background">#202020</item>
         <item name="android:statusBarColor" tools:targetApi="l">#404040</item>
         <item name="colorPrimary">#000000</item>
-        <item name="android:textSize">20.5dp</item>
+        <item name="android:textSize">19dp</item>
         <item name="android:strokeColor">#000000</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="Blue" parent="Theme.AppCompat">
@@ -37,8 +39,9 @@
         <item name="android:background">#4040A0</item>
         <item name="android:statusBarColor" tools:targetApi="l">#4040C0</item>
         <item name="colorPrimary">#000000</item>
-        <item name="android:textSize">20.5dp</item>
+        <item name="android:textSize">19dp</item>
         <item name="android:strokeColor">#000000</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="Green" parent="Theme.AppCompat">
@@ -47,7 +50,8 @@
         <item name="android:background">#308030</item>
         <item name="android:statusBarColor" tools:targetApi="l">#109010</item>
         <item name="colorPrimary">#000000</item>
-        <item name="android:textSize">20.5dp</item>
+        <item name="android:textSize">19dp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
 
