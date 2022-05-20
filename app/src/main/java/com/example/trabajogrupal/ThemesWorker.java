@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -16,8 +17,9 @@ public class ThemesWorker {
     }
     public void setThemes(Context context){
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        if (prefs.contains("temas")) {
-            String mod = prefs.getString("temas", "Default");
+        if (prefs.contains("tema")) {
+            String mod = prefs.getString("tema", "Default");
+            Log.i("Temas", "setThemes: "+mod);
             if (mod.equals("Dark") || mod.equals("Iluna") || mod.equals("Oscuro")) {
                 context.setTheme(R.style.Dark);
             }
@@ -34,7 +36,6 @@ public class ThemesWorker {
         else{
             context.setTheme(R.style.Menu);
         }
-        context.setTheme(R.style.Dark);
     }
 
     public void setButColorBlack(Button but, Context context){

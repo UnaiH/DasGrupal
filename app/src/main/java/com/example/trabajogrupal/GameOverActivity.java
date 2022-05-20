@@ -18,9 +18,11 @@ public class GameOverActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+        new LanguagesWorker().setLangua(this);
         super.onCreate(savedInstanceState);
+        ThemesWorker tem=new ThemesWorker();
+        tem.setThemes(this);
         setContentView(R.layout.activity_game_over);
-
         Bundle extras = getIntent().getExtras();
         if (extras != null)
         {
