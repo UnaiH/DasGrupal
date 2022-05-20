@@ -3,6 +3,7 @@ package com.example.trabajogrupal;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -10,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -18,6 +20,8 @@ import androidx.work.Data;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     EditText user, pass;
@@ -83,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             i.putExtra("user",userEmail);
                             startActivity(i);
                             finish();
-
+                            getUsers(userEmail);
                         } else {
                             Toast.makeText(MainActivity.this, R.string.bademail, Toast.LENGTH_SHORT).show();
                         }
@@ -147,5 +151,52 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
         }
     }
+    public void getUsers(String email){
+        OneTimeWorkRequest otwr = new OneTimeWorkRequest.Builder(WorkerGetUsersForRanking.class).build();
+        WorkManager.getInstance(MainActivity.this).getWorkInfoByIdLiveData(otwr.getId()).observe(MainActivity.this, new Observer<WorkInfo>() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onChanged(WorkInfo workInfo) {
+                if (workInfo != null && workInfo.getState().isFinished()) {
+                    Boolean resultadoPhp = workInfo.getOutputData().getBoolean("exito", false);
+                    System.out.println("RESULTADO --> " + resultadoPhp);
+                    if (resultadoPhp) {
+                        String[] resultados = workInfo.getOutputData().getStringArray("datosUsuario");
+                        PlayerCatalogue catalogue = PlayerCatalogue.getMyPlayerCatalogue();
+                        for (int i = 0; i < resultados.length; i++) {
+                            if (!resultados[i].equals("false")) {
+                                Player unPlayer = getDatosJugador(resultados[i]);
+                                if(unPlayer.getEmail().equals(email)){
+                                    catalogue.setCurrentPlayer(unPlayer);
+                                }
+                            }
+                        }
 
+
+
+                    }
+                }
+            }
+        });
+        WorkManager.getInstance(MainActivity.this).enqueue(otwr);
+    }
+    public Player getDatosJugador(String s) {
+        // "email":"daniel.juape3@gmail.com","username":"Daddy","eloCheckers":"1001","country":"FR"
+        String[] datosSinComas = s.split(",");
+        ArrayList<String> valores = new ArrayList<>();
+        for (int i = 0; i < datosSinComas.length; i++) {
+            valores.add(datosSinComas[i].split(":")[1].replace('"', ' ').trim());
+        }
+        String ultimoValor = valores.get(valores.size() - 1);
+        valores.remove(valores.size() - 1);
+        valores.add(ultimoValor.substring(0, ultimoValor.length() - 2));
+
+        System.out.println("DatosJugador--> " + valores); //[daniel.juape3@gmail.com, Daddy, 1001, FR]
+        String email = valores.get(0), username = valores.get(1), pais = valores.get(4);
+        int eloCheckers = Integer.parseInt(valores.get(2)), eloChess = Integer.parseInt(valores.get(3));
+
+        Player jugador = new Player(username,pais,email,eloCheckers,eloChess);
+
+        return  jugador;
+    }
 }

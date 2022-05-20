@@ -22,6 +22,10 @@ public class Player {
         //gamesFinished = new ArrayList<>();
     }
 
+    public String getEmail() {
+        return email;
+    }
+
     public int getEloCheckers(){return eloCheckers;}
 
     public int getEloChess() {
