@@ -643,7 +643,7 @@ public class ChessActivity extends GameActivity
 
 
 
-    //Para que no se salga de la App
+    /*Para que no se salga de la App
     @Override
     public void onBackPressed()
     {
@@ -653,5 +653,5 @@ public class ChessActivity extends GameActivity
         setResult(RESULT_OK, i);
         finish();
         startActivity(i);
-    }
+    }*/
 }

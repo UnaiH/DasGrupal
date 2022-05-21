@@ -33,4 +33,12 @@
     <string name="correonovalido">Posta elektroniko baliogabea</string>
     <string name="gameOverTitle">Partida amaitu da</string>
     <string name="returnToMenu">Itzuli menura</string>
+    <string name="new_game">Joko berria</string>
+    <string name="games_in_course">Abian diren partidak</string>
+    <string name="record">Erregistroa</string>
+    <string name="games">Jokoak</string>
+    <string name="my_turn">Nire txanda</string>
+    <string name="rivals_turn">Aurkariaren txanda</string>
+    <string name="victory">Irabazita</string>
+    <string name="loss">Galduta</string>
 </resources>

@@ -32,4 +32,12 @@
     <string name="correonovalido">invalid email</string>
     <string name="gameOverTitle">Game has ended</string>
     <string name="returnToMenu">Return to menu</string>
+    <string name="new_game">New game</string>
+    <string name="games_in_course">Games in course</string>
+    <string name="record">Record</string>
+    <string name="games">Games</string>
+    <string name="my_turn">My turn</string>
+    <string name="rivals_turn">Rival\'s turn</string>
+    <string name="victory">Victory</string>
+    <string name="loss">Loss</string>
 </resources>

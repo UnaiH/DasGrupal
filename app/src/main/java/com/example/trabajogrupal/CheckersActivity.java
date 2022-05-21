@@ -428,7 +428,7 @@ public class CheckersActivity extends GameActivity {
         }
     }
 
-    //Para que no se salga de la App
+    /*Para que no se salga de la App
     @Override
     public void onBackPressed()
     {
@@ -438,7 +438,7 @@ public class CheckersActivity extends GameActivity {
         setResult(RESULT_OK, i);
         finish();
         startActivity(i);
-    }
+    }*/
 }
 
 //https://www.pixilart.com/draw/50x50-b16e5b967c8eaa3

@@ -7,4 +7,8 @@ public class GameFinished  extends Game {
         super(pid, prival, ptype);
         won = pwon;
     }
+
+    public boolean isWon() {
+        return won;
+    }
 }

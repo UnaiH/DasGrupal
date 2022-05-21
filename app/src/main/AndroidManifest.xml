@@ -53,7 +53,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".GamesInCourseActivity"
+            android:name=".SelectGameActivity"
+            android:exported="false" />
+        <activity
+            android:name=".NewGameActivity"
+            android:exported="false" />
+        <activity
+            android:name=".GameListActivity"
             android:exported="false" />
     </application>
 

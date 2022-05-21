@@ -73,4 +73,8 @@ public class Player {
     public ArrayList<GameInCourse> getGamesInCourse() {
         return gamesInCourse;
     }
+
+    public ArrayList<GameFinished> getGamesFinished() {
+        return gamesFinished;
+    }
 }

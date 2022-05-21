@@ -44,21 +44,11 @@ public class SelectMenuActivity extends AppCompatActivity {
         cargarFotoPerfil(user);
     }
 
-    public void onClickCheckers(View v) {
-        Intent i = new Intent(this, CheckersActivity.class);
-        //i.putExtra("user", user);
-        setResult(RESULT_OK, i);
-        finish();
+    public void onClickGames(View v) {
+        Intent i = new Intent(this, SelectGameActivity.class);
         startActivity(i);
     }
 
-    public void onClickChess(View v) {
-        Intent i = new Intent(this, ChessActivity.class);
-        //i.putExtra("user", user);
-        setResult(RESULT_OK, i);
-        finish();
-        startActivity(i);
-    }
     public void onClickSelectRanking(View v){
         Intent i = new Intent(this, ChooseRankingActivity.class);
         i.putExtra("flag",true);
@@ -133,13 +123,5 @@ public class SelectMenuActivity extends AppCompatActivity {
         if(requestCode==2 && resultCode==RESULT_OK){
 
         }
-    }
-
-    public void onClickGamesInCourse(View v) {
-        Intent i = new Intent(this, GamesInCourseActivity.class);
-        i.putExtra("user", user);
-        setResult(RESULT_OK, i);
-        finish();
-        startActivity(i);
     }
 }

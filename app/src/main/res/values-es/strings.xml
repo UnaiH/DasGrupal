@@ -33,4 +33,12 @@
     <string name="correonovalido">Correo electrónico inválido</string>
     <string name="gameOverTitle">La partida ha terminado</string>
     <string name="returnToMenu">Volver al menú</string>
+    <string name="new_game">Nuevo juego</string>
+    <string name="games_in_course">Juegos en curso</string>
+    <string name="record">Historial</string>
+    <string name="games">Juegos</string>
+    <string name="my_turn">Mi turno</string>
+    <string name="rivals_turn">Turno del rival</string>
+    <string name="victory">Victoria</string>
+    <string name="loss">Derrota</string>
 </resources>

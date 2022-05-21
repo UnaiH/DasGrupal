@@ -6,91 +6,69 @@
     android:layout_height="match_parent"
     tools:context=".SelectMenuActivity">
 
-    <Button
-        android:id="@+id/checkers"
-        android:layout_width="128dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="136dp"
-        android:layout_marginTop="224dp"
-        android:layout_marginEnd="163dp"
-        android:background="@color/black"
-        android:onClick="onClickCheckers"
-        android:text="@string/checkers"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/chess"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="148dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="175dp"
-        android:background="@color/white"
-        android:onClick="onClickChess"
-        android:text="@string/chess"
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkers" />
-
-    <Button
-        android:id="@+id/pref"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="148dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="169dp"
-        android:background="@color/black"
-        android:onClick="onClickPreferencies"
-        android:text="@string/preferencies"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chess" />
-
-    <Button
-        android:id="@+id/btn_Logout"
-        android:background="@color/white"
-        android:textColor="@color/black"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="291dp"
-        android:layout_marginTop="23dp"
-        android:layout_marginEnd="28dp"
-        android:text="@string/logout"
-        android:onClick="onClickLogout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <ImageButton
         android:id="@+id/btn_Profile"
         android:layout_width="60dp"
         android:layout_height="59dp"
         android:layout_marginStart="17dp"
         android:layout_marginTop="24dp"
+        android:background="@drawable/usuario"
         android:onClick="onClickProfile"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@drawable/usuario"
         tools:ignore="SpeakableTextPresentCheck" />
+
+    <Button
+        android:id="@+id/btn_Back2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="23dp"
+        android:layout_marginEnd="28dp"
+        android:background="@color/white"
+        android:onClick="onClickLogout"
+        android:text="@string/logout"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/games"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:background="@color/white"
+        android:onClick="onClickGames"
+        android:text="@string/games"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/pref"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/pref"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/black"
+        android:onClick="onClickPreferencies"
+        android:text="@string/preferencies"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btn_selectMenu_ranking"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="148dp"
-        android:layout_marginTop="21dp"
-        android:text="Ranking"
-        android:textColor="@color/black"
+        android:layout_marginTop="40dp"
         android:background="@color/white"
         android:onClick="onClickSelectRanking"
+        android:text="Ranking"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pref" />
 
@@ -105,14 +83,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_selectMenu_ranking" />
 
-    <Button
-        android:id="@+id/gamesInCourse"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:onClick="onClickGamesInCourse"
-        android:text="Games in course"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pref" />
 </androidx.constraintlayout.widget.ConstraintLayout>
