@@ -2,16 +2,29 @@ package com.example.trabajogrupal;
 
 public class Game {
     private int id;
-    private Player rival;
+    private Player player1;
+    private Player player2;
     private String type;
+    private String nextTurn;
+    private String winner;
 
-    public Game(int pid, Player prival, String ptype) {
+    public Game(int pid, Player pplayer1, Player pplayer2, String ptype, String pnextTurn) {
         id = pid;
-        rival = prival;
+        player1 = pplayer1;
+        player2 = pplayer2;
         type = ptype;
+        nextTurn = pnextTurn;
+        winner = null;
     }
 
-    public Player getRival() {
+    public Player getRival(String currentPlayer) {
+        Player rival = null;
+        if (currentPlayer.equals(player1.getEmail())) {
+            rival = player2;
+        }
+        else if (currentPlayer.equals(player2.getEmail())) {
+            rival = player1;
+        }
         return rival;
     }
 
@@ -21,5 +34,26 @@ public class Game {
 
     public int getId() {
         return id;
+    }
+
+    public void changeTurn() {
+        if (nextTurn.equals(player1.getEmail())) {
+            nextTurn = player2.getEmail();
+        }
+        else if (nextTurn.equals(player2.getEmail())) {
+            nextTurn = player1.getEmail();
+        }
+    }
+
+    public boolean isMyTurn(String currentPlayer) {
+        return currentPlayer.equals(nextTurn);
+    }
+
+    public boolean iAmWinner(String currentPlayer) {
+        return currentPlayer.equals(winner);
+    }
+
+    public boolean isFinished() {
+        return nextTurn==null;
     }
 }

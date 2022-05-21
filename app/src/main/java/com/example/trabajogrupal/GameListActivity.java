@@ -47,9 +47,9 @@ public class GameListActivity extends AppCompatActivity {
                         String gameType = ((TextView) view.findViewById(R.id.gameType)).getText().toString();
                         int gameID = Integer.parseInt(((TextView) view.findViewById(R.id.gameID)).getText().toString());
                         Intent i = null;
-                        if (gameType.equals("Checkers")) {
+                        if (gameType.equals(getString(R.string.checkers))) {
                             i = new Intent(view.getContext(), CheckersActivity.class);
-                        } else if (gameType.equals("Chess")) {
+                        } else if (gameType.equals(getString(R.string.chess))) {
                             i = new Intent(view.getContext(), ChessActivity.class);
                         }
                         i.putExtra("idGame", gameID);

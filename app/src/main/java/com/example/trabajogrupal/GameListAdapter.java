@@ -1,6 +1,7 @@
 package com.example.trabajogrupal;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,9 +50,11 @@ public class GameListAdapter extends BaseAdapter {
         TextView turnOrWinnerView = (TextView) view.findViewById(R.id.turnOrWinner);
 
         Game game = (Game) games.get(i);
-        Player rival = game.getRival();
+        String currentUser = PlayerCatalogue.getMyPlayerCatalogue().getCurrentUser();
+        Player rival = game.getRival(currentUser);
 
         imageView.setImageBitmap(rival.getImage());
+        imageView.setImageResource(R.drawable.avatar1);
         usernameView.setText(rival.getName());
         countryView.setText(rival.getPais());
         int elo = 0;
@@ -64,19 +67,19 @@ public class GameListAdapter extends BaseAdapter {
             elo = rival.getEloChess();
             gameType = contexto.getString(R.string.chess);
         }
-        eloView.setText(elo);
-        gameIDView.setText(game.getId());
-        gameTypeView.setText(game.getType());
+        eloView.setText(String.valueOf(elo));
+        gameIDView.setText(String.valueOf(game.getId()));
+        gameTypeView.setText(gameType);
         String turnOrWinner = null;
-        if (game instanceof GameInCourse) {
-            if (((GameInCourse) game).isMyTurn()) {
+        if (!game.isFinished()) {
+            if (game.isMyTurn(currentUser)) {
                 turnOrWinner = contexto.getString(R.string.my_turn);
             } else {
                 turnOrWinner = contexto.getString(R.string.rivals_turn);
             }
         }
-        else if (game instanceof GameFinished) {
-            if (((GameFinished) game).isWon()) {
+        else {
+            if (game.iAmWinner(currentUser)) {
                 turnOrWinner = contexto.getString(R.string.victory);
             } else {
                 turnOrWinner = contexto.getString(R.string.loss);

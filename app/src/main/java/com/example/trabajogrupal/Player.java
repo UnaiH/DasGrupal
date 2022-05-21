@@ -8,8 +8,8 @@ public class Player {
     private String username, pais, email;
     private int eloCheckers, eloChess;
     private ArrayList<Integer> rankELO;
-    private ArrayList<GameInCourse> gamesInCourse;
-    private ArrayList<GameFinished> gamesFinished;
+    private ArrayList<Game> gamesInCourse;
+    private ArrayList<Game> gamesFinished;
     private Bitmap image;
     public Player(String pUsername, String pPais, String pEmail, int pEloCheckers, int pEloChess) {
         username = pUsername;
@@ -20,8 +20,8 @@ public class Player {
         rankELO = new ArrayList<>();
         rankELO.add(pEloCheckers);
         rankELO.add(pEloChess);
-        gamesInCourse = new ArrayList<GameInCourse>();
-        gamesFinished = new ArrayList<GameFinished>();
+        gamesInCourse = new ArrayList<Game>();
+        gamesFinished = new ArrayList<Game>();
     }
 
     public String getEmail() {
@@ -53,17 +53,17 @@ public class Player {
     public String getPais() {
         return pais;
     }
-    public void addInCourse(GameInCourse gameInCourse)
+    public void addInCourse(Game game)
     {
-        gamesInCourse.add(gameInCourse);
+        gamesInCourse.add(game);
     }
-    public void removeInCourse(GameInCourse gameInCourse)
+    public void removeInCourse(Game game)
     {
-        gamesInCourse.remove(gameInCourse);
+        gamesInCourse.remove(game);
     }
-    public void finishGame(GameFinished gameFinished)
+    public void finishGame(Game game)
     {
-        gamesFinished.add(gameFinished);
+        gamesFinished.add(game);
     }
 
     public Bitmap getImage() {
@@ -74,11 +74,11 @@ public class Player {
         return username;
     }
 
-    public ArrayList<GameInCourse> getGamesInCourse() {
+    public ArrayList<Game> getGamesInCourse() {
         return gamesInCourse;
     }
 
-    public ArrayList<GameFinished> getGamesFinished() {
+    public ArrayList<Game> getGamesFinished() {
         return gamesFinished;
     }
 }
