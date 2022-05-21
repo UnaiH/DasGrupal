@@ -112,7 +112,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     public boolean isValidPassword(String pass1, String pass2) {
         boolean valid = false;
         //mínimo ocho caracteres, al menos una letra mayúscula, una letra minúscula, un número y un carácter especial. Ejemplo--> D@ja1920
-        String patron = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%.,:;_*+&|?!]).{8,20}$";
+        String patron = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%.,:;_*+&|?!€¿¡]).{8,20}$";
         if (pass1.trim().length() > 0) {
             if (pass1.equals(pass2)) {
                 if (Pattern.compile(patron).matcher(pass1).matches()) {
