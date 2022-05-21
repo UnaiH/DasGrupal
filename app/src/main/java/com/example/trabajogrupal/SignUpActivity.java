@@ -78,7 +78,10 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                                         setResult(RESULT_OK);
                                         iBack.putExtra("user",email);
                                         finish();
-                                        getUsers();
+                                        PlayerCatalogue catalogue = PlayerCatalogue.getMyPlayerCatalogue();
+                                        Player currentPlayer =catalogue.getPlayer(email);
+
+                                        catalogue.setCurrentPlayer(currentPlayer);
                                     } else {
                                         Toast.makeText(SignUpActivity.this, R.string.otroemail, Toast.LENGTH_SHORT).show();
                                     }
@@ -109,7 +112,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     public boolean isValidPassword(String pass1, String pass2) {
         boolean valid = false;
         //mínimo ocho caracteres, al menos una letra mayúscula, una letra minúscula, un número y un carácter especial. Ejemplo--> D@ja1920
-        String patron = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,20}$";
+        String patron = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%.,:;_*+&|?!]).{8,20}$";
         if (pass1.trim().length() > 0) {
             if (pass1.equals(pass2)) {
                 if (Pattern.compile(patron).matcher(pass1).matches()) {
@@ -125,52 +128,5 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
     }
-    public void getUsers(){
-        OneTimeWorkRequest otwr = new OneTimeWorkRequest.Builder(WorkerGetUsersForRanking.class).build();
-        WorkManager.getInstance(SignUpActivity.this).getWorkInfoByIdLiveData(otwr.getId()).observe(SignUpActivity.this, new Observer<WorkInfo>() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onChanged(WorkInfo workInfo) {
-                if (workInfo != null && workInfo.getState().isFinished()) {
-                    Boolean resultadoPhp = workInfo.getOutputData().getBoolean("exito", false);
-                    System.out.println("RESULTADO --> " + resultadoPhp);
-                    if (resultadoPhp) {
-                        String[] resultados = workInfo.getOutputData().getStringArray("datosUsuario");
-                        PlayerCatalogue catalogue = PlayerCatalogue.getMyPlayerCatalogue();
-                        for (int i = 0; i < resultados.length; i++) {
-                            if (!resultados[i].equals("false")) {
-                                Player unPlayer = getDatosJugador(resultados[i]);
-                                if(unPlayer.getEmail().equals(email)){
-                                    catalogue.setCurrentPlayer(unPlayer);
-                                }
-                            }
-                        }
 
-
-
-                    }
-                }
-            }
-        });
-        WorkManager.getInstance(SignUpActivity.this).enqueue(otwr);
-    }
-    public Player getDatosJugador(String s) {
-        // "email":"daniel.juape3@gmail.com","username":"Daddy","eloCheckers":"1001","country":"FR"
-        String[] datosSinComas = s.split(",");
-        ArrayList<String> valores = new ArrayList<>();
-        for (int i = 0; i < datosSinComas.length; i++) {
-            valores.add(datosSinComas[i].split(":")[1].replace('"', ' ').trim());
-        }
-        String ultimoValor = valores.get(valores.size() - 1);
-        valores.remove(valores.size() - 1);
-        valores.add(ultimoValor.substring(0, ultimoValor.length() - 2));
-
-        System.out.println("DatosJugador--> " + valores); //[daniel.juape3@gmail.com, Daddy, 1001, FR]
-        String email = valores.get(0), username = valores.get(1), pais = valores.get(4);
-        int eloCheckers = Integer.parseInt(valores.get(2)), eloChess = Integer.parseInt(valores.get(3));
-
-        Player jugador = new Player(username,pais,email,eloCheckers,eloChess);
-
-        return  jugador;
-    }
 }

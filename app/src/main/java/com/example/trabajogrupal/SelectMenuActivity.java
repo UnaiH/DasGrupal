@@ -87,6 +87,16 @@ public class SelectMenuActivity extends AppCompatActivity {
         startActivityForResult(i, 1);
     }
 
+    public void onClickGameOver(View v)
+    {
+        finish();
+        Intent i = new Intent(this, GameOverActivity.class);
+        i.putExtra("winner","romeo@gmail.com");
+        i.putExtra("loser", "daniel.juape2@gmail.com");
+        i.putExtra("gameType", "Chess");
+        startActivity(i);
+    }
+
     public void cargarFotoPerfil(String user) {
         /*Obtiene la foto de la BBDD y la pone en el imageview*/
         Data datos = new Data.Builder().putString("user", user).build();

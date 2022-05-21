@@ -31,4 +31,6 @@
     <string name="otroemail">This email is in use, please try with other</string>
     <string name="contrnoval">Incorrect password. Your password must have a minimum of eight characters, at least one uppercase letter, one lowercase letter, one number and one special character.</string>
     <string name="correonovalido">invalid email</string>
+    <string name="gameOverTitle">Game has ended</string>
+    <string name="returnToMenu">Return to menu</string>
 </resources>

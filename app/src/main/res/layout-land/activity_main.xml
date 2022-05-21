@@ -8,6 +8,7 @@
 
     <EditText
         android:id="@+id/userSignIn"
+        android:textColor="@color/white"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
@@ -16,7 +17,6 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text="@string/usuario"
-        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -85,6 +85,7 @@
 
     <EditText
         android:id="@+id/PasswordSignIn"
+        android:textColor="@color/white"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
@@ -93,17 +94,16 @@
         android:ems="10"
         android:inputType="textPassword"
         android:text="Password"
-        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userSignIn" />
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="78dp"
-        android:layout_height="109dp"
-        android:layout_marginStart="91dp"
-        android:layout_marginTop="136dp"
+        android:layout_width="114dp"
+        android:layout_height="181dp"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="64dp"
         android:layout_marginEnd="50dp"
         app:layout_constraintEnd_toStartOf="@+id/button3"
         app:layout_constraintHorizontal_bias="0.0"

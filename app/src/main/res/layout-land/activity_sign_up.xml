@@ -19,7 +19,7 @@
         android:inputType="textPersonName"
         android:minHeight="48dp"
         android:text="Email"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,7 +37,7 @@
         android:inputType="textPersonName"
         android:minHeight="48dp"
         android:text="@string/usuario"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -53,7 +53,7 @@
         android:inputType="textPassword"
         android:minHeight="48dp"
         android:text="Password"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         app:layout_constraintStart_toEndOf="@+id/signupEmail"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
@@ -68,7 +68,7 @@
         android:inputType="textPassword"
         android:minHeight="48dp"
         android:text="Password"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         app:layout_constraintStart_toEndOf="@+id/signupEmail"
         app:layout_constraintTop_toBottomOf="@+id/signupPassword" />
 
@@ -79,7 +79,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         android:text="@string/confPas"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/confirmPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.023"
@@ -93,7 +93,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
         android:text="@string/contr"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         app:layout_constraintStart_toEndOf="@+id/signupEmail"
         app:layout_constraintTop_toTopOf="parent" />
 

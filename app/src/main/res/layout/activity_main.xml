@@ -35,6 +35,8 @@
 
     <Button
         android:id="@+id/button"
+        android:background="@color/black"
+        android:textColor="@color/white"
         android:layout_width="195dp"
         android:layout_height="40dp"
         android:layout_marginStart="152dp"
@@ -49,6 +51,8 @@
 
     <Button
         android:id="@+id/button5"
+        android:background="@color/white"
+        android:textColor="@color/black"
         android:layout_width="191dp"
         android:layout_height="43dp"
         android:layout_marginStart="155dp"
@@ -63,6 +67,8 @@
 
     <Button
         android:id="@+id/button3"
+        android:background="@color/white"
+        android:textColor="@color/black"
         android:layout_width="189dp"
         android:layout_height="43dp"
         android:layout_marginStart="160dp"
