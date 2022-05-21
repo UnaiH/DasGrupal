@@ -170,4 +170,8 @@ public class PlayerCatalogue {
     public String getCurrentUser() {
         return currentUser;
     }
+
+    public List<Player> getUsers() {
+        return usuarios;
+    }
 }
