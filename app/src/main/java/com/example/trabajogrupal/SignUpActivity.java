@@ -11,14 +11,21 @@ import androidx.work.WorkManager;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,15 +36,18 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     EditText emailText, passText, confirmPassText, usernameText;
     Context ctxt;
     Activity activ;
+    byte[] fotoTransformada;
+    LocalDB myDB;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         new LanguagesWorker().setLangua(this);
         super.onCreate(savedInstanceState);
-        ThemesWorker tem=new ThemesWorker();
+        ThemesWorker tem = new ThemesWorker();
         tem.setThemes(this);
         setContentView(R.layout.activity_sign_up);
-        ctxt=this;
-        activ=this;
+        ctxt = this;
+        activ = this;
+        myDB = new LocalDB(this, "Chess", null, 1);
     }
 
     @Override
@@ -73,14 +83,22 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                                     Boolean resultadoPhp = workInfo.getOutputData().getBoolean("exito", false);
                                     Log.i("TAG", "onChanged: " + resultadoPhp);
                                     if (resultadoPhp) {
-                                        new DefineCountryWorker().localizacionBD(email, ctxt,activ);
+                                        new DefineCountryWorker().localizacionBD(email, ctxt, activ);
                                         Intent iBack = new Intent();
                                         setResult(RESULT_OK);
-                                        iBack.putExtra("user",email);
+                                        iBack.putExtra("user", email);
                                         finish();
                                         PlayerCatalogue catalogue = PlayerCatalogue.getMyPlayerCatalogue();
-                                        Player currentPlayer =catalogue.getPlayer(email);
-
+                                        Player currentPlayer = catalogue.getPlayer(email);
+                                        compressFoto();
+                                        if (fotoTransformada != null) {
+                                            if (myDB.getImage(email) != null) {
+                                                myDB.updateImage(email, fotoTransformada);
+                                            } else {
+                                                myDB.insertImage(email, fotoTransformada);
+                                            }
+                                            insertarFotoPerfil(email, fotoTransformada);
+                                        }
                                         catalogue.setCurrentPlayer(currentPlayer);
                                     } else {
                                         Toast.makeText(SignUpActivity.this, R.string.otroemail, Toast.LENGTH_SHORT).show();
@@ -108,7 +126,30 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         }
         return valid;
     }
+    public void compressFoto() {
+        String uri = "@drawable/avatar1";
+        int imageResource = getResources().getIdentifier(uri, null, getPackageName());
+        Bitmap bitMapFoto = BitmapFactory.decodeResource(getResources(), imageResource);
 
+        int anchoDestino = 528;
+        int altoDestino = 591;
+        int anchoImagen = bitMapFoto.getWidth();
+        int altoImagen = bitMapFoto.getHeight();
+        float ratioImagen = (float) anchoImagen / (float) altoImagen;
+        float ratioDestino = (float) anchoDestino / (float) altoDestino;
+        int anchoFinal = anchoDestino;
+        int altoFinal = altoDestino;
+        if (ratioDestino > ratioImagen) {
+            anchoFinal = (int) ((float) altoDestino * ratioImagen);
+        } else {
+            altoFinal = (int) ((float) anchoDestino / ratioImagen);
+        }
+        Bitmap bitmapRedimensionado = Bitmap.createScaledBitmap(bitMapFoto, anchoFinal, altoFinal, true);
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmapRedimensionado.compress(Bitmap.CompressFormat.PNG, 100, stream);
+
+        fotoTransformada = stream.toByteArray();
+    }
     public boolean isValidPassword(String pass1, String pass2) {
         boolean valid = false;
         //mínimo ocho caracteres, al menos una letra mayúscula, una letra minúscula, un número y un carácter especial. Ejemplo--> D@ja1920
@@ -122,6 +163,32 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         }
         return valid;
     }
+    public void insertarFotoPerfil(String user, byte[] fotoTransformada) {
+        /*Subir la foto a la BBDD remota */
+        Uri.Builder builder = new Uri.Builder();
+        builder.appendQueryParameter("user", user);
+        String foto64 = Base64.encodeToString(fotoTransformada, Base64.DEFAULT);
+        builder.appendQueryParameter("image", foto64);
+        Data datos = new Data.Builder().putString("user", user).build();
+        OneTimeWorkRequest otwr = new OneTimeWorkRequest.Builder(WorkerInsertImage.class).setInputData(datos).build();
+        WorkManager.getInstance(SignUpActivity.this).getWorkInfoByIdLiveData(otwr.getId()).observe(SignUpActivity.this, new Observer<WorkInfo>() {
+            @Override
+            public void onChanged(WorkInfo workInfo) {
+                if (workInfo != null && workInfo.getState().isFinished()) {
+                    Boolean resultadoPhp = workInfo.getOutputData().getBoolean("exito", false);
+                    System.out.println("RESULTADO INSERT IMAGEN --> " + resultadoPhp);
+                    if (resultadoPhp) {
+                        Intent i = getIntent();
+                        startActivity(i);
+                        finish();
+                    }
+                }
+            }
+        });
+        WorkManager.getInstance(SignUpActivity.this).enqueue(otwr);
+
+    }
+
     public void onBackPressed() {
         super.onBackPressed();
         finish();

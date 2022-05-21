@@ -15,6 +15,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -55,7 +56,7 @@ public class ProfileActivity extends AppCompatActivity {
         btn_camera = findViewById(R.id.btn_profileCamera);
         btn_gallery = findViewById(R.id.btn_profileGallery);
         btn_save = findViewById(R.id.btn_profileGuardar);
-
+        Log.i("PruebaFoto","Imagen-> "+catalogue.getCurrentUser()+" -> "+catalogue.getPlayer(user).getImage());
         /*Dropdown para seleccionar 4 avatares que ofrece la app*/
         dropdown = findViewById(R.id.spinnerSelect);
         itemsDropdown = new String[]{"Select","Avatar 1", "Avatar 2", "Avatar 3", "Avatar 4"};
@@ -164,6 +165,9 @@ public class ProfileActivity extends AppCompatActivity {
     public void compressFoto() {
         int anchoDestino = image.getWidth();
         int altoDestino = image.getHeight();
+        Log.i("compress","Width-> "+anchoDestino);
+        Log.i("compress","Height-> "+altoDestino);
+        Log.i("compress","Height-> "+altoDestino);
         int anchoImagen = bitMapFoto.getWidth();
         int altoImagen = bitMapFoto.getHeight();
         float ratioImagen = (float) anchoImagen / (float) altoImagen;
@@ -183,8 +187,6 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     public void insertarFotoPerfil(String user, byte[] fotoTransformada) {
-
-
         /*Subir la foto a la BBDD remota */
         Uri.Builder builder = new Uri.Builder();
         builder.appendQueryParameter("user", user);
@@ -219,7 +221,7 @@ public class ProfileActivity extends AppCompatActivity {
             public void onChanged(WorkInfo workInfo) {
                 if (workInfo != null && workInfo.getState().isFinished()) {
                     Boolean resultadoPhp = workInfo.getOutputData().getBoolean("exito", false);
-                    System.out.println("RESULTADO INSERT IMAGEN --> " + resultadoPhp);
+                    System.out.println("RESULTADO CARGAR IMAGEN --> " + resultadoPhp);
                     if (resultadoPhp) {
 
                         byte[] decodificado = myDB.getImage(user);

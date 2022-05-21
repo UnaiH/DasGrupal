@@ -3,6 +3,8 @@ package com.example.trabajogrupal;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -28,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     String userEmail, password;
     Button but;
     TextView text;
+    LocalDB myDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         ThemesWorker tem = new ThemesWorker();
         tem.setThemes(this);
-
+        myDB = new LocalDB(this, "Chess", null, 1);
         pedirpermisosLocalizar();
         getUsers();
         setContentView(R.layout.activity_main);
@@ -195,6 +198,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         PlayerCatalogue catalogoJugador = PlayerCatalogue.getMyPlayerCatalogue();
 
         catalogoJugador.addPlayer(email, eloCheckers, eloChess, username, pais);
-
+        getFotoPerfil(email);
     }
+    public void getFotoPerfil(String user) {
+        /*Obtiene la foto de la BBDD y la pone en el imageview*/
+        Data datos = new Data.Builder().putString("user", user).build();
+        OneTimeWorkRequest otwr = new OneTimeWorkRequest.Builder(WorkerGetImage.class).setInputData(datos).build();
+        WorkManager.getInstance(MainActivity.this).getWorkInfoByIdLiveData(otwr.getId()).observe(MainActivity.this, new Observer<WorkInfo>() {
+            @Override
+            public void onChanged(WorkInfo workInfo) {
+                if (workInfo != null && workInfo.getState().isFinished()) {
+                    Boolean resultadoPhp = workInfo.getOutputData().getBoolean("exito", false);
+                    System.out.println("RESULTADO CARGAR IMAGEN --> " + resultadoPhp);
+                    if (resultadoPhp) {
+
+                        byte[] decodificado = myDB.getImage(user);
+                        if (decodificado != null) {
+                            Bitmap elBitmap = BitmapFactory.decodeByteArray(decodificado, 0, decodificado.length);
+                            PlayerCatalogue catalogue = PlayerCatalogue.getMyPlayerCatalogue();
+                            Player unPlayer = catalogue.getPlayer(user);
+                            unPlayer.setImage(elBitmap);
+                        }
+                    }
+                }
+            }
+        });
+        WorkManager.getInstance(MainActivity.this).enqueue(otwr);
+    }
+
 }

@@ -28,6 +28,10 @@ public class Player {
         return email;
     }
 
+    public void setImage(Bitmap image) {
+        this.image = image;
+    }
+
     public int getEloCheckers(){return eloCheckers;}
 
     public int getEloChess() {
