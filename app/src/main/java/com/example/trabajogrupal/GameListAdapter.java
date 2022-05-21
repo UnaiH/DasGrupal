@@ -54,7 +54,6 @@ public class GameListAdapter extends BaseAdapter {
         Player rival = game.getRival(currentUser);
 
         imageView.setImageBitmap(rival.getImage());
-        imageView.setImageResource(R.drawable.avatar1);
         usernameView.setText(rival.getName());
         countryView.setText(rival.getPais());
         int elo = 0;
