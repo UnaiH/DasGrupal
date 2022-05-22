@@ -1,8 +1,7 @@
-Checkers consists of only one type of piece, a checker. At the beginning, you can only move one
-checker one diagonal space forward during a regular turn. If your checker is in the diagonal space
-nearest to one of your opponent's checkers, then you can jump and capture that checker.
-To capture a checker, move two diagonal spaces in the direction of the checker
-you’re attacking, like you are hopping over your opponent's piece. The space on the
-other side of your opponent’s checker has to be empty so that you can move into it. To crown a
-checker and make it a crowned checker. This piece can move forward and backward diagonally on the
-dark squares, so it's easier for crowned checkers to capture your opponent's checkers
+Checkers consists of only one type of piece, a checker. At the beginning, you can only move one checker one diagonal
+space forward during a regular turn. If your checker is in the diagonal space nearest to one of your opponent's checkers,
+then you can jump and capture that checker. To capture a checker, move two diagonal spaces in the direction of the checker
+you’re attacking, like you are hopping over your opponent's piece. The space on the other side of your opponent’s checker
+has to be empty so that you can move into it. To crown a checker and make it a king checker, simply place one of your
+own captured pieces on top of it. The king can move forward and backward diagonally on the dark squares, so it's easier for
+king checkers to capture your opponent's checkers

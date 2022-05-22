@@ -1,4 +1,3 @@
-Damas:
 Las damas constan de un solo tipo de "fichas" que al principio solo pueden avanzar en diagonal una
 casilla. Cuando una ficha del rival se encuentra en el camino de avance en tu turno podrás "comerla"
 avanzando dos casillas en diagonal a la vez que se elimina la ficha enemiga. Si hay dos fichas

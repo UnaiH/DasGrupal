@@ -49,7 +49,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         pedirpermisosLocalizar();
         getUsers();
         setContentView(R.layout.activity_main);
-
+        but = findViewById(R.id.btn_pruebaTuto);
+        but.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i =new Intent(MainActivity.this, TutorialActivity.class);
+                startActivity(i);
+            }
+        });
         /*
         but = findViewById(R.id.button3);
         tem.setButColorBlack(but, this);

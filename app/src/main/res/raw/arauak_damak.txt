@@ -1,4 +1,3 @@
-Damak:
 Damak fitxa mota bakarra daukate. Hasieran bakarrik diagonalean mugitu ahal dira. Lehiakidearen
 fitxa bidean badago zure txandan bi laukiak diagonalean mugitu ahal zara eta aldi berean
 lehiakidearen fitxa kentxen. Bi fitxak diagonalean badaude ezin da jan. Fitxa bat taularen beste

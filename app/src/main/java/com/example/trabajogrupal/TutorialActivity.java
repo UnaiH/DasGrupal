@@ -2,7 +2,9 @@ package com.example.trabajogrupal;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -14,7 +16,7 @@ import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.util.Locale;
 
-public class Tutorial extends AppCompatActivity {
+public class TutorialActivity extends AppCompatActivity {
     Button btnCheckers, btnChess;
     TextView txtTutorial;
 
@@ -43,50 +45,49 @@ public class Tutorial extends AppCompatActivity {
 
     public String leerTutorial(String juego) {
         String tutorial = null;
-        String codigoPais = Locale.getDefault().toString();
+
 
         try {
             String lineaActual;
-            InputStream fich;
+            InputStream fich = null;
             BufferedReader buff;
             switch (juego) {
                 case "Checkers":
-                    if (codigoPais.equals("es")) {
-                        fich = getResources().openRawResource(R.raw.instrucciones_damas);
-                    } else if (codigoPais.equals("eng")) {
-                        fich = getResources().openRawResource(R.raw.instructions_checkers);
-                    } else if (codigoPais.equals("eu")) {
-                        fich = getResources().openRawResource(R.raw.arauak_damak);
-                    } else {
-                        fich = null;
+                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+                    if (prefs.contains("idiomas")) {
+                        String lan = prefs.getString("idiomas", "English");
+                        if (lan.equals("Español")) {
+                            fich = getResources().openRawResource(R.raw.instrucciones_damas);
+                        } else if (lan.equals("Euskara")) {
+                            fich = getResources().openRawResource(R.raw.arauak_damak);
+                        } else {
+                            fich = getResources().openRawResource(R.raw.instructions_checkers);
+                        }
                     }
-
                     buff = new BufferedReader(new InputStreamReader(fich));
-                    lineaActual = buff.readLine();
-                    tutorial = null;
-                    while (lineaActual != null) {
+                    tutorial = "";
+                    while ((lineaActual = buff.readLine()) != null) {
                         tutorial += lineaActual;
                     }
                     break;
                 case "Chess":
 
-                    if (codigoPais.equals("es")) {
-                        fich = getResources().openRawResource(R.raw.instrucciones_ajedrez);
-                    } else if (codigoPais.equals("eng")) {
-                        fich = getResources().openRawResource(R.raw.instructions_chess);
-                    } else if (codigoPais.equals("eu")) {
-                        fich = getResources().openRawResource(R.raw.arauak_xakea);
-                    } else {
-                        fich = null;
+                    prefs = PreferenceManager.getDefaultSharedPreferences(this);
+                    if (prefs.contains("idiomas")) {
+                        String lan = prefs.getString("idiomas", "English");
+                        if (lan.equals("Español")) {
+                            fich = getResources().openRawResource(R.raw.instrucciones_ajedrez);
+                        } else if (lan.equals("Euskara")) {
+                            fich = getResources().openRawResource(R.raw.arauak_xakea);
+                        } else {
+                            fich = getResources().openRawResource(R.raw.instructions_chess);
+                        }
                     }
-
                     buff = new BufferedReader(new InputStreamReader(fich));
-                    lineaActual = buff.readLine();
-                    tutorial = null;
-                    while (lineaActual != null) {
+                    tutorial = "";
+                    while ((lineaActual = buff.readLine()) != null) {
                         tutorial += lineaActual;
                     }
-
                     break;
             }
 
