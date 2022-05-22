@@ -6,8 +6,10 @@
     <string name="iniciars">Iniciar sesión</string>
     <string name="register">Registrar</string>
     <string name="confPas">Confirmar contraseña</string>
-    <string name="checkers">Damas en línea</string>
-    <string name="chess">Ajedrez en línea</string>
+    <string name="checkers">Damas</string>
+    <string name="chess">Ajedrez</string>
+    <string name="checkersOnline">Damas en línea</string>
+    <string name="chessOnline">Ajedrez en línea</string>
     <string name="checkersLocal">Damas localmente</string>
     <string name="chessLocal">Ajedrez localmente</string>
     <string name="idiomas">Idiomas</string>
@@ -34,6 +36,8 @@
     <string name="contrnoval">Contraseña incorrecta. Tu contraseña debe tener mínimo ocho caracteres, al menos una letra mayúscula, una letra minúscula, un número y un carácter especial.</string>
     <string name="correonovalido">Correo electrónico inválido</string>
     <string name="gameOverTitle">La partida ha terminado</string>
+    <string name="gameOver1">: elo aumentado en </string>
+    <string name="gameOver2">: elo reducido en </string>
     <string name="returnToMenu">Volver al menú</string>
     <string name="new_game">Nuevo juego</string>
     <string name="games_in_course">Juegos en curso</string>

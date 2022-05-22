@@ -5,8 +5,10 @@
     <string name="iniciars">Login</string>
     <string name="register">Register</string>
     <string name="confPas">Confirm password</string>
-    <string name="checkers">Checkers online</string>
-    <string name="chess">Chess online</string>
+    <string name="checkers">Checkers</string>
+    <string name="chess">Chess</string>
+    <string name="checkersOnline">Checkers online</string>
+    <string name="chessOnline">Chess online</string>
     <string name="checkersLocal">Checkers locally</string>
     <string name="chessLocal">Chess locally</string>
     <string name="preferencies">Settings</string>
@@ -33,6 +35,8 @@
     <string name="contrnoval">Incorrect password. Your password must have a minimum of eight characters, at least one uppercase letter, one lowercase letter, one number and one special character.</string>
     <string name="correonovalido">invalid email</string>
     <string name="gameOverTitle">Game has ended</string>
+    <string name="gameOver1">: elo added by </string>
+    <string name="gameOver2">: elo reduced by </string>
     <string name="returnToMenu">Return to menu</string>
     <string name="new_game">New game</string>
     <string name="games_in_course">Games in course</string>
@@ -42,4 +46,5 @@
     <string name="rivals_turn">Rival\'s turn</string>
     <string name="victory">Victory</string>
     <string name="loss">Loss</string>
+
 </resources>

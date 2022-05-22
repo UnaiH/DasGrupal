@@ -69,7 +69,7 @@ public class GameOverActivity extends AppCompatActivity {
         int newEloLoser = eloLoser - paso5;
 
         TextView body=findViewById(R.id.TextViewGameOverBody);
-        body.setText(winner + ": elo added by " + paso5 +"\n" + loser + ": elo reduced by " + paso5);
+        body.setText(winner + getResources().getString(R.string.gameOver1) + paso5 +"\n" + loser + getResources().getString(R.string.gameOver2) + paso5);
 
 
         updateElo(winner,newEloWinner,"elo" + gameType);

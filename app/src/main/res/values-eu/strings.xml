@@ -8,6 +8,8 @@
     <string name="confPas">Pasahitza baieztatu</string>
     <string name="checkers">Damak</string>
     <string name="chess">Xake</string>
+    <string name="checkersOnline">Damak online</string>
+    <string name="chessOnline">Xake online</string>
     <string name="checkersLocal">Damak lokalki</string>
     <string name="chessLocal">Xake lokalki</string>
     <string name="idiomas">Hizkuntzak</string>
@@ -34,6 +36,8 @@
     <string name="contrnoval">Pasahitz okerra. Zure pasahitzak gutxienez zortzi karaktere izan behar ditu, gutxienez letra larri bat, letra xehe bat, zenbaki bat eta karaktere berezi bat.</string>
     <string name="correonovalido">Posta elektroniko baliogabea</string>
     <string name="gameOverTitle">Partida amaitu da</string>
+    <string name="gameOver1">: elo handitu da </string>
+    <string name="gameOver2">: elo txikitu da </string>
     <string name="returnToMenu">Itzuli menura</string>
     <string name="new_game">Joko berria</string>
     <string name="games_in_course">Abian diren partidak</string>
