@@ -501,19 +501,25 @@ public class ChessActivity extends GameActivity
         }
         if (p.color.equals("White"))
         {
-            if (currentTurn.equals("Black") || currentUser.equals(player2))
+            if (currentTurn.equals("White") && currentUser.equals(player1))
+            {
+                moves = board.availableMoves(x, y);
+            }
+            else
             {
                 return;
             }
-            moves = board.availableMoves(x, y);
         }
         else if (p.color.equals("Black"))
         {
-            if (currentTurn.equals("White") || currentUser.equals(player1))
+            if (currentTurn.equals("Black") && currentUser.equals(player2))
+            {
+                moves = board.availableMoves(x, y);
+            }
+            else
             {
                 return;
             }
-            moves = board.availableMoves(x, y);
         }
 
         for (int i=0; i<moves.size(); i+=2)
