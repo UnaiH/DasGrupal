@@ -3,8 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Daniel/Documents/GitHub/DasGrupal/app/src/main/res/layout/activity_game_list.xml" value="0.2644927536231884" />
         <entry key="..\:/Users/Daniel/Documents/GitHub/DasGrupal/app/src/main/res/layout/activity_main.xml" value="0.27291666666666664" />
+        <entry key="..\:/Users/Daniel/Documents/GitHub/DasGrupal/app/src/main/res/layout/activity_new_game.xml" value="0.2644927536231884" />
         <entry key="..\:/Users/Daniel/Documents/GitHub/DasGrupal/app/src/main/res/layout/activity_profile.xml" value="0.5" />
+        <entry key="..\:/Users/Daniel/Documents/GitHub/DasGrupal/app/src/main/res/layout/activity_select_game.xml" value="0.2644927536231884" />
         <entry key="..\:/Users/Daniel/Documents/GitHub/DasGrupal/app/src/main/res/layout/activity_select_menu.xml" value="0.20625" />
         <entry key="..\:/Users/Daniel/Documents/GitHub/DasGrupal/app/src/main/res/xml/spinner.xml" value="0.33967391304347827" />
         <entry key="..\:/Users/fanju/AndroidStudioProjects/DasGrupal/app/src/main/res/layout-land/activity_choose_ranking.xml" value="0.15348439504061565" />
