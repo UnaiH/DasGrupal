@@ -1,0 +1,23 @@
+Ajedrez:
+El ajedrez consta de seis tipos de fichas distintas. Los peones que sólo pueden moverse una casilla
+hacia delante (dos si es la primera vez que se mueve) y al llegar al otro lado del tablero será
+"coronado" y se convertirá automáticamente en reina. Para comer los peones podrán hacerlo en
+diagonal.
+Las torres se podrán mover en vertical y en horizontal tantas casillas que se quiera si no se
+interpone ninguna pieza aliada por el medio. Para comer podrá hacerlo con cualquier que pieza
+enemiga en el camino.
+Los caballos se podrán mover en "L" (2 horizontales y una vertical o viceversa sin importar si hay
+una pieza aliada o enemiga en el medio. Comerá si en el final del movimiento hay una pieza enemiga.
+Los alfileres se podrán mover en diagonal tantas casillas como se quiera siempre que no haya una
+pieza "aliada" de por medio. Podrá comer cualquier pieza enemiga que esté en el camino.
+La reina podrá moverse en cualquier dirección (horizontal, vertical y diagonal) sin poder saltar por
+encima de ninguna pieza.
+El rey se puede mover en cualquier dirección como la reina pero solo una casilla. Si el contrario
+comiera esta pieza pederías. Pero si comes la del rival ganarás.
+También se puede hace el "enroque" que consiste en que el rey se moverá dos casillas hacia la torre
+que se quiera y la torre se moverá hacia el rey quedando justo en la casilla del otro lado del rey.
+Solo se podrá hacer si el rey y la torre con la que se hace el movimiento nunca se han movido, el
+rey no está en jaque ni al principio ni al final del movimiento y las casillas intermedias están
+desocupadas.
+
+
