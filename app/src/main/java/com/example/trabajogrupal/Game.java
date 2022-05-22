@@ -56,4 +56,8 @@ public class Game {
     public boolean isFinished() {
         return nextTurn==null;
     }
+
+    public void setWinner(String winner) {
+        this.winner = winner;
+    }
 }

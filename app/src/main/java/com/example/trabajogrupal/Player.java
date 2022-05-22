@@ -81,4 +81,12 @@ public class Player {
     public ArrayList<Game> getGamesFinished() {
         return gamesFinished;
     }
+
+    public void setGamesInCourse(ArrayList<Game> gamesInCourse) {
+        this.gamesInCourse = gamesInCourse;
+    }
+
+    public void setGamesFinished(ArrayList<Game> gamesFinished) {
+        this.gamesFinished = gamesFinished;
+    }
 }
