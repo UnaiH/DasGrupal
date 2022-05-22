@@ -241,6 +241,7 @@ public class GameActivity extends AppCompatActivity
                             {
                                 player=player2;
                             }
+                            // Enviar mensaje
                             enviarMensaje(player);
                         }
                     }
