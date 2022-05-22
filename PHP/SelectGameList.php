@@ -18,10 +18,10 @@ $finished = $_POST["finished"];
 
 # Ejecutar la sentencia SQL
 if ($finished=='true') {
-	$resultado = mysqli_query($con, "SELECT * FROM Game WHERE (player1='$currentPlayer' OR player2='$currentPlayer') AND nextTurn IS NULL");
+	$resultado = mysqli_query($con, "SELECT * FROM Game WHERE (player1='$currentPlayer' OR player2='$currentPlayer') AND winner IS NOT NULL");
 }
 else {
-	$resultado = mysqli_query($con, "SELECT * FROM Game WHERE (player1='$currentPlayer' OR player2='$currentPlayer') AND nextTurn IS NOT NULL");
+	$resultado = mysqli_query($con, "SELECT * FROM Game WHERE (player1='$currentPlayer' OR player2='$currentPlayer') AND winner IS NULL");
 } 
 
 # Comprobar si se ha ejecutado correctamente
