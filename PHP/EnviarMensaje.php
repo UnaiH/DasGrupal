@@ -16,16 +16,12 @@ exit();
 $parametro = $_POST["player"];
 
 # Ejecutar la sentencia SQL
-$resultado = mysqli_query($con, "SELECT * FROM Token WHERE player='$parametro'");
+$resultado = mysqli_query($con, "SELECT token FROM Token WHERE player='$parametro'");
 
 # Comprobar si se ha ejecutado correctamente
 if (!$resultado) {
 echo 'Ha ocurrido algún error: ' . mysqli_error($con);
 }
-
-#Acceder al resultado
-$fila = mysqli_fetch_row($resultado);
-$playerToken = $fila[0];
 
 $cabecera = array(
 'Authorization: key=AAAAMmsJRMQ:APA91bGMQHwQUxvxyUsV3ZrFYNKpC4Cb7NJWEYq2s94FcY05zMTMRnt6QXun4hPWNo7PGnFBA2D6A_4PBcRt-HoEWp0QYK4dPtJNtTjJywgfEETM8_Bg8T-tforeku3NlX7koyw-7U6Z',
@@ -33,7 +29,7 @@ $cabecera = array(
 );
 
 $msg = array(
-'to' => $playerToken,
+'to' => $resultado,
 'notification' => array (
 "body" => "¡Es tu turno!",
 "title" => "¡Te han retado a jugar una partida!",
