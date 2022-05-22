@@ -6,8 +6,10 @@
     <string name="iniciars">Iniciar sesión</string>
     <string name="register">Registrar</string>
     <string name="confPas">Confirmar contraseña</string>
-    <string name="checkers">Damas</string>
-    <string name="chess">Ajedrez</string>
+    <string name="checkers">Damas en línea</string>
+    <string name="chess">Ajedrez en línea</string>
+    <string name="checkersLocal">Damas localmente</string>
+    <string name="chessLocal">Ajedrez localmente</string>
     <string name="idiomas">Idiomas</string>
     <string name="defIdm">En este apartado se puede elegir el idioma a usar en la app</string>
     <string name="preferencies">Configuración</string>

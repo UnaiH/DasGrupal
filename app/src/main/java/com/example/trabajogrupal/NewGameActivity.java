@@ -35,14 +35,23 @@ public class NewGameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_new_game);
     }
 
-    public void onClickCheckers(View v) {
+    public void onClickCheckersOnline(View v) {
         createGame("Checkers");
     }
 
-    public void onClickChess(View v) {
+    public void onClickChessOnline(View v) {
         createGame("Chess");
     }
 
+    public void onClickCheckersLocal(View v)
+    {
+
+    }
+
+    public void onClickChessLocal(View v)
+    {
+
+    }
     public void createGame(String gameType) {
         getUsers();
         List<Player> players = PlayerCatalogue.getMyPlayerCatalogue().getUsers();
