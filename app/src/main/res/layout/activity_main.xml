@@ -6,120 +6,78 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="160dp"
+        android:layout_height="127dp"
+        android:layout_marginBottom="40dp"
+        app:layout_constraintBottom_toTopOf="@+id/userSignIn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/usuario" />
+
     <EditText
         android:id="@+id/userSignIn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="156dp"
-        android:layout_marginEnd="101dp"
+        android:layout_marginBottom="20dp"
         android:ems="10"
         android:hint="Email"
+        app:layout_constraintBottom_toTopOf="@+id/PasswordSignIn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.49"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="131dp"
-        android:layout_height="39dp"
-        android:onClick="onClickCheckers"
-        android:text="Checkers"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.392"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button5"
-        app:layout_constraintVertical_bias="0.189" />
-
-    <Button
-        android:id="@+id/button"
-        android:background="@color/black"
-        android:textColor="@color/white"
-        android:layout_width="195dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="152dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="153dp"
-        android:onClick="onClickSignUp"
-        android:text="@string/register"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.629"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button3" />
-
-    <Button
-        android:id="@+id/button5"
-        android:background="@color/white"
-        android:textColor="@color/black"
-        android:layout_width="191dp"
-        android:layout_height="43dp"
-        android:layout_marginStart="155dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="155dp"
-        android:onClick="onClickRanking"
-        android:text="Ranking"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.611"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
-
-    <Button
-        android:id="@+id/button3"
-        android:background="@color/white"
-        android:textColor="@color/black"
-        android:layout_width="189dp"
-        android:layout_height="43dp"
-        android:layout_marginStart="160dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="159dp"
-        android:onClick="onClickSignIn"
-        android:text="@string/iniciars"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.608"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/PasswordSignIn" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/PasswordSignIn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="36dp"
-        android:layout_marginEnd="101dp"
+        android:layout_marginBottom="40dp"
         android:ems="10"
         android:hint="Password"
+
         android:inputType="textPassword"
-
+        app:layout_constraintBottom_toTopOf="@+id/button3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.49"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userSignIn" />
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="160dp"
-        android:layout_height="127dp"
-        android:layout_marginStart="91dp"
-        android:layout_marginTop="7dp"
-        android:layout_marginEnd="91dp"
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="189dp"
+        android:layout_height="43dp"
+        android:background="@color/white"
+        android:onClick="onClickSignIn"
+        android:text="@string/iniciars"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/usuario" />
+        app:layout_constraintVertical_bias="0.558" />
 
     <Button
-        android:id="@+id/Chess"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="onClickChess"
-        android:text="@string/chess"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/button"
+        android:layout_width="195dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="40dp"
+        android:background="@color/black"
+        android:onClick="onClickSignUp"
+        android:text="@string/register"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.34"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button4"
-        app:layout_constraintVertical_bias="0.177" />
+        app:layout_constraintTop_toBottomOf="@+id/button3" />
+
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="191dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="40dp"
+        android:background="@color/white"
+        android:onClick="onClickRanking"
+        android:text="Ranking"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
