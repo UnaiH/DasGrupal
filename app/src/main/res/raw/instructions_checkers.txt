@@ -1,6 +1,8 @@
-Damas:
-Las damas constan de un solo tipo de "fichas" que al principio solo pueden avanzar en diagonal una
-casilla. Cuando una ficha del rival se encuentra en el camino de avance en tu turno podrás "comerla"
-avanzando dos casillas en diagonal a la vez que se elimina la ficha enemiga. Si hay dos fichas
-contiguas no se podrá comer. Al llegar una ficha al otro lado del tablero la ficha se convertirá en
-coronada y podrá ir hacia delante y hacia atras.
+Checkers:
+Checkers consists of only one type of piece, a checker. At the beginning, you can only move one checker one diagonal
+space forward during a regular turn. If your checker is in the diagonal space nearest to one of your opponent's checkers,
+then you can jump and capture that checker. To capture a checker, move two diagonal spaces in the direction of the checker
+you’re attacking, like you are hopping over your opponent's piece. The space on the other side of your opponent’s checker
+has to be empty so that you can move into it. To crown a checker and make it a king checker, simply place one of your
+own captured pieces on top of it. The king can move forward and backward diagonally on the dark squares, so it's easier for
+king checkers to capture your opponent's checkers
