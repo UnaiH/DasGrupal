@@ -1,9 +1,12 @@
 package com.example.trabajogrupal;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
+import androidx.work.Constraints;
 import androidx.work.Data;
+import androidx.work.NetworkType;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
@@ -24,6 +27,10 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.ByteArrayOutputStream;
 import java.time.ZoneId;
@@ -83,23 +90,18 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                                     Boolean resultadoPhp = workInfo.getOutputData().getBoolean("exito", false);
                                     Log.i("TAG", "onChanged: " + resultadoPhp);
                                     if (resultadoPhp) {
-                                        new DefineCountryWorker().localizacionBD(email, ctxt, activ);
-                                        Intent iBack = new Intent();
-                                        setResult(RESULT_OK);
-                                        iBack.putExtra("user", email);
-                                        finish();
-                                        PlayerCatalogue catalogue = PlayerCatalogue.getMyPlayerCatalogue();
-                                        Player currentPlayer = catalogue.getPlayer(email);
-                                        compressFoto();
-                                        if (fotoTransformada != null) {
-                                            if (myDB.getImage(email) != null) {
-                                                myDB.updateImage(email, fotoTransformada);
-                                            } else {
-                                                myDB.insertImage(email, fotoTransformada);
-                                            }
-                                            insertarFotoPerfil(email, fotoTransformada);
-                                        }
-                                        catalogue.setCurrentPlayer(currentPlayer);
+                                        FirebaseMessaging.getInstance().getToken()
+                                                .addOnCompleteListener(new OnCompleteListener<String>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<String> task) {
+                                                        if (!task.isSuccessful()) {
+                                                            task.getException();
+                                                            return;
+                                                        }
+                                                        String token = task.getResult();
+                                                        createToken(token);
+                                                    }
+                                                });
                                     } else {
                                         Toast.makeText(SignUpActivity.this, R.string.otroemail, Toast.LENGTH_SHORT).show();
                                     }
@@ -114,6 +116,51 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             Toast.makeText(SignUpActivity.this, R.string.correonovalido, Toast.LENGTH_SHORT).show();
 
         }
+    }
+
+    public void createToken(String token) {
+        Constraints restricciones = new Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .build();
+        Data datos = new Data.Builder()
+                .putString("player", email)
+                .putString("token", token)
+                .build();
+        OneTimeWorkRequest otwr2 =
+                new OneTimeWorkRequest.Builder(WorkerInsertToken.class)
+                        .setConstraints(restricciones)
+                        .setInputData(datos)
+                        .build();
+        WorkManager.getInstance(getApplicationContext()).getWorkInfoByIdLiveData(otwr2.getId())
+                .observe(this, new Observer<WorkInfo>() {
+                    @Override
+                    public void onChanged(WorkInfo workInfo) {
+                        if(workInfo != null && workInfo.getState().isFinished()){
+                            register();
+                        }
+                    }
+                });
+        WorkManager.getInstance(getApplicationContext()).enqueue(otwr2);
+    }
+
+    public void register() {
+        new DefineCountryWorker().localizacionBD(email, ctxt, activ);
+        Intent iBack = new Intent();
+        setResult(RESULT_OK);
+        iBack.putExtra("user", email);
+        finish();
+        PlayerCatalogue catalogue = PlayerCatalogue.getMyPlayerCatalogue();
+        Player currentPlayer = catalogue.getPlayer(email);
+        compressFoto();
+        if (fotoTransformada != null) {
+            if (myDB.getImage(email) != null) {
+                myDB.updateImage(email, fotoTransformada);
+            } else {
+                myDB.insertImage(email, fotoTransformada);
+            }
+            insertarFotoPerfil(email, fotoTransformada);
+        }
+        catalogue.setCurrentPlayer(currentPlayer);
     }
 
     public boolean isValidEmail(String email) {

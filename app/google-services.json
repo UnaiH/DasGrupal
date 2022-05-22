@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "216544134340",
+    "project_id": "trabajogrupal-e05d6",
+    "storage_bucket": "trabajogrupal-e05d6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:216544134340:android:cb00b507e258cd54e97591",
+        "android_client_info": {
+          "package_name": "com.example.trabajogrupal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "216544134340-4l7adjbv0ei0pb7i33me3f86mc0u7u9o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1NP1TBchmrXP6GR1p2gzgZzYrZwQFKck"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "216544134340-4l7adjbv0ei0pb7i33me3f86mc0u7u9o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

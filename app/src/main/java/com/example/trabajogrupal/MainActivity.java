@@ -13,15 +13,22 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
+import androidx.work.Constraints;
 import androidx.work.Data;
+import androidx.work.NetworkType;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
 
@@ -85,14 +92,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         Boolean resultadoPhp = workInfo.getOutputData().getBoolean("exito", false);
                         System.out.println("RESULTADO LOGIN --> " + resultadoPhp);
                         if (resultadoPhp) {//se logueó correctamente
-                            Intent i = new Intent(MainActivity.this, SelectMenuActivity.class);
-                            PlayerCatalogue catalogue = PlayerCatalogue.getMyPlayerCatalogue();
-                            catalogue.setCurrentUser(userEmail);
-                            i.putExtra("user", userEmail);
-                            startActivity(i);
-                            finish();
-                            Player currentUser = catalogue.getPlayer(userEmail);
-                            catalogue.setCurrentPlayer(currentUser);
+                            FirebaseMessaging.getInstance().getToken()
+                                    .addOnCompleteListener(new OnCompleteListener<String>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<String> task) {
+                                            if (!task.isSuccessful()) {
+                                                task.getException();
+                                                return;
+                                            }
+                                            String token = task.getResult();
+                                            updateToken(token);
+                                        }
+                                    });
+
                         } else {
                             Toast.makeText(MainActivity.this, R.string.bademail, Toast.LENGTH_SHORT).show();
                         }
@@ -103,6 +115,42 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else {
             Toast.makeText(MainActivity.this, R.string.todosCamp, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void updateToken(String token) {
+        Constraints restricciones = new Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .build();
+        Data datos = new Data.Builder()
+                .putString("player", userEmail)
+                .putString("token", token)
+                .build();
+        OneTimeWorkRequest otwr2 =
+                new OneTimeWorkRequest.Builder(WorkerUpdateToken.class)
+                        .setConstraints(restricciones)
+                        .setInputData(datos)
+                        .build();
+        WorkManager.getInstance(getApplicationContext()).getWorkInfoByIdLiveData(otwr2.getId())
+                .observe(this, new Observer<WorkInfo>() {
+                    @Override
+                    public void onChanged(WorkInfo workInfo) {
+                        if(workInfo != null && workInfo.getState().isFinished()){
+                            login();
+                        }
+                    }
+                });
+        WorkManager.getInstance(getApplicationContext()).enqueue(otwr2);
+    }
+
+    public void login() {
+        Intent i = new Intent(MainActivity.this, SelectMenuActivity.class);
+        PlayerCatalogue catalogue = PlayerCatalogue.getMyPlayerCatalogue();
+        catalogue.setCurrentUser(userEmail);
+        i.putExtra("user", userEmail);
+        startActivity(i);
+        finish();
+        Player currentUser = catalogue.getPlayer(userEmail);
+        catalogue.setCurrentPlayer(currentUser);
     }
 
     public void onClickSignUp(View view) {
