@@ -80,13 +80,9 @@ public class WorkerSelectGameList extends Worker
                     Player player1 = PlayerCatalogue.getMyPlayerCatalogue().getPlayer(emailPlayer1);
                     Player player2 = PlayerCatalogue.getMyPlayerCatalogue().getPlayer(emailPlayer2);
 
-                    Game game = null;
+                    Game game = new Game(idGame, player1, player2, gameType, nextTurn);
                     if (finished) {
-                        game = new Game(idGame, player1, player2, gameType, null);
                         game.setWinner(winner);
-                    }
-                    else {
-                        game = new Game(idGame, player1, player2, gameType, nextTurn);
                     }
 
                     lista.add(game);

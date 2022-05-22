@@ -91,7 +91,7 @@ public class NewGameActivity extends AppCompatActivity {
                 .putString("player1", currentPlayer.getEmail())
                 .putString("player2", rival.getEmail())
                 .putString("gameType", gameType)
-                .putString("nextTurn", currentPlayer.getEmail())
+                .putString("nextTurn", "White")
                 .build();
         OneTimeWorkRequest otwr2 =
                 new OneTimeWorkRequest.Builder(WorkerStartGame.class)
@@ -103,7 +103,7 @@ public class NewGameActivity extends AppCompatActivity {
                     @Override
                     public void onChanged(WorkInfo workInfo) {
                         if(workInfo != null && workInfo.getState().isFinished()){
-                            Game game = new Game(gameID, currentPlayer, rival, gameType, currentPlayer.getEmail());
+                            Game game = new Game(gameID, currentPlayer, rival, gameType, "White");
                             currentPlayer.addInCourse(game);
                             rival.addInCourse(game);
 

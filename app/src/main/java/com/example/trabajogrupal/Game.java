@@ -37,16 +37,23 @@ public class Game {
     }
 
     public void changeTurn() {
-        if (nextTurn.equals(player1.getEmail())) {
-            nextTurn = player2.getEmail();
+        if (nextTurn.equals("White")) {
+            nextTurn = "Black";
         }
-        else if (nextTurn.equals(player2.getEmail())) {
-            nextTurn = player1.getEmail();
+        else if (nextTurn.equals("Black")) {
+            nextTurn = "White";
         }
     }
 
     public boolean isMyTurn(String currentPlayer) {
-        return currentPlayer.equals(nextTurn);
+        Player player = null;
+        if (nextTurn.equals("White")) {
+            player = player1;
+        }
+        else if (nextTurn.equals("Black")) {
+            player = player2;
+        }
+        return currentPlayer.equals(player.getEmail());
     }
 
     public boolean iAmWinner(String currentPlayer) {
@@ -54,7 +61,7 @@ public class Game {
     }
 
     public boolean isFinished() {
-        return nextTurn==null;
+        return winner!=null;
     }
 
     public void setWinner(String winner) {
