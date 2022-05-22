@@ -35,15 +35,27 @@ public class NewGameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_new_game);
     }
 
-    public void onClickCheckers(View v) {
-        createGame("Checkers");
+    public void onClickCheckersOnline(View v) {
+        createGame("Checkers", 2);
     }
 
-    public void onClickChess(View v) {
-        createGame("Chess");
+    public void onClickChessOnline(View v) {
+        createGame("Chess", 2);
     }
 
-    public void createGame(String gameType) {
+    public void onClickCheckersLocal(View v)
+    {
+        createGame("Checkers", 1);
+    }
+    public void onClickTutorial(View v){
+        Intent iTutorial = new Intent(this,Tutorial.class);
+        startActivity(iTutorial);
+    }
+    public void onClickChessLocal(View v)
+    {
+        createGame("Chess", 1);
+    }
+    public void createGame(String gameType, int numberOfPlayers) {
         getUsers();
         List<Player> players = PlayerCatalogue.getMyPlayerCatalogue().getUsers();
         if (players.size()>1) {
@@ -60,8 +72,15 @@ public class NewGameActivity extends AppCompatActivity {
                         public void onChanged(WorkInfo workInfo) {
                             if(workInfo != null && workInfo.getState().isFinished()){
                                 int gameID = workInfo.getOutputData().getInt("resultado",0)+1;
+                                if (numberOfPlayers==2)
+                                {
+                                    createGame2(gameType, gameID);
+                                }
+                                else
+                                {
+                                    createGame3(gameType, gameID);
+                                }
 
-                                createGame2(gameType, gameID);
                             }
                         }
                     });
@@ -103,6 +122,48 @@ public class NewGameActivity extends AppCompatActivity {
                     @Override
                     public void onChanged(WorkInfo workInfo) {
                         if(workInfo != null && workInfo.getState().isFinished()){
+                            Intent i = null;
+                            if (gameType.equals("Checkers")) {
+                                i = new Intent(getApplicationContext(), CheckersActivity.class);
+                            }
+                            else if (gameType.equals("Chess")) {
+                                i = new Intent(getApplicationContext(), ChessActivity.class);
+                            }
+                            i.putExtra("idGame", gameID);
+                            startActivity(i);
+                        }
+                    }
+                });
+        WorkManager.getInstance(getApplicationContext()).enqueue(otwr2);
+    }
+
+    public void createGame3(String gameType, int gameID) {
+        Player currentPlayer = PlayerCatalogue.getMyPlayerCatalogue().getCurrentPlayer();
+
+        Constraints restricciones = new Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .build();
+        Data datos = new Data.Builder()
+                .putInt("idGame",gameID)
+                .putString("player1", currentPlayer.getEmail())
+                .putString("player2", currentPlayer.getEmail())
+                .putString("gameType", gameType)
+                .putString("nextTurn", "White")
+                .build();
+        OneTimeWorkRequest otwr2 =
+                new OneTimeWorkRequest.Builder(WorkerStartGame.class)
+                        .setConstraints(restricciones)
+                        .setInputData(datos)
+                        .build();
+        WorkManager.getInstance(getApplicationContext()).getWorkInfoByIdLiveData(otwr2.getId())
+                .observe(this, new Observer<WorkInfo>() {
+                    @Override
+                    public void onChanged(WorkInfo workInfo) {
+                        if(workInfo != null && workInfo.getState().isFinished()){
+                            Game game = new Game(gameID, currentPlayer, currentPlayer, gameType, "White");
+                            currentPlayer.addInCourse(game);
+                            //rival.addInCourse(game);
+
                             Intent i = null;
                             if (gameType.equals("Checkers")) {
                                 i = new Intent(getApplicationContext(), CheckersActivity.class);

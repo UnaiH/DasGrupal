@@ -1,23 +1,20 @@
-Ajedrez:
-El ajedrez consta de seis tipos de fichas distintas. Los peones que sólo pueden moverse una casilla
-hacia delante (dos si es la primera vez que se mueve) y al llegar al otro lado del tablero será
-"coronado" y se convertirá automáticamente en reina. Para comer los peones podrán hacerlo en
-diagonal.
-Las torres se podrán mover en vertical y en horizontal tantas casillas que se quiera si no se
-interpone ninguna pieza aliada por el medio. Para comer podrá hacerlo con cualquier que pieza
-enemiga en el camino.
-Los caballos se podrán mover en "L" (2 horizontales y una vertical o viceversa sin importar si hay
-una pieza aliada o enemiga en el medio. Comerá si en el final del movimiento hay una pieza enemiga.
-Los alfileres se podrán mover en diagonal tantas casillas como se quiera siempre que no haya una
-pieza "aliada" de por medio. Podrá comer cualquier pieza enemiga que esté en el camino.
-La reina podrá moverse en cualquier dirección (horizontal, vertical y diagonal) sin poder saltar por
-encima de ninguna pieza.
-El rey se puede mover en cualquier dirección como la reina pero solo una casilla. Si el contrario
-comiera esta pieza pederías. Pero si comes la del rival ganarás.
-También se puede hace el "enroque" que consiste en que el rey se moverá dos casillas hacia la torre
-que se quiera y la torre se moverá hacia el rey quedando justo en la casilla del otro lado del rey.
-Solo se podrá hacer si el rey y la torre con la que se hace el movimiento nunca se han movido, el
-rey no está en jaque ni al principio ni al final del movimiento y las casillas intermedias están
-desocupadas.
-
-
+Chess:
+Chess consists of six types of different pieces. Pawns can only move one square forward (two squares
+forward if it's the first time it moves) and once it arrives to the other side of the board it will
+be crowned as a Queen. To capture a pawn it has to be taken diagonally.
+Rooks (or castles) will be able to move vertically and horizontally across as many squares as they
+want, as long as there are no enemy pieces on the way.
+Knights will be able to move in 'L' (2 horizontal and 1 vertical moves or vice versa, it doesn's
+matter whether there're enemy or ally pieces on the way). The knight'll capture a piece if in the
+end of the movement there's an enemy piece.
+Bishops will be able to move diagonally across as many squares as they want, as long as there are no
+enemy pieces on the way. Bishops'll take any enemy piece that is on the road.
+The Queen will be able to move in any direction she wants without being able of jumping over an
+enemy piece.
+The King will be able to move like the queen but only one square at a time. If the opponent takes
+your king you'll loose the game, otherwise you eats the rival's king you will win the game.
+Castling is a special move to protect your king and activate your rook. It's the only time in chess
+you can move two pieces in one move. The king moves two squares to the right or left and the rook
+moves directly to the other side of the king. You can only castle if neither the rook or king have
+moved and there are no pieces in the way. You can also not castle when in check, into check or
+through check.

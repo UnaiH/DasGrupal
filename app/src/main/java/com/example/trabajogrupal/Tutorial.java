@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringReader;
+import java.util.Locale;
 
 public class Tutorial extends AppCompatActivity {
     Button btnCheckers, btnChess;
@@ -42,6 +43,7 @@ public class Tutorial extends AppCompatActivity {
 
     public String leerTutorial(String juego) {
         String tutorial = null;
+        String codigoPais = Locale.getDefault().toString();
 
         try {
             String lineaActual;
@@ -49,7 +51,14 @@ public class Tutorial extends AppCompatActivity {
             BufferedReader buff;
             switch (juego) {
                 case "Checkers":
-                    fich = getResources().openRawResource(R.raw.instrucciones_damas);
+                    if (codigoPais.equals("es")) {
+                        fich = getResources().openRawResource(R.raw.instrucciones_damas);
+                    } else if (codigoPais.equals("eng")) {
+                        fich = getResources().openRawResource(R.raw.instructions_checkers);
+                    } else {
+                        fich = null;
+                    }
+
                     buff = new BufferedReader(new InputStreamReader(fich));
                     lineaActual = buff.readLine();
                     tutorial = null;
@@ -58,7 +67,15 @@ public class Tutorial extends AppCompatActivity {
                     }
                     break;
                 case "Chess":
-                    fich = getResources().openRawResource(R.raw.instrucciones_ajedrez);
+
+                    if (codigoPais.equals("es")) {
+                        fich = getResources().openRawResource(R.raw.instrucciones_ajedrez);
+                    } else if (codigoPais.equals("eng")) {
+                        fich = getResources().openRawResource(R.raw.instructions_chess);
+                    } else {
+                        fich = null;
+                    }
+
                     buff = new BufferedReader(new InputStreamReader(fich));
                     lineaActual = buff.readLine();
                     tutorial = null;

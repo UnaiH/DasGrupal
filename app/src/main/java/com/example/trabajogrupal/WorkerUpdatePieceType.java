@@ -43,7 +43,7 @@ public class WorkerUpdatePieceType extends Worker
             Log.i("workerPHP","Update: " + idGame + "-" + posX + "-" + posY + "-" + type);
 
             PrintWriter out = new PrintWriter(urlConnection.getOutputStream());
-            String parametros = "idGame="+idGame+"&posX="+posX+"&posYOld="+posY+"&type="+type;
+            String parametros = "idGame="+idGame+"&posX="+posX+"&posY="+posY+"&type="+type;
             out.print(parametros);
             out.close();
 
