@@ -61,60 +61,65 @@ public class NewGameActivity extends AppCompatActivity {
                             if(workInfo != null && workInfo.getState().isFinished()){
                                 int gameID = workInfo.getOutputData().getInt("resultado",0)+1;
 
-                                Player currentPlayer = PlayerCatalogue.getMyPlayerCatalogue().getCurrentPlayer();
-                                int indCurrentPlayer = players.indexOf(currentPlayer);
-                                int random = 0;
-                                boolean find = false;
-                                while (!find) {
-                                    random = new Random().nextInt(players.size());
-                                    if (random!=indCurrentPlayer) {
-                                        find = true;
-                                    }
-                                }
-                                Player rival = players.get(random);
-
-                                Constraints restricciones = new Constraints.Builder()
-                                        .setRequiredNetworkType(NetworkType.CONNECTED)
-                                        .build();
-                                Data datos = new Data.Builder()
-                                        .putInt("idGame",gameID)
-                                        .putString("player1", currentPlayer.getEmail())
-                                        .putString("player2", rival.getEmail())
-                                        .putString("gameType", gameType)
-                                        .putString("nextTurn", currentPlayer.getEmail())
-                                        .build();
-                                OneTimeWorkRequest otwr2 =
-                                        new OneTimeWorkRequest.Builder(WorkerStartGame.class)
-                                                .setConstraints(restricciones)
-                                                .setInputData(datos)
-                                                .build();
-                                WorkManager.getInstance(getApplicationContext()).getWorkInfoByIdLiveData(otwr2.getId())
-                                        .observe((LifecycleOwner) getApplicationContext(), new Observer<WorkInfo>() {
-                                            @Override
-                                            public void onChanged(WorkInfo workInfo) {
-                                                if(workInfo != null && workInfo.getState().isFinished()){
-                                                    Game game = new Game(gameID, currentPlayer, rival, gameType, currentPlayer.getEmail());
-                                                    currentPlayer.addInCourse(game);
-                                                    rival.addInCourse(game);
-
-                                                    Intent i = null;
-                                                    if (gameType.equals("Checkers")) {
-                                                        i = new Intent(getApplicationContext(), CheckersActivity.class);
-                                                    }
-                                                    else if (gameType.equals("Chess")) {
-                                                        i = new Intent(getApplicationContext(), ChessActivity.class);
-                                                    }
-                                                    i.putExtra("idGame", gameID);
-                                                    startActivity(i);
-                                                }
-                                            }
-                                        });
-                                WorkManager.getInstance(getApplicationContext()).enqueue(otwr2);
+                                createGame2(gameType, gameID);
                             }
                         }
                     });
             WorkManager.getInstance(this).enqueue(otwr);
         }
+    }
+
+    public void createGame2(String gameType, int gameID) {
+        List<Player> players = PlayerCatalogue.getMyPlayerCatalogue().getUsers();
+        Player currentPlayer = PlayerCatalogue.getMyPlayerCatalogue().getCurrentPlayer();
+        int indCurrentPlayer = players.indexOf(currentPlayer);
+        int random = 0;
+        boolean find = false;
+        while (!find) {
+            random = new Random().nextInt(players.size());
+            if (random!=indCurrentPlayer) {
+                find = true;
+            }
+        }
+        Player rival = players.get(random);
+
+        Constraints restricciones = new Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .build();
+        Data datos = new Data.Builder()
+                .putInt("idGame",gameID)
+                .putString("player1", currentPlayer.getEmail())
+                .putString("player2", rival.getEmail())
+                .putString("gameType", gameType)
+                .putString("nextTurn", currentPlayer.getEmail())
+                .build();
+        OneTimeWorkRequest otwr2 =
+                new OneTimeWorkRequest.Builder(WorkerStartGame.class)
+                        .setConstraints(restricciones)
+                        .setInputData(datos)
+                        .build();
+        WorkManager.getInstance(getApplicationContext()).getWorkInfoByIdLiveData(otwr2.getId())
+                .observe(this, new Observer<WorkInfo>() {
+                    @Override
+                    public void onChanged(WorkInfo workInfo) {
+                        if(workInfo != null && workInfo.getState().isFinished()){
+                            Game game = new Game(gameID, currentPlayer, rival, gameType, currentPlayer.getEmail());
+                            currentPlayer.addInCourse(game);
+                            rival.addInCourse(game);
+
+                            Intent i = null;
+                            if (gameType.equals("Checkers")) {
+                                i = new Intent(getApplicationContext(), CheckersActivity.class);
+                            }
+                            else if (gameType.equals("Chess")) {
+                                i = new Intent(getApplicationContext(), ChessActivity.class);
+                            }
+                            i.putExtra("idGame", gameID);
+                            startActivity(i);
+                        }
+                    }
+                });
+        WorkManager.getInstance(getApplicationContext()).enqueue(otwr2);
     }
 
     public void getUsers() {
