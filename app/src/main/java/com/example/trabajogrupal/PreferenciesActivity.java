@@ -23,13 +23,8 @@ public class PreferenciesActivity extends AppCompatActivity {
         user = catalogue.getCurrentUser();
         Fragment fragmento = new preferencias();
         FragmentTransaction ftransc = getFragmentManager().beginTransaction();
-        if (savedInstanceState==null){
-            ftransc.add(R.id.layoutpref,fragmento,"fragset");
-            ftransc.commit();
-        }
-        else{
-            fragmento = getFragmentManager().findFragmentById(Integer.parseInt("fragset"));
-        }
+        ftransc.add(R.id.layoutpref,fragmento,"fragset");
+        ftransc.commit();
     }
 
 
