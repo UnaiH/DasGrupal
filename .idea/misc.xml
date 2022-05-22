@@ -13,39 +13,29 @@
         <entry key="..\:/Users/fanju/AndroidStudioProjects/DasGrupal/app/src/main/res/layout/activity_chess.xml" value="0.13" />
         <entry key="..\:/Users/fanju/AndroidStudioProjects/DasGrupal/app/src/main/res/layout/activity_main.xml" value="0.271532184950136" />
         <entry key="..\:/Users/fanju/AndroidStudioProjects/DasGrupal/app/src/main/res/layout/activity_select_menu.xml" value="0.22" />
+        <entry key="..\:/Users/jonka/AndroidStudioProjects/TrabajoGrupal/app/src/main/res/layout-land/activity_checkers.xml" value="0.19797178130511464" />
+        <entry key="..\:/Users/jonka/AndroidStudioProjects/TrabajoGrupal/app/src/main/res/layout-land/activity_chess.xml" value="0.19797178130511464" />
+        <entry key="..\:/Users/jonka/AndroidStudioProjects/TrabajoGrupal/app/src/main/res/layout-land/activity_game_over.xml" value="0.18" />
+        <entry key="..\:/Users/jonka/AndroidStudioProjects/TrabajoGrupal/app/src/main/res/layout-land/activity_main.xml" value="0.20677083333333332" />
+        <entry key="..\:/Users/jonka/AndroidStudioProjects/TrabajoGrupal/app/src/main/res/layout-land/activity_preferencias.xml" value="0.19797178130511464" />
+        <entry key="..\:/Users/jonka/AndroidStudioProjects/TrabajoGrupal/app/src/main/res/layout-land/activity_profile.xml" value="0.19797178130511464" />
+        <entry key="..\:/Users/jonka/AndroidStudioProjects/TrabajoGrupal/app/src/main/res/layout-land/activity_select_menu.xml" value="0.19797178130511464" />
+        <entry key="..\:/Users/jonka/AndroidStudioProjects/TrabajoGrupal/app/src/main/res/layout-land/activity_sign_up.xml" value="0.19797178130511464" />
+        <entry key="..\:/Users/jonka/AndroidStudioProjects/TrabajoGrupal/app/src/main/res/layout-land/globalrankingelement.xml" value="0.19797178130511464" />
         <entry key="..\:/Users/jonka/AndroidStudioProjects/TrabajoGrupal/app/src/main/res/layout/activity_checkers.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/jonka/AndroidStudioProjects/TrabajoGrupal/app/src/main/res/layout/activity_chess.xml" value="0.17980072463768115" />
+        <entry key="..\:/Users/jonka/AndroidStudioProjects/TrabajoGrupal/app/src/main/res/layout/activity_choose_ranking.xml" value="0.17980072463768115" />
+        <entry key="..\:/Users/jonka/AndroidStudioProjects/TrabajoGrupal/app/src/main/res/layout/activity_game_over.xml" value="0.23385416666666667" />
         <entry key="..\:/Users/jonka/AndroidStudioProjects/TrabajoGrupal/app/src/main/res/layout/activity_global_ranking.xml" value="0.33" />
         <entry key="..\:/Users/jonka/AndroidStudioProjects/TrabajoGrupal/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/Users/jonka/AndroidStudioProjects/TrabajoGrupal/app/src/main/res/layout/activity_menu.xml" value="0.23641304347826086" />
+        <entry key="..\:/Users/jonka/AndroidStudioProjects/TrabajoGrupal/app/src/main/res/layout/activity_profile.xml" value="0.17980072463768115" />
+        <entry key="..\:/Users/jonka/AndroidStudioProjects/TrabajoGrupal/app/src/main/res/layout/activity_select_game.xml" value="0.25" />
         <entry key="..\:/Users/jonka/AndroidStudioProjects/TrabajoGrupal/app/src/main/res/layout/activity_select_menu.xml" value="0.29030797101449274" />
         <entry key="..\:/Users/jonka/AndroidStudioProjects/TrabajoGrupal/app/src/main/res/layout/activity_sign_up.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/jonka/AndroidStudioProjects/TrabajoGrupal/app/src/main/res/layout/fila_game_list.xml" value="0.1" />
         <entry key="..\:/Users/jonka/AndroidStudioProjects/TrabajoGrupal/app/src/main/res/layout/globalrankingelement.xml" value="0.67" />
         <entry key="..\:/Users/jonka/AndroidStudioProjects/TrabajoGrupal/app/src/main/res/xml/preferencias.xml" value="0.1" />
-        <entry key="..\:/Users/jonro/AndroidStudioProjects/TrabajoGrupal/app/src/main/res/layout-land/activity_game_list.xml" value="0.1728395061728395" />
-        <entry key="..\:/Users/jonro/AndroidStudioProjects/TrabajoGrupal/app/src/main/res/layout-land/activity_main.xml" value="0.1728395061728395" />
-        <entry key="..\:/Users/jonro/AndroidStudioProjects/TrabajoGrupal/app/src/main/res/layout-land/activity_new_game.xml" value="0.1728395061728395" />
-        <entry key="..\:/Users/jonro/AndroidStudioProjects/TrabajoGrupal/app/src/main/res/layout-land/activity_select_game.xml" value="0.25" />
-        <entry key="..\:/Users/jonro/AndroidStudioProjects/TrabajoGrupal/app/src/main/res/layout-land/activity_select_menu.xml" value="0.25" />
-        <entry key="..\:/Users/jonro/AndroidStudioProjects/TrabajoGrupal/app/src/main/res/layout-land/fila_game_list.xml" value="0.33" />
-        <entry key="..\:/Users/jonro/AndroidStudioProjects/TrabajoGrupal/app/src/main/res/layout/activity_checkers.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/jonro/AndroidStudioProjects/TrabajoGrupal/app/src/main/res/layout/activity_chess.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/jonro/AndroidStudioProjects/TrabajoGrupal/app/src/main/res/layout/activity_choose_ranking.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/jonro/AndroidStudioProjects/TrabajoGrupal/app/src/main/res/layout/activity_game_list.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/jonro/AndroidStudioProjects/TrabajoGrupal/app/src/main/res/layout/activity_game_over.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/jonro/AndroidStudioProjects/TrabajoGrupal/app/src/main/res/layout/activity_games_in_course.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/jonro/AndroidStudioProjects/TrabajoGrupal/app/src/main/res/layout/activity_main.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/jonro/AndroidStudioProjects/TrabajoGrupal/app/src/main/res/layout/activity_new_game.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/jonro/AndroidStudioProjects/TrabajoGrupal/app/src/main/res/layout/activity_preferencias.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/jonro/AndroidStudioProjects/TrabajoGrupal/app/src/main/res/layout/activity_profile.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/jonro/AndroidStudioProjects/TrabajoGrupal/app/src/main/res/layout/activity_select_game.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/jonro/AndroidStudioProjects/TrabajoGrupal/app/src/main/res/layout/activity_select_menu.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/jonro/AndroidStudioProjects/TrabajoGrupal/app/src/main/res/layout/activity_sign_up.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/jonro/AndroidStudioProjects/TrabajoGrupal/app/src/main/res/layout/fila_game.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/jonro/AndroidStudioProjects/TrabajoGrupal/app/src/main/res/layout/fila_game_finished.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/jonro/AndroidStudioProjects/TrabajoGrupal/app/src/main/res/layout/fila_game_in_course.xml" value="0.33" />
-        <entry key="..\:/Users/jonro/AndroidStudioProjects/TrabajoGrupal/app/src/main/res/layout/fila_game_list.xml" value="0.33" />
-        <entry key="..\:/Users/jonro/AndroidStudioProjects/TrabajoGrupal/app/src/main/res/layout/fila_games_in_course.xml" value="0.1" />
-        <entry key="..\:/Users/jonro/AndroidStudioProjects/TrabajoGrupal/app/src/main/res/layout/globalrankingelement.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/pierr/StudioProjects/DasGrupal/app/src/main/res/layout-land/activity_checkers.xml" value="0.33" />
         <entry key="..\:/Users/pierr/StudioProjects/DasGrupal/app/src/main/res/layout-land/activity_chess.xml" value="0.31040564373897706" />
         <entry key="..\:/Users/pierr/StudioProjects/DasGrupal/app/src/main/res/layout-land/activity_global_ranking.xml" value="0.31040564373897706" />
