@@ -47,7 +47,10 @@ public class NewGameActivity extends AppCompatActivity {
     {
         createGame("Checkers", 1);
     }
-
+    public void onClickTutorial(View v){
+        Intent iTutorial = new Intent(this,Tutorial.class);
+        startActivity(iTutorial);
+    }
     public void onClickChessLocal(View v)
     {
         createGame("Chess", 1);
