@@ -29,7 +29,9 @@ public class GameOverActivity extends AppCompatActivity {
             String winner= extras.getString("winner");
             String loser= extras.getString("loser");
             String gameType= extras.getString("gameType");
+            int idGame = extras.getInt("idGame");
             actualizarELO(winner, loser, gameType);
+            setWinner(winner, idGame);
         }
     }
 
@@ -96,6 +98,31 @@ public class GameOverActivity extends AppCompatActivity {
         data.putString("eloType", eloType);
 
         OneTimeWorkRequest otwr = new OneTimeWorkRequest.Builder(WorkerUpdateElo.class)
+                .setInputData(data.build())
+                .build();
+        WorkManager.getInstance(this).getWorkInfoByIdLiveData(otwr.getId())
+                .observe(this, new Observer<WorkInfo>()
+                {
+                    @Override
+                    public void onChanged(WorkInfo workInfo)
+                    {
+                        if (workInfo != null && workInfo.getState().isFinished())
+                        {
+                            Log.i("workerPHP", "Elo changed");
+                        }
+                    }
+                });
+        WorkManager.getInstance(this).enqueue(otwr);
+    }
+
+    private void setWinner(String winner, int idGame)
+    {
+        Data.Builder data = new Data.Builder();
+
+        data.putInt("idGame", idGame);
+        data.putString("winner", winner);
+
+        OneTimeWorkRequest otwr = new OneTimeWorkRequest.Builder(WorkerSetWinner.class)
                 .setInputData(data.build())
                 .build();
         WorkManager.getInstance(this).getWorkInfoByIdLiveData(otwr.getId())

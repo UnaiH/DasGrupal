@@ -64,7 +64,7 @@ public class WorkerSelectGame extends Worker
                 }
                 inputStream.close();
                 JSONArray jsonArray = new JSONArray(result);
-                String[] lista = new String[jsonArray.length()*5];
+                String[] lista = new String[jsonArray.length()*3];
                 for(int i = 0; i < jsonArray.length(); i++)
                 {
                     String player1 = jsonArray.getJSONObject(i).getString("player1");
