@@ -23,13 +23,17 @@ if (!$resultado) {
 echo 'Ha ocurrido algún error: ' . mysqli_error($con);
 }
 
+#Acceder al resultado
+$fila = mysqli_fetch_row($resultado)
+$registration_id = $fila[0];
+
 $cabecera = array(
 'Authorization: key=AAAAMmsJRMQ:APA91bGMQHwQUxvxyUsV3ZrFYNKpC4Cb7NJWEYq2s94FcY05zMTMRnt6QXun4hPWNo7PGnFBA2D6A_4PBcRt-HoEWp0QYK4dPtJNtTjJywgfEETM8_Bg8T-tforeku3NlX7koyw-7U6Z',
 'Content-Type: application/json'
 );
 
 $msg = array(
-'to' => $resultado,
+'to' => $registration_id,
 'notification' => array (
 "body" => "¡Es tu turno!",
 "title" => "¡Te han retado a jugar una partida!",
