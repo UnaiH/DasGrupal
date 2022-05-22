@@ -9,7 +9,6 @@ import android.view.View;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.work.Constraints;
 import androidx.work.Data;
@@ -48,7 +47,7 @@ public class NewGameActivity extends AppCompatActivity {
         createGame("Checkers", 1);
     }
     public void onClickTutorial(View v){
-        Intent iTutorial = new Intent(this,Tutorial.class);
+        Intent iTutorial = new Intent(this, TutorialActivity.class);
         startActivity(iTutorial);
     }
     public void onClickChessLocal(View v)

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Tutorial">
+    tools:context=".TutorialActivity">
 
     <TextView
         android:id="@+id/tv_Tutorial"
@@ -14,7 +14,6 @@
         android:layout_marginTop="52dp"
         android:layout_marginEnd="12dp"
         android:layout_marginBottom="142dp"
-        android:text="TextView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

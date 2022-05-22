@@ -1,4 +1,3 @@
-Checkers:
 Checkers consists of only one type of piece, a checker. At the beginning, you can only move one checker one diagonal
 space forward during a regular turn. If your checker is in the diagonal space nearest to one of your opponent's checkers,
 then you can jump and capture that checker. To capture a checker, move two diagonal spaces in the direction of the checker

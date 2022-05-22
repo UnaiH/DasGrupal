@@ -1,4 +1,3 @@
-Ajedrez:
 El ajedrez consta de seis tipos de fichas distintas.
 Los peones que sólo pueden moverse una casilla hacia delante (dos si es la primera vez que se mueve)
 y al llegar al otro lado del tablero será "coronado" y se convertirá automáticamente en reina. Para

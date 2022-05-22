@@ -1,10 +1,9 @@
-Chess:
 Chess consists of six types of different pieces. Pawns can only move one square forward (two squares
 forward if it's the first time it moves) and once it arrives to the other side of the board it will
 be crowned as a Queen. To capture a pawn it has to be taken diagonally.
 Rooks (or castles) will be able to move vertically and horizontally across as many squares as they
 want, as long as there are no enemy pieces on the way.
-Knights will be able to move in 'L' (2 horizontal and 1 vertical moves or vice versa, it doesn's
+Knights will be able to move in 'L' (2 horizontal and 1 vertical moves or vice versa, it doesnt's
 matter whether there're enemy or ally pieces on the way). The knight'll capture a piece if in the
 end of the movement there's an enemy piece.
 Bishops will be able to move diagonally across as many squares as they want, as long as there are no
