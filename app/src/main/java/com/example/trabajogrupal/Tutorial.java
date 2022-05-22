@@ -55,6 +55,8 @@ public class Tutorial extends AppCompatActivity {
                         fich = getResources().openRawResource(R.raw.instrucciones_damas);
                     } else if (codigoPais.equals("eng")) {
                         fich = getResources().openRawResource(R.raw.instructions_checkers);
+                    } else if (codigoPais.equals("eu")) {
+                        fich = getResources().openRawResource(R.raw.arauak_damak);
                     } else {
                         fich = null;
                     }
@@ -72,6 +74,8 @@ public class Tutorial extends AppCompatActivity {
                         fich = getResources().openRawResource(R.raw.instrucciones_ajedrez);
                     } else if (codigoPais.equals("eng")) {
                         fich = getResources().openRawResource(R.raw.instructions_chess);
+                    } else if (codigoPais.equals("eu")) {
+                        fich = getResources().openRawResource(R.raw.arauak_xakea);
                     } else {
                         fich = null;
                     }
