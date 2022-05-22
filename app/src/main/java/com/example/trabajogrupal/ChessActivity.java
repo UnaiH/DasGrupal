@@ -7,6 +7,12 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import androidx.lifecycle.Observer;
+import androidx.work.Data;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkInfo;
+import androidx.work.WorkManager;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -16,6 +22,7 @@ public class ChessActivity extends GameActivity
     private ImageButton[][] buttons = new ImageButton[10][10];
     private ArrayList<Integer> redSquares;
     private int[] chosenSquare = new int[2];
+    ArrayList<Integer> coordinates;
 
 
     @Override
@@ -27,22 +34,20 @@ public class ChessActivity extends GameActivity
         tem.setThemes(this);
         setContentView(R.layout.activity_chess);
 
+        initialSteps();
+        type="Checkers";
+
         Bundle extras = getIntent().getExtras();
         if (extras != null)
         {
             idGame= extras.getInt("idGame");
+            currentUser = PlayerCatalogue.getMyPlayerCatalogue().getCurrentUser();
+            getNameInfo(idGame);
         }
-        currentUser = PlayerCatalogue.getMyPlayerCatalogue().getCurrentUser();
-
-        setUpBoard();
-
     }
 
-    private void setUpBoard()
+    private void initialSteps()
     {
-        Random rand = new Random();
-        idGame = rand.nextInt(999999);
-        currentTurn="White";
         board = new ChessBoard();
 
         for (int i=0; i<10; i++)
@@ -53,7 +58,7 @@ public class ChessActivity extends GameActivity
             }
         }
         redSquares = new ArrayList<>();
-        ArrayList<Integer> coordinates = new ArrayList<>();
+        coordinates = new ArrayList<>();
 
         ImageButton A1 = findViewById(R.id.ChessA1); ImageButton B1 = findViewById(R.id.ChessB1);
         ImageButton C1 = findViewById(R.id.ChessC1); ImageButton D1 = findViewById(R.id.ChessD1);
@@ -128,8 +133,10 @@ public class ChessActivity extends GameActivity
         buttons[3][8]=C8; buttons[4][8]=D8;
         buttons[5][8]=E8; buttons[6][8]=F8;
         buttons[7][8]=G8; buttons[8][8]=H8;
+    }
 
-
+    private void setUpBoard()
+    {
         for (int i=0; i<coordinates.size(); i+=2)
         {
             int coordinateX = coordinates.get(i);
@@ -227,6 +234,32 @@ public class ChessActivity extends GameActivity
             }
         }
     }
+
+    private void loadPieces()
+    {
+        for (int i=0; i<coordinates.size(); i+=2)
+        {
+            int coordinateX = coordinates.get(i);
+            int coordinateY = coordinates.get(i+1);
+            ImageButton button = buttons[coordinateX][coordinateY];
+            if ((coordinateX+coordinateY)%2==0)
+            {
+                button.setImageResource(R.drawable.checkers_empty);
+            }
+            else
+            {
+                button.setImageResource(R.drawable.checkers_empty_white);
+            }
+        }
+
+        for (int j=0; j<loadedPieces.size(); j++)
+        {
+            Piece p = loadedPieces.get(j);
+            drawProperPiece(p,p.posX,p.posY);
+            board.addPiece(p,p.posX,p.posY);
+        }
+    }
+
 
     public void onClickBoard(View v)
     {
@@ -468,7 +501,7 @@ public class ChessActivity extends GameActivity
         }
         if (p.color.equals("White"))
         {
-            if (currentTurn.equals("Black"))
+            if (currentTurn.equals("Black") || currentUser.equals(player2))
             {
                 return;
             }
@@ -476,7 +509,7 @@ public class ChessActivity extends GameActivity
         }
         else if (p.color.equals("Black"))
         {
-            if (currentTurn.equals("White"))
+            if (currentTurn.equals("White") || currentUser.equals(player1))
             {
                 return;
             }
@@ -506,8 +539,22 @@ public class ChessActivity extends GameActivity
             drawProperPiece(null,posX,posY);
             if(finished)
             {
-                Toast.makeText(this,"You win", Toast.LENGTH_LONG).show();
-                getPieces(idGame);
+                finish();
+                Intent i = new Intent(this, GameOverActivity.class);
+                if (currentTurn.equals("White"))
+                {
+                    i.putExtra("winner", player1);
+                    i.putExtra("loser", player2);
+                }
+                if (currentTurn.equals("Black"))
+                {
+                    i.putExtra("winner", player2);
+                    i.putExtra("loser", player1);
+                }
+                i.putExtra("gameType", "Checkers");
+                i.putExtra("idGame",idGame);
+                startActivity(i);
+                return;
             }
             if (promoted)
             {
@@ -639,6 +686,142 @@ public class ChessActivity extends GameActivity
         {
             Log.i("Chess", "Piece: " + x + "-" + y + " has wrong type.");
         }
+    }
+
+    protected void getNameInfo(int idGame)
+    {
+        Data.Builder data = new Data.Builder();
+
+        data.putInt("idGame", idGame);
+
+        OneTimeWorkRequest otwr = new OneTimeWorkRequest.Builder(WorkerSelectGame.class)
+                .setInputData(data.build())
+                .build();
+        WorkManager.getInstance(this).getWorkInfoByIdLiveData(otwr.getId())
+                .observe(this, new Observer<WorkInfo>()
+                {
+                    @Override
+                    public void onChanged(WorkInfo workInfo)
+                    {
+                        if (workInfo != null && workInfo.getState().isFinished())
+                        {
+                            String[] listPieces = workInfo.getOutputData().getStringArray("lista");
+                            for (int i=0; i<listPieces.length; i+=3)
+                            {
+                                player1 = listPieces[i];
+                                player2 = listPieces[i + 1];
+                                currentTurn = listPieces[i + 2];
+                                Log.i("workerPHP", "Game info: " + player1 + "-" + player2 + "-" + currentTurn);
+                            }
+                            getPieces(idGame);
+                        }
+                    }
+                });
+        WorkManager.getInstance(this).enqueue(otwr);
+    }
+
+    protected void getPieces(int idGame)
+    {
+        Data.Builder data = new Data.Builder();
+
+        data.putInt("idGame", idGame);
+
+        OneTimeWorkRequest otwr = new OneTimeWorkRequest.Builder(WorkerSelectPieces.class)
+                .setInputData(data.build())
+                .build();
+        WorkManager.getInstance(this).getWorkInfoByIdLiveData(otwr.getId())
+                .observe(this, new Observer<WorkInfo>()
+                {
+                    @Override
+                    public void onChanged(WorkInfo workInfo)
+                    {
+                        if (workInfo != null && workInfo.getState().isFinished())
+                        {
+                            String[] listPieces = workInfo.getOutputData().getStringArray("lista");
+                            loadedPieces = new ArrayList<>();
+                            for (int i=0; i<listPieces.length; i+=3)
+                            {
+                                String type = listPieces[i];
+                                int posX = Integer.parseInt(listPieces[i + 1]);
+                                int posY = Integer.parseInt(listPieces[i + 2]);
+                                Log.i("workerPHP", "Pieces recovered: " + type + "  " + posX + "-" + posY);
+
+                                String color="";
+                                if (type.contains("White"))
+                                {
+                                    color = "White";
+                                }
+                                else if (type.contains("Black"))
+                                {
+                                    color = "Black";
+                                }
+
+                                Piece p=null;
+                                if (type.contains("Pawn_White"))
+                                {
+                                    p = new Piece_Chess_Pawn_White("name",color,posX,posY);
+                                }
+                                else if (type.contains("Pawn_Black"))
+                                {
+                                    p = new Piece_Chess_Pawn_Black("name",color,posX,posY);
+                                }
+                                else if (type.contains("Rook_White"))
+                                {
+                                    p = new Piece_Chess_Rook_White("name",color,posX,posY);
+                                }
+                                else if (type.contains("Rook_Black"))
+                                {
+                                    p = new Piece_Chess_Rook_Black("name",color,posX,posY);
+                                }
+                                else if (type.contains("Bishop_White"))
+                                {
+                                    p = new Piece_Chess_Bishop_White("name",color,posX,posY);
+                                }
+                                else if (type.contains("Bishop_Black"))
+                                {
+                                    p = new Piece_Chess_Bishop_Black("name",color,posX,posY);
+                                }
+                                else if (type.contains("Knight_White"))
+                                {
+                                    p = new Piece_Chess_Knight_White("name",color,posX,posY);
+                                }
+                                else if (type.contains("Knight_Black"))
+                                {
+                                    p = new Piece_Chess_Knight_Black("name",color,posX,posY);
+                                }
+                                else if (type.contains("Queen_White"))
+                                {
+                                    p = new Piece_Chess_Queen_White("name",color,posX,posY);
+                                }
+                                else if (type.contains("Queen_Black"))
+                                {
+                                    p = new Piece_Chess_Queen_Black("name",color,posX,posY);
+                                }
+                                else if (type.contains("King_White"))
+                                {
+                                    p = new Piece_Chess_King_White("name",color,posX,posY);
+                                }
+                                else if (type.contains("King_Black"))
+                                {
+                                    p = new Piece_Chess_King_Black("name",color,posX,posY);
+                                }
+                                Log.i("workerPHP",p.getClass().getName());
+                                loadedPieces.add(p);
+                            }
+                            if (loadedPieces!=null && loadedPieces.size()!=0)
+                            {
+                                loadPieces();
+                                Log.i("workerPHP","load");
+                            }
+                            else
+                            {
+                                setUpBoard();
+                                Log.i("workerPHP","setUp");
+                            }
+                        }
+                    }
+                });
+        WorkManager.getInstance(this).enqueue(otwr);
     }
 
 

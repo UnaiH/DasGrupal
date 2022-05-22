@@ -64,7 +64,7 @@ public class WorkerSelectPieces extends Worker
                 }
                 inputStream.close();
                 JSONArray jsonArray = new JSONArray(result);
-                String[] lista = new String[jsonArray.length()*5];
+                String[] lista = new String[jsonArray.length()*3];
                 for(int i = 0; i < jsonArray.length(); i++)
                 {
                     String type = jsonArray.getJSONObject(i).getString("type");
@@ -74,6 +74,7 @@ public class WorkerSelectPieces extends Worker
                     lista[3*i+1] = String.valueOf(posX);
                     lista[3*i+2] = String.valueOf(posY);
                 }
+                Log.i("workerPHP","piezasSeleccionadas del id: " +idGame + " / " + lista);
                 Data jason = new Data.Builder()
                         .putStringArray("lista",lista)
                         .build();

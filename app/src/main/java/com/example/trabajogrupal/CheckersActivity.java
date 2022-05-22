@@ -7,6 +7,12 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import androidx.lifecycle.Observer;
+import androidx.work.Data;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkInfo;
+import androidx.work.WorkManager;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -19,6 +25,7 @@ public class CheckersActivity extends GameActivity {
     private int[] chosenSquare = new int[2];
     private int whiteCounts;
     private int blackCounts;
+    ArrayList<Integer> coordinates;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -29,26 +36,21 @@ public class CheckersActivity extends GameActivity {
         tem.setThemes(this);
         setContentView(R.layout.activity_checkers);
 
+        initialSteps();
+        type="Checkers";
+
         Bundle extras = getIntent().getExtras();
         if (extras != null)
         {
             idGame= extras.getInt("idGame");
+            currentUser = PlayerCatalogue.getMyPlayerCatalogue().getCurrentUser();
+            getNameInfo(idGame);
         }
-        currentUser = PlayerCatalogue.getMyPlayerCatalogue().getCurrentUser();
-
-        setUpBoard();
     }
 
-    private void setUpBoard()
+    private void initialSteps()
     {
-
-        Random rand = new Random();
-        idGame = rand.nextInt(999999);
-        currentTurn="White";
         board = new CheckersBoard();
-        whiteCounts=12;
-        blackCounts=12;
-
 
         for (int i=0; i<10; i++)
         {
@@ -58,7 +60,7 @@ public class CheckersActivity extends GameActivity {
             }
         }
         redSquares = new ArrayList<>();
-        ArrayList<Integer> coordinates = new ArrayList<>();
+        coordinates = new ArrayList<>();
 
         ImageButton A1 = findViewById(R.id.CheckersA1);
         ImageButton C1 = findViewById(R.id.CheckersC1);
@@ -116,7 +118,12 @@ public class CheckersActivity extends GameActivity {
         buttons[1][7]=A7; buttons[3][7]=C7; buttons[5][7]=E7;
         buttons[7][7]=G7; buttons[2][8]=B8; buttons[4][8]=D8;
         buttons[6][8]=F8; buttons[8][8]=H8;
+    }
 
+    private void setUpBoard()
+    {
+        whiteCounts=12;
+        blackCounts=12;
 
         for (int i = 0; i< coordinates.size(); i+=2)
         {
@@ -149,6 +156,35 @@ public class CheckersActivity extends GameActivity {
                 }
                 insertPiece(idGame,p.getClass().getName(),coordinateX,coordinateY);
                 board.addPiece(p,coordinateX,coordinateY);
+            }
+        }
+    }
+
+    private void loadPieces()
+    {
+        whiteCounts=0;
+        blackCounts=0;
+
+        for (int i=0; i<coordinates.size(); i+=2)
+        {
+            int coordinateX = coordinates.get(i);
+            int coordinateY = coordinates.get(i+1);
+            ImageButton button = buttons[coordinateX][coordinateY];
+            button.setImageResource(R.drawable.checkers_empty);
+        }
+
+        for (int j=0; j<loadedPieces.size(); j++)
+        {
+            Piece p = loadedPieces.get(j);
+            drawProperPiece(p,p.posX,p.posY);
+            board.addPiece(p,p.posX,p.posY);
+            if(p.color.equals("White"))
+            {
+                whiteCounts++;
+            }
+            else if(p.color.equals("Black"))
+            {
+                whiteCounts++;
             }
         }
     }
@@ -298,7 +334,7 @@ public class CheckersActivity extends GameActivity {
         }
         if (p instanceof Piece_Checkers_White)
         {
-            if (currentTurn.equals("Black"))
+            if (currentTurn.equals("Black") || currentUser.equals(player2))
             {
                 return;
             }
@@ -306,7 +342,7 @@ public class CheckersActivity extends GameActivity {
         }
         else if (p instanceof Piece_Checkers_Black)
         {
-            if (currentTurn.equals("White"))
+            if (currentTurn.equals("White")  || currentUser.equals(player1))
             {
                 return;
             }
@@ -348,9 +384,21 @@ public class CheckersActivity extends GameActivity {
                 drawProperPiece(null,middleX,middleY);
                 if(whiteCounts==0 || blackCounts==0)
                 {
-                    Toast.makeText(this,"You win", Toast.LENGTH_LONG).show();
-                    getPieces(idGame);
-
+                    finish();
+                    Intent i = new Intent(this, GameOverActivity.class);
+                    if (currentTurn.equals("White"))
+                    {
+                        i.putExtra("winner", player1);
+                        i.putExtra("loser", player2);
+                    }
+                    if (currentTurn.equals("Black"))
+                    {
+                        i.putExtra("winner", player2);
+                        i.putExtra("loser", player1);
+                    }
+                    i.putExtra("gameType", "Checkers");
+                    i.putExtra("idGame",idGame);
+                    startActivity(i);
                     return;
                 }
                 deletePiece(idGame,middleX,middleY);
@@ -426,6 +474,116 @@ public class CheckersActivity extends GameActivity {
         {
             Log.i("Checkers", "Piece: " + x + "-" + y + " has wrong type.");
         }
+    }
+
+    private void getNameInfo(int idGame)
+    {
+        Data.Builder data = new Data.Builder();
+
+        data.putInt("idGame", idGame);
+
+        OneTimeWorkRequest otwr = new OneTimeWorkRequest.Builder(WorkerSelectGame.class)
+                .setInputData(data.build())
+                .build();
+        WorkManager.getInstance(this).getWorkInfoByIdLiveData(otwr.getId())
+                .observe(this, new Observer<WorkInfo>()
+                {
+                    @Override
+                    public void onChanged(WorkInfo workInfo)
+                    {
+                        if (workInfo != null && workInfo.getState().isFinished())
+                        {
+                            String[] listPieces = workInfo.getOutputData().getStringArray("lista");
+                            for (int i=0; i<listPieces.length; i+=3)
+                            {
+                                player1 = listPieces[i];
+                                player2 = listPieces[i + 1];
+                                currentTurn = listPieces[i + 2];
+                                Log.i("workerPHP", "Game info: " + player1 + "-" + player2 + "-" + currentTurn);
+                            }
+                            getPieces(idGame);
+                        }
+
+                    }
+                });
+        WorkManager.getInstance(this).enqueue(otwr);
+    }
+
+    private void getPieces(int idGame)
+    {
+        Data.Builder data = new Data.Builder();
+
+        data.putInt("idGame", idGame);
+
+        OneTimeWorkRequest otwr = new OneTimeWorkRequest.Builder(WorkerSelectPieces.class)
+                .setInputData(data.build())
+                .build();
+        WorkManager.getInstance(this).getWorkInfoByIdLiveData(otwr.getId())
+                .observe(this, new Observer<WorkInfo>()
+                {
+                    @Override
+                    public void onChanged(WorkInfo workInfo)
+                    {
+                        if (workInfo != null && workInfo.getState().isFinished())
+                        {
+                            String[] listPieces = workInfo.getOutputData().getStringArray("lista");
+                            loadedPieces = new ArrayList<>();
+                            for (int i=0; i<listPieces.length; i+=3)
+                            {
+                                String type = listPieces[i];
+                                int posX = Integer.parseInt(listPieces[i + 1]);
+                                int posY = Integer.parseInt(listPieces[i + 2]);
+                                Log.i("workerPHP", "Pieces recovered: " + type + "  " + posX + "-" + posY);
+
+                                String color="";
+                                if (type.contains("White"))
+                                {
+                                    color = "White";
+                                }
+                                else if (type.contains("Black"))
+                                {
+                                    color = "Black";
+                                }
+
+                                Piece p=null;
+                                if (type.contains("Crowned_White"))
+                                {
+                                    p = new Piece_Checkers_Crowned_White("name",color,posX,posY);
+                                }
+                                else if (type.contains("Crowned_Black"))
+                                {
+                                    p = new Piece_Checkers_Crowned_Black("name",color,posX,posY);
+                                }
+                                else if (type.contains("Checkers_White"))
+                                {
+                                    p = new Piece_Checkers_White("name",color,posX,posY);
+                                }
+                                else if (type.contains("Checkers_Black"))
+                                {
+                                    p = new Piece_Checkers_Black("name",color,posX,posY);
+                                }
+                                else
+                                {
+                                    Log.i("workerPHP","ayuda");
+                                    break;
+                                }
+                                Log.i("workerPHP",p.getClass().getName());
+                                loadedPieces.add(p);
+                            }
+                            if (loadedPieces!=null && loadedPieces.size()!=0)
+                            {
+                                loadPieces();
+                                Log.i("workerPHP","load");
+                            }
+                            else
+                            {
+                                setUpBoard();
+                                Log.i("workerPHP","setUp");
+                            }
+                        }
+                    }
+                });
+        WorkManager.getInstance(this).enqueue(otwr);
     }
 
     /*Para que no se salga de la App
