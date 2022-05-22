@@ -177,10 +177,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == RESULT_OK) { //Se registró correctamente y se le da por logueado automáticamente
             Intent i = new Intent(MainActivity.this, SelectMenuActivity.class);
-            String user = getIntent().getStringExtra("email");
+            String user = getIntent().getStringExtra("user");
             i.putExtra("email", user);
-            PlayerCatalogue catalogue = PlayerCatalogue.getMyPlayerCatalogue();
-            catalogue.setCurrentUser(user);
             startActivity(i);
             finish();
         }
