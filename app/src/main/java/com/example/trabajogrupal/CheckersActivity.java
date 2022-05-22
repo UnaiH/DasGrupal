@@ -186,7 +186,7 @@ public class CheckersActivity extends GameActivity {
             }
             else if(p.color.equals("Black"))
             {
-                whiteCounts++;
+                blackCounts++;
             }
         }
     }
