@@ -17,6 +17,9 @@
         android:theme="@style/Theme.TrabajoGrupal"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".Tutorial"
+            android:exported="false" />
+        <activity
             android:name=".GameOverActivity"
             android:exported="false" />
         <activity
