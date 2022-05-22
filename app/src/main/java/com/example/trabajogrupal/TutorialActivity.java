@@ -22,7 +22,10 @@ public class TutorialActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        new LanguagesWorker().setLangua(this);
         super.onCreate(savedInstanceState);
+        ThemesWorker tem = new ThemesWorker();
+        tem.setThemes(this);
         setContentView(R.layout.activity_tutorial);
         btnCheckers = findViewById(R.id.btn_tutoCheckers);
         btnChess = findViewById(R.id.btn_tutoChess);
