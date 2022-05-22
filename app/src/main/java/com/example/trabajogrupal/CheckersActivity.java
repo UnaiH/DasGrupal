@@ -8,7 +8,9 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.lifecycle.Observer;
+import androidx.work.Constraints;
 import androidx.work.Data;
+import androidx.work.NetworkType;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
@@ -484,11 +486,15 @@ public class CheckersActivity extends GameActivity {
 
     private void getNameInfo(int idGame)
     {
-        Data.Builder data = new Data.Builder();
+        Constraints restricciones = new Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .build();
 
+        Data.Builder data = new Data.Builder();
         data.putInt("idGame", idGame);
 
         OneTimeWorkRequest otwr = new OneTimeWorkRequest.Builder(WorkerSelectGame.class)
+                .setConstraints(restricciones)
                 .setInputData(data.build())
                 .build();
         WorkManager.getInstance(this).getWorkInfoByIdLiveData(otwr.getId())
@@ -517,11 +523,15 @@ public class CheckersActivity extends GameActivity {
 
     private void getPieces(int idGame)
     {
-        Data.Builder data = new Data.Builder();
+        Constraints restricciones = new Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .build();
 
+        Data.Builder data = new Data.Builder();
         data.putInt("idGame", idGame);
 
         OneTimeWorkRequest otwr = new OneTimeWorkRequest.Builder(WorkerSelectPieces.class)
+                .setConstraints(restricciones)
                 .setInputData(data.build())
                 .build();
         WorkManager.getInstance(this).getWorkInfoByIdLiveData(otwr.getId())
