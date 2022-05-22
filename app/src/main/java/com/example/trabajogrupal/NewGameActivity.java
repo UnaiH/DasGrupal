@@ -103,10 +103,6 @@ public class NewGameActivity extends AppCompatActivity {
                     @Override
                     public void onChanged(WorkInfo workInfo) {
                         if(workInfo != null && workInfo.getState().isFinished()){
-                            Game game = new Game(gameID, currentPlayer, rival, gameType, "White");
-                            currentPlayer.addInCourse(game);
-                            rival.addInCourse(game);
-
                             Intent i = null;
                             if (gameType.equals("Checkers")) {
                                 i = new Intent(getApplicationContext(), CheckersActivity.class);

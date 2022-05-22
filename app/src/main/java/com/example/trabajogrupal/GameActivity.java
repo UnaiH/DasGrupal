@@ -1,10 +1,13 @@
 package com.example.trabajogrupal;
 
+import android.content.Intent;
 import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
+import androidx.work.Constraints;
 import androidx.work.Data;
+import androidx.work.NetworkType;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
@@ -228,12 +231,45 @@ public class GameActivity extends AppCompatActivity
                     public void onChanged(WorkInfo workInfo)
                     {
                         if (workInfo != null && workInfo.getState().isFinished()) {
-                            Log.i("workerPHP", "Turn changed");
+                            Log.i("workerPHP", "Turn changed --> Send FCM");
+                            String player;
+                            if (currentTurn.equals("White"))
+                            {
+                                player=player1;
+                            }
+                            else
+                            {
+                                player=player2;
+                            }
+                            enviarMensaje(player);
                         }
                     }
                 });
         WorkManager.getInstance(this).enqueue(otwr);
     }
 
+    public void enviarMensaje(String player) {
+        Constraints restricciones = new Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .build();
+        Data datos = new Data.Builder()
+                .putString("player", player)
+                .build();
+        OneTimeWorkRequest otwr2 =
+                new OneTimeWorkRequest.Builder(WorkerEnviarMensaje.class)
+                        .setConstraints(restricciones)
+                        .setInputData(datos)
+                        .build();
+        WorkManager.getInstance(this).getWorkInfoByIdLiveData(otwr2.getId())
+                .observe(this, new Observer<WorkInfo>() {
+                    @Override
+                    public void onChanged(WorkInfo workInfo) {
+                        if(workInfo != null && workInfo.getState().isFinished()){
+
+                        }
+                    }
+                });
+        WorkManager.getInstance(this).enqueue(otwr2);
+    }
 
 }
