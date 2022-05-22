@@ -13,7 +13,6 @@ Erregina edozein norabidean mugitu ahal da (bertikalki, horizontalki eta diagona
 kontuan hartzen.
 Erregea erregina bezala mugitu ahal da baina lauki bakarra. Lehiakidea fitxa hau jaten badu galduko
 duzu baina zuk lehiakidearen erregea jaten baduzu irabaziko duzu.
-Endroke mugimendua egian ahal da. Mugimendu hau honela egiten da. Bi lauki mugitu ahal duzu erregea
+Endroke mugimendua egin ahal da. Mugimendu hau honela egiten da: bi lauki mugitu ahal duzu erregea
 dorrerantz eta dorrea erregearen ondoko laukirantz (beste aldekoa) mugituko da. Bakarrik egin
-dezakezu dorrea eta erregea mugitu ez baduzu, erregea xakean ez badago mugimenduaren hasieran edo
-amaieran eta erdian dauden laukiak hutsik badaude.
+dezakezu dorrea eta erregea mugitu ez baduzu eta erdian dauden laukiak hutsik badaude.

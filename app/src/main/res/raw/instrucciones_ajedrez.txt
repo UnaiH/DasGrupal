@@ -1,4 +1,3 @@
-Ajedrez:
 El ajedrez consta de seis tipos de fichas distintas.
 Los peones que sólo pueden moverse una casilla hacia delante (dos si es la primera vez que se mueve)
 y al llegar al otro lado del tablero será "coronado" y se convertirá automáticamente en reina. Para
@@ -16,6 +15,5 @@ El rey se puede mover en cualquier dirección como la reina pero solo una casill
 comiera esta pieza perderias. Pero si comes la del rival ganarias.
 También se puede hace el "enroque" que consiste en que el rey se moverá dos casillas hacia la torre
 que se quiera y la torre se moverá hacia el rey quedando justo en la casilla del otro lado del rey.
-Solo se podrá hacer si el rey y la torre con la que se hace el movimiento nunca se han movido, el
-rey no está en jaque ni al principio ni al final del movimiento y las casillas intermedias están
-desocupadas.
+Solo se podrá hacer si el rey y la torre con la que se hace el movimiento nunca se han movido y
+las casillas intermedias están desocupadas.

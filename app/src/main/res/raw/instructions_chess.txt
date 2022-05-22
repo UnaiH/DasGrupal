@@ -1,20 +1,19 @@
 Chess:
 Chess consists of six types of different pieces. Pawns can only move one square forward (two squares
 forward if it's the first time it moves) and once it arrives to the other side of the board it will
-be crowned as a Queen. To capture a pawn it has to be taken diagonally.
+be crowned as a Queen. To capture, the pawn  has to be move diagonally.
 Rooks (or castles) will be able to move vertically and horizontally across as many squares as they
 want, as long as there are no enemy pieces on the way.
-Knights will be able to move in 'L' (2 horizontal and 1 vertical moves or vice versa, it doesn's
+Knights will be able to move in an 'L' shape (2 horizontal and 1 vertical moves or vice versa, it doesn't
 matter whether there're enemy or ally pieces on the way). The knight'll capture a piece if in the
 end of the movement there's an enemy piece.
 Bishops will be able to move diagonally across as many squares as they want, as long as there are no
-enemy pieces on the way. Bishops'll take any enemy piece that is on the road.
-The Queen will be able to move in any direction she wants without being able of jumping over an
+enemy pieces on the way. Bishops will take any enemy piece that is on the road.
+The Queen will be able to move in any direction she wants without being able to jump over an
 enemy piece.
 The King will be able to move like the queen but only one square at a time. If the opponent takes
-your king you'll loose the game, otherwise you eats the rival's king you will win the game.
+your king you'll lose the game, otherwise if you eat the rival's king you will win the game.
 Castling is a special move to protect your king and activate your rook. It's the only time in chess
 you can move two pieces in one move. The king moves two squares to the right or left and the rook
-moves directly to the other side of the king. You can only castle if neither the rook or king have
-moved and there are no pieces in the way. You can also not castle when in check, into check or
-through check.
+moves directly to the opposite side of the king. You can only castle if neither the rook or king have
+moved and there are no pieces in the way.
