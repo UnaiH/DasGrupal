@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:onClick="onClickCheckers"
     tools:context=".ChooseRankingActivity">
 
     <TextView
@@ -11,23 +12,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:textColor="@color/white"
         android:text="Ranking"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:background="@color/black"
-        android:textColor="@color/white"
         android:id="@+id/button7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:layout_marginTop="124dp"
-        android:onClick="onClickCheckersOnline"
+        android:background="@color/black"
+        android:onClick="onClickCheckers"
         android:text="@string/checkers"
+        android:textColor="@color/white"
         app:layout_constraintStart_toEndOf="@+id/button2"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -37,10 +38,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="124dp"
-        android:onClick="onClickChessOnline"
         android:background="@color/black"
-        android:textColor="@color/white"
+        android:onClick="onClickChess"
         android:text="@string/chess"
+        android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
